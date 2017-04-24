@@ -13,7 +13,7 @@ Gabriel Nuñez | ? | g.nunez.coutinho@gmail.com
 Pedro Henrique | ? | pedrohenriquedrim@gmail.com
 Vinícius Machado | ? | ?
 Lucas Nunes | ? | ?
-Guilherme Caixeta | ? | ?
+Guilherme Caixeta | ? | caixetag@gmail.com
 Valquer Diniz | ? | valquernovaes@hotmail.com
 
 ### 2.2. Cronogramas
