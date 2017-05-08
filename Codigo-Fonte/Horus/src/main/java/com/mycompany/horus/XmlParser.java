@@ -5,13 +5,14 @@
  */
 package com.mycompany.horus;
 
-import java.io.IOException;
+import java.io.*;
 import java.io.StringReader;
 import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
@@ -21,31 +22,38 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author aluno
+ * @author Vinicius
  */
 public class XmlParser {
 
-    public Set<String> getServices(String xmlString) {
+    public String getMessage() {
 
-        InputSource source = new InputSource(new StringReader(xmlString));
-
-        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-        builderFactory.setNamespaceAware(true);
-        DocumentBuilder builder;
-
+        String message =null;
         try {
-            builder = builderFactory.newDocumentBuilder();
-            Document xmlDocument = builder.parse(source);
-            XPath xpath = XPathFactory.newInstance().newXPath();
 
-            // Buscando serviços disponiveis
-            NodeList n = xmlDocument.getElementsByTagName("wsdl:portType");
-            String soapNameSpace = xpath.evaluate("//wsdl:operation", xmlDocument);
-            String servicesFlag = "wsdl:portType";
-        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+
+            Document xmlDocument = builder.parse(new FileInputStream("./teste.xml"));
+
+            XPath xPath = XPathFactory.newInstance().newXPath();
+
+            String expression = "/soap:Envelope/soap:Body/soap:Fault/soap:Reason/soap:Text";
+            message = xPath.compile(expression).evaluate(xmlDocument);
+            System.out.println("Resultado: "+message);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
         }
 
-        return null;
+        return message;
     }
 }

@@ -10,21 +10,23 @@ public class BSUS {
 
     public static void main(String[] args) throws Exception {
 
-       //consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado();
-
+       //consultarPosicaoEstoquePorCNES();
+        XmlParser parser = new XmlParser();
+        parser.getMessage();
     }
 
     public static String consultarPosicaoEstoquePorCNES(){
-
+        String result;
         HttpRequest request = new HttpRequest();
-
+        XmlParser parser = new XmlParser();
         StringBuilder soap = new StringBuilder();
         soap.append(buildHeaderXml());
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" <est:cnes>7604041</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-
-        return request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        result = request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        parser.getMessage();
+        return result;
     }
 
 
