@@ -10,9 +10,8 @@ public class BSUS {
 
     public static void main(String[] args) throws Exception {
 
-       //consultarPosicaoEstoquePorCNES();
-        XmlParser parser = new XmlParser();
-        parser.getMessage();
+        consultarPosicaoEstoquePorCNES();
+
     }
 
     public static String consultarPosicaoEstoquePorCNES(){
@@ -32,20 +31,22 @@ public class BSUS {
 
     public static String consultarPosicaoEstoquePorCNESPrincipioAtivo(){
         HttpRequest request = new HttpRequest();
-
+        String result;
+        XmlParser parser = new XmlParser();
         StringBuilder soap = new StringBuilder();
         soap.append(buildHeaderXml());
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
         soap.append(" <est:cnes>7604041</est:cnes>\n");
         soap.append(" <est:principioAtivo>Principio Ativo</est:principioAtivo>\n </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-
-        return request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        result = request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        parser.getMessage();
+        return result;
     }
 
     public static String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(){
         HttpRequest request = new HttpRequest();
-
+        XmlParser parser = new XmlParser();
         StringBuilder soap = new StringBuilder();
         soap.append(buildHeaderXmlPaginado());
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
@@ -57,26 +58,29 @@ public class BSUS {
         soap.append(" </est:paginacao>\n");
         soap.append(" </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        return request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        String result = request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        parser.getMessage();
+        return result;
     }
 
     public static String consultarProdutoPorCNESDispensacao(){
         HttpRequest request = new HttpRequest();
-
+        XmlParser parser = new XmlParser();
         StringBuilder soap = new StringBuilder();
         soap.append(buildHeaderXml());
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacao>\n");
         soap.append(" <est:cnes>7604041</est:cnes>\n");
         soap.append(" </est:requestConsultarProdutoPorCNESDispensacao>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-
-        return request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        String result = request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        parser.getMessage();
+        return result;
     }
 
     public static String consultarProdutoPorCNESDispensacaoPaginado(){
-
+        String result;
         HttpRequest request = new HttpRequest();
-
+        XmlParser parser = new XmlParser();
         StringBuilder soap = new StringBuilder();
         soap.append(buildHeaderXmlPaginado());
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
@@ -91,7 +95,9 @@ public class BSUS {
         soap.append(" </est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
 
-        return request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        result = request.request("https://servicos.saude.gov.br/horus/v1r0/EstoqueService", soap.toString());
+        parser.getMessage();
+        return result;
     }
 
     public static String buildHeaderXml(){

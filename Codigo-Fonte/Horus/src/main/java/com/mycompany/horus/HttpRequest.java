@@ -35,8 +35,8 @@ public class HttpRequest {
             HttpEntity respEntity = response.getEntity();
             resp = EntityUtils.toString(respEntity);
             if (respEntity != null) {
-                System.out.println("Response:");
-                System.out.println(resp);
+                //System.out.println("Response:");
+                //System.out.println(resp);
                 //Changing response to Xml file
                 stringToDom(resp);
 

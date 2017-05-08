@@ -17,6 +17,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -28,20 +29,30 @@ public class XmlParser {
 
     public String getMessage() {
 
-        String message =null;
+        String message = null;
         try {
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 
+            builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
             Document xmlDocument = builder.parse(new FileInputStream("./teste.xml"));
 
             XPath xPath = XPathFactory.newInstance().newXPath();
 
-            String expression = "/soap:Envelope/soap:Body/soap:Fault/soap:Reason/soap:Text";
-            message = xPath.compile(expression).evaluate(xmlDocument);
-            System.out.println("Resultado: "+message);
+            NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
+            NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
+            NodeList n3 = xmlDocument.getElementsByTagName("men:descricao");
+            Node node1;
+            Node node2;
+            Node node3;
+            node1 = n1.item(0);
+            node2 = n2.item(0);
+            node3 = n3.item(0);
+            System.out.println(node1.getTextContent());
+            System.out.println(node2.getTextContent());
+            System.out.println(node3.getTextContent());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
@@ -49,8 +60,6 @@ public class XmlParser {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
 
