@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Downloads/httpcomponents-client-4.5.3/lib/lib.iml" filepath="$USER_HOME$/Downloads/httpcomponents-client-4.5.3/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/Horus/src/main/main.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/Horus/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/implementacao/src/main/main.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/implementacao/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/template/src/main/main1.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/template/src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/interface/src/main/main2.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/interface/src/main/main2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/interface/src/test/test.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/interface/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/template/src/test/test1.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/template/src/test/test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codigo-Fonte/implementacao/src/test/test2.iml" filepath="$PROJECT_DIR$/Codigo-Fonte/implementacao/src/test/test2.iml" />
     </modules>
   </component>
 </project>

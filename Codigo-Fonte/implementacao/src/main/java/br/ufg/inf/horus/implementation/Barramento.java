@@ -11,6 +11,6 @@ package br.ufg.inf.horus.implementation;
  */
 public interface Barramento {
     
-    String obterEstoquePorCNES(String cnes);
+    String obterEstoquePorCNES(int cnes);
     
 }

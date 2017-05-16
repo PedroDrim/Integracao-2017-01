@@ -15,14 +15,11 @@ import java.io.IOException;
  */
 public class HttpRequest {
 
-    public static void main(String[] args) throws Exception {
-
-
-    }
+    //Método que faz a conexão com a url do argumento e recebe a resposta, retornando-a.
     public String request(String url,String body){
         String resp="";
         try {
-            // Get target URL
+
             StringBuilder soap = new StringBuilder(body);
             CloseableHttpClient httpclient = HttpClientBuilder.create().build();
             StringEntity strEntity = new StringEntity(soap.toString(),"UTF-8");
@@ -30,17 +27,10 @@ public class HttpRequest {
             HttpPost post = new HttpPost(url);
             post.setEntity(strEntity);
 
-            // Execute request
             HttpResponse response = httpclient.execute(post);
             HttpEntity respEntity = response.getEntity();
             resp = EntityUtils.toString(respEntity);
-            if (respEntity != null) {
-                //System.out.println("Response:");
-                //System.out.println(resp);
-                //Changing response to Xml file
-                stringToDom(resp);
-
-            } else {
+            if (respEntity == null) {
                 System.out.println("No Response");
             }
         }
@@ -52,10 +42,4 @@ public class HttpRequest {
 
     }
 
-    public static void stringToDom(String xmlSource)
-            throws IOException {
-        java.io.FileWriter fw = new java.io.FileWriter("teste.xml");
-        fw.write(xmlSource);
-        fw.close();
-    }
 }
