@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.kyriosdata.exemplo;
+package br.ufg.inf.horus.implementation;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -42,6 +42,16 @@ public class BSUSTest {
     //
     @Test
     public void hello() {
-        assertFalse(true);
+        Bsus bsus = new Bsus( new MyConnection() );
+        assertEquals(bsus.obterEstoquePorCNES("xxx"), "ok");
     }
+}
+
+class MyConnection implements Connection{
+
+    @Override
+    public String fazUmaRequisicao(String argumento) {
+        return argumento;
+    }
+    
 }
