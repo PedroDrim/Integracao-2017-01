@@ -14,16 +14,19 @@ import com.netflix.hystrix.HystrixCommandGroupKey;
  */
 public class CircuitBreaker extends HystrixCommand<String>{
 
-    private final HorusRequest horusRequest;
+    private String soapRequest;
+    private String destination;
+    private HttpRequest request = new HttpRequest();
 
-    public CircuitBreaker(HorusRequest horusRequest) {
+    public CircuitBreaker(String soapRequest, String destination) {
         super(HystrixCommandGroupKey.Factory.asKey("HorusTolerance"));
-        this.horusRequest = horusRequest;
+        this.soapRequest = soapRequest;
+        this.destination = destination;
     }
     
     @Override
     protected String run() throws Exception {
-        return this.horusRequest.getResponse();
+        return this.request.request(this.destination, this.soapRequest);
     }
  
     
