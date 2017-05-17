@@ -95,7 +95,7 @@ public class ConnectionBsus implements Connection{
         return response;
     }
 
-    public String buildHeaderXml(String username, String password){
+    private String buildHeaderXml(String username, String password){
         StringBuilder str = new StringBuilder();
         str.append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\">\n");
         str.append(" <soap:Header>\n");
@@ -107,7 +107,7 @@ public class ConnectionBsus implements Connection{
         return str.toString();
     }
 
-    public static String buildHeaderXmlPaginado(String username, String password){
+    private String buildHeaderXmlPaginado(String username, String password){
         StringBuilder str = new StringBuilder();
         str.append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\" xmlns:pag=\"http://servicos.saude.gov.br/wsdl/mensageria/v1r0/paginacao\">\n");
         str.append(" <soap:Header>\n");
