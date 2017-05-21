@@ -9,11 +9,17 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 /**
- * Created by viniciuscmac on 4/24/17.
+ *@author Vinicius
+ *Classe que faz a conexão e requisição.
  */
 public class HttpRequest {
 
-    //Método que faz a conexão com a url do argumento e recebe a resposta, retornando-a.
+    /**
+     * Método que executa o POST.
+     * @param url Url para a requisição.
+     * @param body Mensagem da requisição.
+     * @return resp Resposta da requisição.
+     */
     public String request(String url,String body){
         String resp="";
         try {
@@ -37,7 +43,5 @@ public class HttpRequest {
         }
 
         return resp;
-
     }
-
 }

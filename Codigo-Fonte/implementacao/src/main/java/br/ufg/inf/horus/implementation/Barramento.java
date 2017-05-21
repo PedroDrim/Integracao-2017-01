@@ -7,7 +7,7 @@ package br.ufg.inf.horus.implementation;
 
 /**
  *
- * @author aluno
+ * @author Pedro
  */
 public interface Barramento {
     

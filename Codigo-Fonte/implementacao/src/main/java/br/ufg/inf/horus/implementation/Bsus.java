@@ -1,18 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufg.inf.horus.implementation;
 
 /**
  *
- * @author aluno
+ * @author Vinicius
+ * Classe Bsus que implementa e requisita a execução remota, recebe a resposta XML e converte-a.
  */
 public class Bsus implements Barramento {
 
     private Connection connection;
-    
+    /**
+     * Construtor.
+     * @param connection Interface com os serviços.
+     */
     public Bsus(Connection connection) {
         this.connection = connection;
     }

@@ -1,35 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufg.inf.horus.implementation;
 
 import java.io.*;
-import java.io.StringReader;
-import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
  *
- * @author Vinicius
+ * @author Vinicius/Pedro
+ * Classe que faz a conversão da resposta Xml em resposta para o cliente.
  */
 public class XmlParser {
-
+    /**
+     * Método que busca as informações necessárias na resposta.
+     * @return message Mensagem com as informações tratadas.
+     */
     public String getMessage() {
 
-        String message = null;
+        String message = "";
         try {
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -50,9 +44,8 @@ public class XmlParser {
             node1 = n1.item(0);
             node2 = n2.item(0);
             node3 = n3.item(0);
-            System.out.println(node1.getTextContent());
-            System.out.println(node2.getTextContent());
-            System.out.println(node3.getTextContent());
+            message = node1.getTextContent()+"\n"+node2.getTextContent()+"\n"+node3.getTextContent();
+           
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
@@ -62,7 +55,7 @@ public class XmlParser {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-
+        
         return message;
     }
 }
