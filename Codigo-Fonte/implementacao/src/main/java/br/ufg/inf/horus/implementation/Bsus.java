@@ -24,8 +24,8 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNES(String username, String senha, int cnes) {
-        //String xml = connection.consultarPosicaoEstoquePorCNES("HORUS","SENHA",cnes);
-        String xml ="OLA";
+        String xml = connection.consultarPosicaoEstoquePorCNES(username, senha, cnes);
+
         //Requisita a execucao remota do servico
         //Recebe a resposta XML e converte a resposta XML na saída conforme o negocio
         //Parser do xml

@@ -41,36 +41,36 @@ public class BsusTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void hello() {
+    public void obterEstoquePorCNESTest() {
 
         Bsus bsus = new Bsus(new Connection() {
             @Override
             public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes) {
-                return null;
+                return "OK1";
             }
 
             @Override
             public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio) {
-                return null;
+                return "OK2";
             }
 
             @Override
             public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-                return null;
+                return "OK3";
             }
 
             @Override
             public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes) {
-                return null;
+                return "OK4";
             }
 
             @Override
             public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-                return null;
+                return "OK5";
             }
         });
 
-        assertEquals(bsus.obterEstoquePorCNES(7604041),"OK");
+        assertEquals(bsus.obterEstoquePorCNES("HORUS","SENHA",7604041),"OK1");
     }
 }
 
