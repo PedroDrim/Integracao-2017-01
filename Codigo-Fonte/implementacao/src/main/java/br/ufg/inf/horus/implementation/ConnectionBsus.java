@@ -1,5 +1,12 @@
 package br.ufg.inf.horus.implementation;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * 
  * @author Vinicius
@@ -7,8 +14,6 @@ package br.ufg.inf.horus.implementation;
  * Constrói a requisição e retorna a resposta.
  */
 public class ConnectionBsus implements Connection{
-
-    public static final String REQUESTADRESS = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
     
     /**
      * Método para consular estoque pelo número Cnes.
@@ -20,12 +25,17 @@ public class ConnectionBsus implements Connection{
     @Override
     public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes){
         StringBuilder soap = new StringBuilder();
-
+        String url = "";
+        try {
+            url = getUrl();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         soap.append(buildHeaderXml(username,password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");        
-        String response = new CircuitBreaker(soap.toString(), ConnectionBsus.REQUESTADRESS).execute();
+        String response = new CircuitBreaker(soap.toString(), url).execute();
      
         return response;
     }
@@ -41,13 +51,18 @@ public class ConnectionBsus implements Connection{
     @Override
     public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio){
         StringBuilder soap = new StringBuilder();
-
+        String url = "";
+        try {
+            url = getUrl();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         soap.append(buildHeaderXml(username,password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
         soap.append(" <est:principioAtivo>").append(principio).append("</est:principioAtivo>\n </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), ConnectionBsus.REQUESTADRESS).execute();
+        String response = new CircuitBreaker(soap.toString(), url).execute();
             
         return response;
     }
@@ -66,7 +81,12 @@ public class ConnectionBsus implements Connection{
     @Override
     public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros){
         StringBuilder soap = new StringBuilder();
-
+        String url = "";
+        try {
+            url = getUrl();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         soap.append(buildHeaderXmlPaginado(username,password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
@@ -77,7 +97,7 @@ public class ConnectionBsus implements Connection{
         soap.append(" </est:paginacao>\n");
         soap.append(" </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), ConnectionBsus.REQUESTADRESS).execute();
+        String response = new CircuitBreaker(soap.toString(), url).execute();
               
         return response;
     }
@@ -92,13 +112,18 @@ public class ConnectionBsus implements Connection{
     @Override
     public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes){
         StringBuilder soap = new StringBuilder();
-
+        String url = "";
+        try {
+            url = getUrl();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         soap.append(buildHeaderXml(username,password));
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacao>\n");
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
         soap.append(" </est:requestConsultarProdutoPorCNESDispensacao>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), ConnectionBsus.REQUESTADRESS).execute();
+        String response = new CircuitBreaker(soap.toString(), url).execute();
                 
         return response;
     }
@@ -116,7 +141,12 @@ public class ConnectionBsus implements Connection{
     @Override
     public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros){
         StringBuilder soap = new StringBuilder();
-
+        String url = "";
+        try {
+            url = getUrl();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+        }
         soap.append(buildHeaderXmlPaginado(username,password));
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
@@ -127,7 +157,7 @@ public class ConnectionBsus implements Connection{
         soap.append(" </est:paginacao>\n");
         soap.append(" </est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), ConnectionBsus.REQUESTADRESS).execute();
+        String response = new CircuitBreaker(soap.toString(), url).execute();
            
         return response;
     }
@@ -165,5 +195,19 @@ public class ConnectionBsus implements Connection{
         str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordText\">").append(password).append("</wsse:Password>\n");
         str.append( " </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
         return str.toString();
+    }
+    
+    /**
+     * Método que busca a Url de um arquivo properties.
+     * @return url Url para a requisição ser feita.
+     * @throws IOException 
+     */
+    private static String getUrl() throws IOException{
+        String url;
+        Properties prop = new Properties();
+        FileInputStream file = new FileInputStream("./src/main/resources/info.properties");
+        prop.load(file);
+        url = prop.getProperty("prop.url");
+        return url;
     }
 }
