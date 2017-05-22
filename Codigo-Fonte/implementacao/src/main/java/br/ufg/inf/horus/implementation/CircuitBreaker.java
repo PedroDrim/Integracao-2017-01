@@ -21,11 +21,7 @@ public class CircuitBreaker extends HystrixCommand<String>{
      * @param destination Url de destino.
      */
     public CircuitBreaker(String soapRequest, String destination) {
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HorusTolerance"))
-                        .andCommandPropertiesDefaults(
-                                HystrixCommandProperties.Setter()
-                                        .withExecutionTimeoutInMilliseconds(2000)
-        ));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HorusTolerance")));
         
         this.soapRequest = soapRequest;
         this.destination = destination;
