@@ -11,6 +11,9 @@ package br.ufg.inf.horus.implementation;
  */
 public interface Barramento {
     
-    String obterEstoquePorCNES(int cnes);
-    
+    String obterEstoquePorCNES(String username,String senha,int cnes);
+    String obterEstoquePorCNESEPrincipio(String username,String senha,int cnes,String principio);
+    String obterEstoquePorCNESEPrincipioPaginado(String username,String senha,int cnes,String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros);
+    String obterDadosEEstoquePorCNES(String username,String senha,int cnes);
+    String obterDadosEEstoquePorCNESPaginado(String username,String senha,int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros);
 }
