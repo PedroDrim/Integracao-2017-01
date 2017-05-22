@@ -4,8 +4,6 @@ import java.io.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -19,21 +17,20 @@ import org.xml.sax.SAXException;
 public class XmlParser {
     /**
      * Método que busca as informações necessárias na resposta.
+     * @param xml String xml para tratamento.
      * @return message Mensagem com as informações tratadas.
      */
-    public String getMessage() {
+    public String getMessage(String xml) {
 
         String message = "";
         try {
-
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-
             builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
-            Document xmlDocument = builder.parse(new FileInputStream("./teste.xml"));
+            Document xmlDocument = builder.parse(xml);
 
-            XPath xPath = XPathFactory.newInstance().newXPath();
+            
 
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
             NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
@@ -47,13 +44,7 @@ public class XmlParser {
             message = node1.getTextContent()+"\n"+node2.getTextContent()+"\n"+node3.getTextContent();
            
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException | SAXException | IOException e) {
         }
         
         return message;

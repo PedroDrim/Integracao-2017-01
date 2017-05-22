@@ -6,7 +6,7 @@ package br.ufg.inf.horus.implementation;
  * Classe Bsus que implementa e requisita a execução remota, recebe a resposta XML e converte-a.
  */
 public class Bsus implements Barramento {
-
+    
     private Connection connection;
     /**
      * Construtor.
@@ -25,11 +25,9 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNES(String username, String senha, int cnes) {
         String xml = connection.consultarPosicaoEstoquePorCNES(username, senha, cnes);
-
-        //Requisita a execucao remota do servico
-        //Recebe a resposta XML e converte a resposta XML na saída conforme o negocio
-        //Parser do xml
-        return xml;
+        XmlParser parser = new XmlParser();
+        String retorno = parser.getMessage(xml);
+        return retorno;
     }
 
     /**
@@ -42,7 +40,10 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNESEPrincipio(String username, String senha, int cnes, String principio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(username, senha, cnes, principio);
+        XmlParser parser = new XmlParser();
+        String retorno = parser.getMessage(xml);
+        return retorno;
     }
 
     /**
@@ -58,7 +59,10 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNESEPrincipioPaginado(String username, String senha, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(username, senha, cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        XmlParser parser = new XmlParser();
+        String retorno = parser.getMessage(xml);
+        return retorno;
     }
 
     /**
@@ -70,7 +74,10 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterDadosEEstoquePorCNES(String username, String senha, int cnes) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String xml = connection.consultarProdutoPorCNESDispensacao(username, senha, cnes);
+        XmlParser parser = new XmlParser();
+        String retorno = parser.getMessage(xml);
+        return retorno;
     }
 
     /**
@@ -85,7 +92,10 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterDadosEEstoquePorCNESPaginado(String username, String senha, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(username, senha, cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        XmlParser parser = new XmlParser();
+        String retorno = parser.getMessage(xml);
+        return retorno;
     }
     
 }
