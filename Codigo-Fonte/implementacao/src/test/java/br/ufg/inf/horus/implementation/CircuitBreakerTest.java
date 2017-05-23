@@ -7,44 +7,47 @@ package br.ufg.inf.horus.implementation;
 
 import java.util.concurrent.Future;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author aluno
+ * @author Pedro
  */
 public class CircuitBreakerTest {
 
+    private String destination;
+    private String header;
+    
     public CircuitBreakerTest() {
+        this.destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
+    /**
+     * Método executado antes de cada teste, responsável por inicializar as variaveis comuns.
+     */
     @Before
     public void setUp() {
+        HeaderGenerator headerGenerator = new HeaderGenerator();
+        this.header = headerGenerator.getHeader("user", "123", 0);
     }
 
+    /**
+     * Método executado antes de cada teste, responsável por limpar as variaveis comuns.
+     */
     @After
     public void tearDown() {
+        this.header = "";
     }
 
+    /**
+     * Caso de teste resonsável por testar a classe CicruitBreaker de modo assincrono.
+     * @throws Exception 
+     */
     @Test
     public void singleAsynchronousTest() throws Exception {
-
-        String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
-        HeaderGenerator headerGenerator = new HeaderGenerator();
-        String header = headerGenerator.getHeader("user", "123", 0);
-        
+  
         CircuitBreaker circuitBreaker = new CircuitBreaker(header, destination);
         
         Future<String> asynchrnous = circuitBreaker.queue();
@@ -57,8 +60,19 @@ public class CircuitBreakerTest {
     }
 }
 
+/**
+ * Classe responsável pela geração do cabeçalho utilizado para os testes da classe CircuitBreaker
+ * @author Pedro
+ */
 class HeaderGenerator {
 
+    /**
+     * Gera o cabeçalho da requisição com base em um username, password e número cnes.
+     * @param username Usuário do sistema Horus.
+     * @param senha Senha do usuário.
+     * @param cnes Número do CNES para busca, 7 posições.
+     * @return Retorna o cabeçalho da requisição.
+     */
     public String getHeader(String username, String password, int cnes) {
 
         StringBuilder soap = new StringBuilder();
@@ -70,6 +84,12 @@ class HeaderGenerator {
         return soap.toString();
     }
 
+    /**
+     * Gera o conteúdo do cabeçalho da requisição com base em um username e password.
+     * @param username Usuário do sistema Horus.
+     * @param senha Senha do usuário.
+     * @return Retorna o conteúdo do cabeçalho da requisição.
+     */
     public String buildHeaderXml(String username, String password) {
         StringBuilder str = new StringBuilder();
         str.append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\">\n");
