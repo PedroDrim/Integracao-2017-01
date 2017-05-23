@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -28,9 +29,8 @@ public class XmlParser {
             builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
-            Document xmlDocument = builder.parse(xml);
-
-            
+            InputSource source = new InputSource(new StringReader(xml));
+            Document xmlDocument = builder.parse(source);         
 
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
             NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
