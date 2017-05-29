@@ -15,13 +15,13 @@ import static org.junit.Assert.*;
  * @author vinicius
  */
 public class HttpRequestTest {
+    
     private String url;
     private String body;
     private String wrongBody;
     private String resp;
     private String wrongResp;
-    public HttpRequestTest() {
-    }
+
     
     @Before
     public void setUp() {

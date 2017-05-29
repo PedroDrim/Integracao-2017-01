@@ -6,9 +6,7 @@
 package br.ufg.inf.horus.implementation;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,9 +17,7 @@ import static org.junit.Assert.*;
 public class XmlParserTest {
     
     private String xml;
-    public XmlParserTest() {
-    }
-    
+
     @Before
     public void setUp() {
         this.xml = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\n"
