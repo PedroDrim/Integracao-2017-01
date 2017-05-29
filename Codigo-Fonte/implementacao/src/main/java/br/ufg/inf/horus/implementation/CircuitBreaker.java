@@ -2,13 +2,14 @@ package br.ufg.inf.horus.implementation;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 
 /**
  *
- * @author Pedro
- * Classe que implemente o CircuitBreaker do sistema com o Hystrix.
+ * @author Pedro Classe que implemente o CircuitBreaker do sistema com o
+ * Hystrix.
  */
-public class CircuitBreaker extends HystrixCommand<String>{
+public class CircuitBreaker extends HystrixCommand<String> {
 
     private String soapRequest;
     private String destination;
@@ -16,20 +17,26 @@ public class CircuitBreaker extends HystrixCommand<String>{
 
     /**
      * Construtor.
+     *
      * @param soapRequest String com a requisição.
      * @param destination Url de destino.
      */
     public CircuitBreaker(String soapRequest, String destination) {
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HorusTolerance")));
-        
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HorusTolerance"))
+                .andCommandPropertiesDefaults(
+                        HystrixCommandProperties.Setter()
+                        .withExecutionTimeoutEnabled(false)
+                ));
+
         this.soapRequest = soapRequest;
         this.destination = destination;
     }
-    
+
     /**
      * Método run para threads.
+     *
      * @return resposta Resposta da requisição
-     * @throws Exception 
+     * @throws Exception
      */
     @Override
     protected String run() throws Exception {

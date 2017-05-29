@@ -18,9 +18,7 @@ public class HttpRequestTest {
     
     private String url;
     private String body;
-    private String wrongBody;
     private String resp;
-    private String wrongResp;
 
     
     @Before

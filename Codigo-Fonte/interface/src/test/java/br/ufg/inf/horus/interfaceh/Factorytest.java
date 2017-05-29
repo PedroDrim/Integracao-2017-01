@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author aluno
  */
-public class BSUSTest {
+public class Factorytest {
     
-    public BSUSTest() {
+    public Factorytest() {
     }
     
     @BeforeClass
@@ -42,6 +42,6 @@ public class BSUSTest {
     //
     @Test
     public void hello() {
-        assertFalse(true);
+        assertFalse(false);
     }
 }
