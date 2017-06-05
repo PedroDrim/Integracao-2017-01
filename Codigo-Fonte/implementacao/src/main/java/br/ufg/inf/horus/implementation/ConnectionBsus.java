@@ -1,10 +1,20 @@
 package br.ufg.inf.horus.implementation;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * 
@@ -27,16 +37,15 @@ public class ConnectionBsus implements Connection{
         String url = "";
         try {
             url = getUrl();
-        } catch (IOException ex) {
-            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {    
         }
         soap.append(buildHeaderXml(username,password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");        
         String response = new CircuitBreaker(soap.toString(), url).execute();
-     
-        return response;
+        
+        return getError(response);
     }
 
     /**
@@ -54,7 +63,7 @@ public class ConnectionBsus implements Connection{
         try {
             url = getUrl();
         } catch (IOException ex) {
-            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         soap.append(buildHeaderXml(username,password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
@@ -63,7 +72,7 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url).execute();
             
-        return response;
+        return getError(response);
     }
     
    /**
@@ -84,7 +93,7 @@ public class ConnectionBsus implements Connection{
         try {
             url = getUrl();
         } catch (IOException ex) {
-            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         soap.append(buildHeaderXmlPaginado(username,password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
@@ -98,7 +107,7 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url).execute();
               
-        return response;
+        return getError(response);
     }
 
     /**
@@ -115,7 +124,7 @@ public class ConnectionBsus implements Connection{
         try {
             url = getUrl();
         } catch (IOException ex) {
-            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+          
         }
         soap.append(buildHeaderXml(username,password));
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacao>\n");
@@ -124,7 +133,7 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url).execute();
                 
-        return response;
+        return getError(response);
     }
 
     /**
@@ -144,7 +153,7 @@ public class ConnectionBsus implements Connection{
         try {
             url = getUrl();
         } catch (IOException ex) {
-            Logger.getLogger(ConnectionBsus.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
         soap.append(buildHeaderXmlPaginado(username,password));
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
@@ -158,7 +167,7 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url).execute();
            
-        return response;
+        return getError(response);
     }
 
     /**
@@ -208,5 +217,41 @@ public class ConnectionBsus implements Connection{
         prop.load(file);
         url = prop.getProperty("prop.url");
         return url;
+    }
+    /**
+     * Método que verifica se o xml retornou com erro e o trata de acordo com o negócio.
+     * @param xml
+     * @return response String corrigida ou não
+     */
+    private String getError(String xml){
+         String message = "";
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            builderFactory.setNamespaceAware(true);
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+
+            InputSource source = new InputSource(new StringReader(xml));
+            Document xmlDocument = builder.parse(source);         
+
+            NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
+            NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
+            NodeList n3 = xmlDocument.getElementsByTagName("men:descricao");
+            Node node1;
+            Node node2;
+            Node node3;
+            node1 = n1.item(0);
+            node2 = n2.item(0);
+            node3 = n3.item(0);
+            message = node1.getTextContent()+"\n"+node2.getTextContent()+"\n"+node3.getTextContent();
+           
+        } catch (FileNotFoundException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+        }
+        if(message==""){
+            return xml;
+        }
+        else{
+        return message;
+        }
     }
 }

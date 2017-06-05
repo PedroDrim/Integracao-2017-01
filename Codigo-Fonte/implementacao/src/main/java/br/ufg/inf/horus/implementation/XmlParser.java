@@ -33,15 +33,12 @@ public class XmlParser {
             Document xmlDocument = builder.parse(source);         
 
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
-            NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
-            NodeList n3 = xmlDocument.getElementsByTagName("men:descricao");
+            
             Node node1;
-            Node node2;
-            Node node3;
+            
             node1 = n1.item(0);
-            node2 = n2.item(0);
-            node3 = n3.item(0);
-            message = node1.getTextContent()+"\n"+node2.getTextContent()+"\n"+node3.getTextContent();
+            
+            message = node1.getTextContent()+"\n";
            
         } catch (FileNotFoundException e) {
         } catch (ParserConfigurationException | SAXException | IOException e) {
