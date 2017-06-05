@@ -20,7 +20,7 @@ public class BsusFactorytest {
     //
     @Test
     public void createConnectionTest() throws Exception {
-        String className = "br.ufg.inf.horus.implementation.ConnectionBsus";
+        String className = "br.ufg.inf.horus.implementation.Bsus";
         assertNotNull(BsusFactory.createConnection(className));
     }
 }

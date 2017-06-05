@@ -1,5 +1,7 @@
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.interfaceh.Security;
+
 /**
  *
  * @author Vinicius
@@ -8,13 +10,16 @@ package br.ufg.inf.horus.implementation;
 public class Bsus implements Barramento {
     
     private Connection connection;
-    /**
-     * Construtor.
-     * @param connection Interface com os serviços.
-     */
-    public Bsus(Connection connection) {
+    private Security security;
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
+    
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
+    
     /**
      * Método que executa remotamente o serviço e trata a resposta.
      * @param username Usuário do sistema Horus.
@@ -23,8 +28,10 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterEstoquePorCNES(String username, String senha, int cnes) {
-        String xml = connection.consultarPosicaoEstoquePorCNES(username, senha, cnes);
+    public String obterEstoquePorCNES(int cnes) {
+        String xml = connection.consultarPosicaoEstoquePorCNES(
+                this.security.getUser(), this.security.getUser(), cnes
+        );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
         return retorno;
@@ -39,8 +46,10 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterEstoquePorCNESEPrincipio(String username, String senha, int cnes, String principio) {
-        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(username, senha, cnes, principio);
+    public String obterEstoquePorCNESEPrincipio(int cnes, String principio) {
+        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
+                this.security.getUser(), this.security.getUser(), cnes, principio
+        );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
         return retorno;
@@ -58,8 +67,10 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterEstoquePorCNESEPrincipioPaginado(String username, String senha, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(username, senha, cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+    public String obterEstoquePorCNESEPrincipioPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+                this.security.getUser(), this.security.getUser(), cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+        );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
         return retorno;
@@ -73,8 +84,10 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterDadosEEstoquePorCNES(String username, String senha, int cnes) {
-        String xml = connection.consultarProdutoPorCNESDispensacao(username, senha, cnes);
+    public String obterDadosEEstoquePorCNES(int cnes) {
+        String xml = connection.consultarProdutoPorCNESDispensacao(
+                this.security.getUser(), this.security.getUser(), cnes
+        );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
         return retorno;
@@ -91,8 +104,10 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterDadosEEstoquePorCNESPaginado(String username, String senha, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(username, senha, cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+    public String obterDadosEEstoquePorCNESPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+        String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(
+                this.security.getUser(), this.security.getUser(), cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+        );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
         return retorno;

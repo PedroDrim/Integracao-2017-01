@@ -5,7 +5,7 @@
  */
 package br.ufg.inf.horus.interfaceh;
 
-import br.ufg.inf.horus.implementation.Connection;
+import br.ufg.inf.horus.implementation.Barramento;
 
 /**
  *
@@ -13,8 +13,8 @@ import br.ufg.inf.horus.implementation.Connection;
  */
 public class BsusFactory{
     
-    public static Connection createConnection(String className) throws Exception {
+    public static Barramento createConnection(String className) throws Exception {
         Class clazz = Class.forName(className);
-        return (Connection) clazz.newInstance();        
+        return (Barramento) clazz.newInstance();        
     }
 }
