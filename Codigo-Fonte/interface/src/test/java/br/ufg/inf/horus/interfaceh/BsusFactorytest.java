@@ -19,8 +19,8 @@ public class BsusFactorytest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void createConnectionTest() throws Exception {
+    public void createBarramentoTest() throws Exception {
         String className = "br.ufg.inf.horus.implementation.Bsus";
-        assertNotNull(BsusFactory.createConnection(className));
+        assertNotNull(BsusFactory.createBarramento(className));
     }
 }

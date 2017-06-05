@@ -1,5 +1,6 @@
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.interfaceh.Log;
 import br.ufg.inf.horus.interfaceh.Security;
 
 /**
@@ -11,13 +12,21 @@ public class Bsus implements Barramento {
     
     private Connection connection;
     private Security security;
-
+    private Log log;
+    
+    @Override
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
     
+    @Override
     public void setSecurity(Security security) {
         this.security = security;
+    }
+    
+    @Override
+    public void setLog(Log log) {
+        this.log = log;
     }
     
     /**
@@ -30,7 +39,7 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNES(int cnes) {
         String xml = connection.consultarPosicaoEstoquePorCNES(
-                this.security.getUser(), this.security.getUser(), cnes
+                this.security.getUser(), this.security.getPassword(), cnes
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
@@ -48,7 +57,7 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNESEPrincipio(int cnes, String principio) {
         String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
-                this.security.getUser(), this.security.getUser(), cnes, principio
+                this.security.getUser(), this.security.getPassword(), cnes, principio
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
@@ -69,7 +78,7 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNESEPrincipioPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
-                this.security.getUser(), this.security.getUser(), cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+                this.security.getUser(), this.security.getPassword(), cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
@@ -86,7 +95,7 @@ public class Bsus implements Barramento {
     @Override
     public String obterDadosEEstoquePorCNES(int cnes) {
         String xml = connection.consultarProdutoPorCNESDispensacao(
-                this.security.getUser(), this.security.getUser(), cnes
+                this.security.getUser(), this.security.getPassword(), cnes
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
@@ -106,7 +115,7 @@ public class Bsus implements Barramento {
     @Override
     public String obterDadosEEstoquePorCNESPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(
-                this.security.getUser(), this.security.getUser(), cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+                this.security.getUser(), this.security.getPassword(), cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);

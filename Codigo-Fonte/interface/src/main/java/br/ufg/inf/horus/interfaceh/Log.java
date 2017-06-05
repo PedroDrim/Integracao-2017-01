@@ -9,9 +9,7 @@ package br.ufg.inf.horus.interfaceh;
  *
  * @author aluno
  */
-public interface Security {
-
-    String getUser();
-    String getPassword();
-    String getURL();
+public interface Log {
+    
+    void sendLog(String message);
 }

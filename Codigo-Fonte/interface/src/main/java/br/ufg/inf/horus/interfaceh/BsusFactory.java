@@ -13,7 +13,7 @@ import br.ufg.inf.horus.implementation.Barramento;
  */
 public class BsusFactory{
     
-    public static Barramento createConnection(String className) throws Exception {
+    public static Barramento createBarramento(String className) throws Exception {
         Class clazz = Class.forName(className);
         return (Barramento) clazz.newInstance();        
     }
