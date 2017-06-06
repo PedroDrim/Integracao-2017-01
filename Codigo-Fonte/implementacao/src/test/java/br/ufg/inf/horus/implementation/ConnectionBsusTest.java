@@ -49,7 +49,7 @@ public class ConnectionBsusTest {
     public void testConsultarPosicaoEstoquePorCNES() {
         ConnectionBsus instance = new ConnectionBsus();
 
-        assertEquals(instance.consultarPosicaoEstoquePorCNES(username, password, cnes), result);
+        assertEquals(instance.consultarPosicaoEstoquePorCNES(cnes), result);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ConnectionBsusTest {
         String principio = "Principio Ativo";
         ConnectionBsus instance = new ConnectionBsus();
        
-        assertEquals(instance.consultarPosicaoEstoquePorCNESPrincipioAtivo(username, password, cnes, principio), result);
+        assertEquals(instance.consultarPosicaoEstoquePorCNESPrincipioAtivo(cnes, principio), result);
         
     }
 
@@ -75,7 +75,7 @@ public class ConnectionBsusTest {
         int qtdRegistros = 10;
         ConnectionBsus instance = new ConnectionBsus();
         
-        String response = instance.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(username, password, cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        String response = instance.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
         assertEquals(response, resultPaginado);    
     }
 
@@ -86,7 +86,7 @@ public class ConnectionBsusTest {
     public void testConsultarProdutoPorCNESDispensacao() {
         ConnectionBsus instance = new ConnectionBsus();
         
-        assertEquals(instance.consultarProdutoPorCNESDispensacao(username, password, cnes), result);    
+        assertEquals(instance.consultarProdutoPorCNESDispensacao(cnes), result);    
     }
 
     /**
@@ -100,7 +100,7 @@ public class ConnectionBsusTest {
         int qtdRegistros = 10;
         ConnectionBsus instance = new ConnectionBsus();
         
-        String response = instance.consultarProdutoPorCNESDispensacaoPaginado(username, password, cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        String response = instance.consultarProdutoPorCNESDispensacaoPaginado(cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
         assertEquals(response, resultPaginado);            
     }
     

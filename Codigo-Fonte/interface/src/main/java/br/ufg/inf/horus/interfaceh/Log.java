@@ -11,5 +11,6 @@ package br.ufg.inf.horus.interfaceh;
  */
 public interface Log {
     
-    void sendLog(String message);
+    void info(String message);
+    void erro(String message);
 }

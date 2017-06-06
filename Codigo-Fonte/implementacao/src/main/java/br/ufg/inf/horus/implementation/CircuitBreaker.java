@@ -1,5 +1,6 @@
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.interfaceh.Log;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
@@ -13,6 +14,7 @@ public class CircuitBreaker extends HystrixCommand<String> {
 
     private String soapRequest;
     private String destination;
+    private Log log;
     private HttpRequest request = new HttpRequest();
 
     /**
@@ -21,7 +23,8 @@ public class CircuitBreaker extends HystrixCommand<String> {
      * @param soapRequest String com a requisição.
      * @param destination Url de destino.
      */
-    public CircuitBreaker(String soapRequest, String destination) {
+    public CircuitBreaker(String soapRequest, String destination, Log log) {
+        
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HorusTolerance"))
                 .andCommandPropertiesDefaults(
                         HystrixCommandProperties.Setter()

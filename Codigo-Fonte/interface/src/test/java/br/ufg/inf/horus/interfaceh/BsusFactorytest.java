@@ -19,8 +19,14 @@ public class BsusFactorytest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void createBarramentoTest() throws Exception {
+    public void createBarramentoCorretoTest() throws Exception {
         String className = "br.ufg.inf.horus.implementation.Bsus";
-        assertNotNull(BsusFactory.createBarramento(className));
+        assertNotNull(BsusFactory.createBarramento(className, null));
+    }
+    
+    @Test(expected = java.lang.ClassNotFoundException.class)
+    public void createBarramentoFalhoTest() throws Exception {
+        String className = "br.ufg.inf.horus.implementation.FalsoBsus";
+        assertNotNull(BsusFactory.createBarramento(className, null));
     }
 }
