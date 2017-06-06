@@ -27,8 +27,9 @@ public class CircuitBreaker extends HystrixCommand<String> {
      */
     public CircuitBreaker(String soapRequest, String destination, Log log) {
 
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HorusTolerance"))
-                .andCommandPropertiesDefaults(
+        super(Setter.withGroupKey(
+                HystrixCommandGroupKey.Factory.asKey("HorusTolerance")
+                ).andCommandPropertiesDefaults(
                         HystrixCommandProperties.Setter()
                                 .withExecutionTimeoutEnabled(false)
                 ));
@@ -61,7 +62,8 @@ public class CircuitBreaker extends HystrixCommand<String> {
      */
     @Override
     protected String run() throws Exception {
-        String resposta = this.request.request(this.destination, this.soapRequest);
+        String resposta = this.request.request(this.destination,
+                this.soapRequest);
         return resposta;
     }
 

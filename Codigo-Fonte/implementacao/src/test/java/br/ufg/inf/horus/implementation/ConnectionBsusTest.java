@@ -5,10 +5,11 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.interfaceh.Log;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -17,10 +18,26 @@ import static org.junit.Assert.*;
 public class ConnectionBsusTest {
     
     private String result;
-    private String resultPaginado;
-    private String username;
-    private String password;
+    private String resultPaginado; 
     private int cnes;
+    private ConnectionBsus instance;
+    
+    public ConnectionBsusTest(){
+        instance = new ConnectionBsus();
+        instance.setCredential("user", "pass");
+        instance.setURL("https://servicos.saude.gov.br/horus/v1r0/EstoqueService");
+        instance.setLog(new Log() {
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        });
+    }
     
     @Before
     public void setUp() {
@@ -30,15 +47,11 @@ public class ConnectionBsusTest {
         this.resultPaginado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:pag=\"http://servicos.saude.gov.br/wsdl/mensageria/v1r0/paginacao\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:pag=\"http://servicos.saude.gov.br/wsdl/mensageria/v1r0/paginacao\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
         
-        this.username = "HORUS";
-        this.password = "SENHA";
         this.cnes = 7604041;
     }
     
     @After
     public void tearDown() {
-        this.username = "";
-        this.password = "";
         this.cnes = 0;
     }
 
@@ -47,8 +60,6 @@ public class ConnectionBsusTest {
      */
     @Test
     public void testConsultarPosicaoEstoquePorCNES() {
-        ConnectionBsus instance = new ConnectionBsus();
-
         assertEquals(instance.consultarPosicaoEstoquePorCNES(cnes), result);
     }
 
@@ -58,8 +69,6 @@ public class ConnectionBsusTest {
     @Test
     public void testConsultarPosicaoEstoquePorCNESPrincipioAtivo() {
         String principio = "Principio Ativo";
-        ConnectionBsus instance = new ConnectionBsus();
-       
         assertEquals(instance.consultarPosicaoEstoquePorCNESPrincipioAtivo(cnes, principio), result);
         
     }
@@ -73,8 +82,7 @@ public class ConnectionBsusTest {
         int posicaoInicio = 0;
         int qtdRegistrosPagina = 10;
         int qtdRegistros = 10;
-        ConnectionBsus instance = new ConnectionBsus();
-        
+
         String response = instance.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
         assertEquals(response, resultPaginado);    
     }
@@ -84,8 +92,6 @@ public class ConnectionBsusTest {
      */
     @Test
     public void testConsultarProdutoPorCNESDispensacao() {
-        ConnectionBsus instance = new ConnectionBsus();
-        
         assertEquals(instance.consultarProdutoPorCNESDispensacao(cnes), result);    
     }
 
@@ -98,8 +104,7 @@ public class ConnectionBsusTest {
         int posicaoInicio = 0;
         int qtdRegistrosPagina = 10;
         int qtdRegistros = 10;
-        ConnectionBsus instance = new ConnectionBsus();
-        
+
         String response = instance.consultarProdutoPorCNESDispensacaoPaginado(cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
         assertEquals(response, resultPaginado);            
     }

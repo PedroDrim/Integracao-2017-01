@@ -1,7 +1,10 @@
 package br.ufg.inf.horus.implementation;
 
+import java.io.IOException;
+import java.nio.charset.UnsupportedCharsetException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,13 +23,13 @@ public class HttpRequest implements HttpInterface{
      * @param body Mensagem da requisição.
      * @return resp Resposta da requisição.
      */
+    @Override
     public String request(String url,String body){
         String resp="";
         
         try {
-            StringBuilder soap = new StringBuilder(body);
             CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            StringEntity strEntity = new StringEntity(soap.toString(),"UTF-8");
+            StringEntity strEntity = new StringEntity(body,"UTF-8");
             strEntity.setContentType("text/xml");
             HttpPost post = new HttpPost(url);
             post.setEntity(strEntity);
@@ -35,7 +38,7 @@ public class HttpRequest implements HttpInterface{
             HttpEntity respEntity = response.getEntity();
             resp = EntityUtils.toString(respEntity);
         }
-        catch (Exception e) {
+        catch (IOException | UnsupportedCharsetException | ParseException e) {
         }
 
         return resp;

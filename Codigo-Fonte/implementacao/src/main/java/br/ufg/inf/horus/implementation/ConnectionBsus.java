@@ -66,7 +66,9 @@ public class ConnectionBsus implements Connection{
 
         soap.append(buildHeaderXml());
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
+        soap.append(" <est:cnes>");
+        soap.append(cnes);
+        soap.append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");        
         String response = new CircuitBreaker(soap.toString(), url, log).execute();
         
@@ -80,15 +82,21 @@ public class ConnectionBsus implements Connection{
      * @return response Resposta retornada da requisição.
      */
     @Override
-    public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio){
+    public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes,
+            String principio){
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXml());
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
-        soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
-        soap.append(" <est:principioAtivo>").append(principio).append("</est:principioAtivo>\n </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
+        soap.append(" <est:cnes>");
+        soap.append(cnes);
+        soap.append("</est:cnes>\n");
+        soap.append(" <est:principioAtivo>");
+        soap.append(principio);
+        soap.append("</est:principioAtivo>\n </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), url, log).execute();
+        String response = new CircuitBreaker(soap.toString(), url, log)
+                .execute();
             
         return getError(response);
     }
@@ -108,15 +116,26 @@ public class ConnectionBsus implements Connection{
 
         soap.append(buildHeaderXmlPaginado());
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
-        soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
-        soap.append(" <est:principioAtivo>").append(principio).append("</est:principioAtivo>\n");
-        soap.append(" <est:paginacao>\n <pag:posicaoRegistroInicio>").append(posicaoInicio).append("</pag:posicaoRegistroInicio>\n");
-        soap.append(" <pag:quantidadeRegistrosPorPagina>").append(qtdRegistrosPagina).append("</pag:quantidadeRegistrosPorPagina>\n");
-        soap.append(" <pag:quantidadeRegistros>").append(qtdRegistros).append("</pag:quantidadeRegistros>\n");
+        soap.append(" <est:cnes>");
+        soap.append(cnes);
+        soap.append("</est:cnes>\n");
+        soap.append(" <est:principioAtivo>");
+        soap.append(principio);
+        soap.append("</est:principioAtivo>\n");
+        soap.append(" <est:paginacao>\n <pag:posicaoRegistroInicio>");
+        soap.append(posicaoInicio);
+        soap.append("</pag:posicaoRegistroInicio>\n");
+        soap.append(" <pag:quantidadeRegistrosPorPagina>");
+        soap.append(qtdRegistrosPagina);
+        soap.append("</pag:quantidadeRegistrosPorPagina>\n");
+        soap.append(" <pag:quantidadeRegistros>");
+        soap.append(qtdRegistros);
+        soap.append("</pag:quantidadeRegistros>\n");
         soap.append(" </est:paginacao>\n");
         soap.append(" </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), url, log).execute();
+        String response = new CircuitBreaker(soap.toString(), url, log)
+                .execute();
               
         return getError(response);
     }
@@ -135,13 +154,15 @@ public class ConnectionBsus implements Connection{
         soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
         soap.append(" </est:requestConsultarProdutoPorCNESDispensacao>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), url, log).execute();
+        String response = new CircuitBreaker(soap.toString(), url, log)
+                .execute();
                 
         return getError(response);
     }
 
     /**
-     * Método para consultar o estoque pelo Cnes e Princípio Ativo, com paginação.
+     * Método para consultar o estoque pelo Cnes e Princípio Ativo,
+     * com paginação.
      * @param cnes Número do CNES para busca, 7 posições.
      * @param posicaoInicio Posição de início da listagem.
      * @param qtdRegistrosPagina Quantidade de registros por pagina.
@@ -149,20 +170,30 @@ public class ConnectionBsus implements Connection{
      * @return response Resposta retornada da requisição.
      */
     @Override
-    public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros){
+    public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
+            int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros){
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXmlPaginado());
         soap.append(" <est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
-        soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
+        soap.append(" <est:cnes>");
+        soap.append(cnes);
+        soap.append("</est:cnes>\n");
         soap.append("<est:paginacao>\n");
-        soap.append(" <pag:posicaoRegistroInicio>").append(posicaoInicio).append("</pag:posicaoRegistroInicio>\n");
-        soap.append(" <pag:quantidadeRegistrosPorPagina>").append(qtdRegistrosPagina).append("</pag:quantidadeRegistrosPorPagina>\n");
-        soap.append("<pag:quantidadeRegistros>").append(qtdRegistros).append("</pag:quantidadeRegistros>\n");
+        soap.append(" <pag:posicaoRegistroInicio>");
+        soap.append(posicaoInicio);
+        soap.append("</pag:posicaoRegistroInicio>\n");
+        soap.append(" <pag:quantidadeRegistrosPorPagina>");
+        soap.append(qtdRegistrosPagina);
+        soap.append("</pag:quantidadeRegistrosPorPagina>\n");
+        soap.append("<pag:quantidadeRegistros>");
+        soap.append(qtdRegistros);
+        soap.append("</pag:quantidadeRegistros>\n");
         soap.append(" </est:paginacao>\n");
         soap.append(" </est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), url, log).execute();
+        String response = new CircuitBreaker(soap.toString(), url, log)
+                .execute();
            
         return getError(response);
     }
@@ -177,7 +208,9 @@ public class ConnectionBsus implements Connection{
         str.append(" <soap:Header>\n");
         str.append(" <wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd\">\n");
         str.append(" <wsse:UsernameToken wsu:Id=\"Id-0001334008436683-000000002c4a1908-1\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n");
-        str.append(" <wsse:Username>").append(usuario).append("</wsse:Username>\n");
+        str.append(" <wsse:Username>");
+        str.append(usuario);
+        str.append("</wsse:Username>\n");
         str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordText\">").append(senha).append("</wsse:Password>\n");
         str.append( " </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
         return str.toString();
@@ -193,7 +226,9 @@ public class ConnectionBsus implements Connection{
         str.append(" <soap:Header>\n");
         str.append(" <wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd\">\n");
         str.append(" <wsse:UsernameToken wsu:Id=\"Id-0001334008436683-000000002c4a1908-1\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n");
-        str.append(" <wsse:Username>").append(usuario).append("</wsse:Username>\n");
+        str.append(" <wsse:Username>");
+        str.append(usuario);
+        str.append("</wsse:Username>\n");
         str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordText\">").append(senha).append("</wsse:Password>\n");
         str.append( " </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
         return str.toString();
@@ -207,7 +242,8 @@ public class ConnectionBsus implements Connection{
     private String getError(String xml){
          String message = "";
         try {
-            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+                    .newInstance();
             builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
@@ -223,7 +259,8 @@ public class ConnectionBsus implements Connection{
             node1 = n1.item(0);
             node2 = n2.item(0);
             node3 = n3.item(0);
-            message = node1.getTextContent()+"\n"+node2.getTextContent()+"\n"+node3.getTextContent();
+            message = node1.getTextContent()+"\n"+node2.getTextContent()+
+                    "\n"+node3.getTextContent();
            
         } catch (FileNotFoundException e) {
         } catch (ParserConfigurationException | SAXException | IOException e) {

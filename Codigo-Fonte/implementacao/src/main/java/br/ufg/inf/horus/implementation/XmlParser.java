@@ -25,7 +25,8 @@ public class XmlParser {
 
         String message = "";
         try {
-            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+                    .newInstance();
             builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 

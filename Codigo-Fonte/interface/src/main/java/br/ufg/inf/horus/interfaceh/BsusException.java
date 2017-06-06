@@ -1,10 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package br.ufg.inf.horus.interfaceh;
 
 /**
  * Encapsula as excessões do projeto.
  * @author Pedro
  */
-public class BsusException extends RuntimeException{
+public class BsusException extends RuntimeException {
 
     /**
      * Construtor que captura a mensagem de erro.
@@ -15,7 +21,8 @@ public class BsusException extends RuntimeException{
     }
 
     /**
-     * Construtor que captura a mensagem de erro junto com o tipo de erro gerado.
+     * Construtor que captura a mensagem de erro junto com o tipo de
+     * erro gerado.
      * @param string Mensagem de erro a ser exibida.
      * @param thrwbl Tipo de erro gerado.
      */

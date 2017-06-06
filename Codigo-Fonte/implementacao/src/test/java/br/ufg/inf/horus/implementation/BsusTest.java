@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.interfaceh.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +18,26 @@ import static org.junit.Assert.*;
 public class BsusTest {
 
     private String xml;
+    private Bsus bsus;
+
+    public BsusTest() {
+        bsus = new Bsus();
+        bsus.setLog(new Log() {
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        });
+    }
 
     /**
-     * Método executado antes de cada teste, responsável por inicializar as variaveis comuns.
+     * Método executado antes de cada teste, responsável por inicializar as
+     * variaveis comuns.
      */
     @Before
     public void setUp() {
@@ -47,7 +65,8 @@ public class BsusTest {
     }
 
     /**
-     * Método executado antes de cada teste, responsável por limpar as variaveis comuns.
+     * Método executado antes de cada teste, responsável por limpar as variaveis
+     * comuns.
      */
     @After
     public void tearDown() {
@@ -60,7 +79,7 @@ public class BsusTest {
     @Test
     public void obterEstoquePorCNESTest() {
 
-        Bsus bsus = new Bsus(new Connection() {
+        bsus.setConnection(new Connection() {
             @Override
             public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return xml;
@@ -84,6 +103,18 @@ public class BsusTest {
             @Override
             public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
+            }
+
+            @Override
+            public void setCredential(String usuario, String senha) {
+            }
+
+            @Override
+            public void setURL(String url) {
+            }
+
+            @Override
+            public void setLog(Log log) {
             }
         });
 
@@ -98,7 +129,7 @@ public class BsusTest {
     @Test
     public void obterEstoquePorCNESEPrincipioTest() {
 
-        Bsus bsus = new Bsus(new Connection() {
+        bsus.setConnection(new Connection() {
             @Override
             public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
@@ -123,6 +154,18 @@ public class BsusTest {
             @Override
             public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
+            }
+
+            @Override
+            public void setCredential(String usuario, String senha) {
+            }
+
+            @Override
+            public void setURL(String url) {
+            }
+
+            @Override
+            public void setLog(Log log) {
             }
         });
 
@@ -137,7 +180,7 @@ public class BsusTest {
     @Test
     public void obterEstoquePorCNESEPrincipioPaginadoTest() {
 
-        Bsus bsus = new Bsus(new Connection() {
+        bsus.setConnection(new Connection() {
             @Override
             public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
@@ -162,6 +205,18 @@ public class BsusTest {
             @Override
             public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
+            }
+
+            @Override
+            public void setCredential(String usuario, String senha) {
+            }
+
+            @Override
+            public void setURL(String url) {
+            }
+
+            @Override
+            public void setLog(Log log) {
             }
         });
 
@@ -176,7 +231,7 @@ public class BsusTest {
     @Test
     public void obterDadosEEstoquePorCNESTest() {
 
-        Bsus bsus = new Bsus(new Connection() {
+        bsus.setConnection(new Connection() {
             @Override
             public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
@@ -201,6 +256,18 @@ public class BsusTest {
             @Override
             public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
+            }
+
+            @Override
+            public void setCredential(String usuario, String senha) {
+            }
+
+            @Override
+            public void setURL(String url) {
+            }
+
+            @Override
+            public void setLog(Log log) {
             }
         });
 
@@ -215,7 +282,7 @@ public class BsusTest {
     @Test
     public void obterDadosEEstoquePorCNESPaginadoTest() {
 
-        Bsus bsus = new Bsus(new Connection() {
+        bsus.setConnection(new Connection() {
             @Override
             public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
@@ -240,6 +307,18 @@ public class BsusTest {
             public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
 
                 return xml;
+            }
+
+            @Override
+            public void setCredential(String usuario, String senha) {
+            }
+
+            @Override
+            public void setURL(String url) {
+            }
+
+            @Override
+            public void setLog(Log log) {
             }
         });
 

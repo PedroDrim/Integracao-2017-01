@@ -5,14 +5,13 @@ import br.ufg.inf.horus.interfaceh.Log;
 /**
  *
  * @author Vinicius
- * Classe Bsus que implementa e requisita a execução remota, recebe a resposta XML e converte-a.
+ * Classe Bsus que implementa e requisita a execução remota, recebe a resposta
+ * XML e converte-a.
  */
 public class Bsus implements Barramento {
     
     private Connection connection;
     private Log log;
-    private String usuario;
-    private String senha;
     
     @Override
     public void setConnection(Connection connection) {
@@ -23,13 +22,9 @@ public class Bsus implements Barramento {
     public void setLog(Log log) {
         this.log = log;
     }
-    
-    
-    
+        
     /**
      * Método que executa remotamente o serviço e trata a resposta.
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
      * @param cnes Número do CNES para busca, 7 posições.
      * @return xml Resposta tratada conforme o negócio.
      */
@@ -44,15 +39,14 @@ public class Bsus implements Barramento {
 
     /**
      * Método que executa remotamente o serviço e trata a resposta.
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
      * @param cnes Número do CNES para busca, 7 posições.
      * @param principio Princípio Ativo do medicamento.
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
     public String obterEstoquePorCNESEPrincipio(int cnes, String principio) {
-        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(cnes, principio
+        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
+                cnes, principio
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
@@ -61,8 +55,6 @@ public class Bsus implements Barramento {
 
     /**
      * Método que executa remotamente o serviço e trata a resposta. 
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
      * @param cnes Número do CNES para busca, 7 posições.
      * @param principio Princípio Ativo do medicamento.
      * @param posicaoInicio Posição de início da listagem.
@@ -71,8 +63,11 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterEstoquePorCNESEPrincipioPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+    public String obterEstoquePorCNESEPrincipioPaginado(int cnes,
+            String principio, int posicaoInicio, int qtdRegistrosPagina,
+            int qtdRegistros) {
+        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+                cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);
@@ -81,8 +76,6 @@ public class Bsus implements Barramento {
 
     /**
      * Método que executa remotamente o serviço e trata a resposta. 
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
      * @param cnes Número do CNES para busca, 7 posições.
      * @return xml Resposta tratada conforme o negócio.
      */
@@ -97,8 +90,6 @@ public class Bsus implements Barramento {
 
     /**
      * Método que executa remotamente o serviço e trata a resposta. 
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
      * @param cnes Número do CNES para busca, 7 posições.
      * @param posicaoInicio Posição de início da listagem.
      * @param qtdRegistrosPagina Quantidade de registros por pagina.
@@ -106,8 +97,10 @@ public class Bsus implements Barramento {
      * @return xml Resposta tratada conforme o negócio.
      */
     @Override
-    public String obterDadosEEstoquePorCNESPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+    public String obterDadosEEstoquePorCNESPaginado(int cnes, int posicaoInicio,
+            int qtdRegistrosPagina, int qtdRegistros) {
+        String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(
+                cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
         );
         XmlParser parser = new XmlParser();
         String retorno = parser.getMessage(xml);

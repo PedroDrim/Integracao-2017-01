@@ -13,9 +13,13 @@ public interface Connection {
     void setURL(String url);
     void setLog(Log log);
     String consultarPosicaoEstoquePorCNES(int cnes);
-    String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio);
-    String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros);
+    String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes,
+            String principio);
+    String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes,
+            String principio, int posicaoInicio, int qtdRegistrosPagina,
+            int qtdRegistros);
     String consultarProdutoPorCNESDispensacao(int cnes);
-    String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros);
+    String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
+            int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros);
   
 }
