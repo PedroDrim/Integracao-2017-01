@@ -14,19 +14,50 @@ import static org.junit.Assert.*;
  */
 public class BsusFactorytest {
     
+    private final String PACKAGE;
+    private Log log;
+    
+    public BsusFactorytest(){
+        this.PACKAGE = "br.ufg.inf.horus.implementation";
+        this.log = new Log() {
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    @Test
-    public void createBarramentoCorretoTest() throws Exception {
-        String className = "br.ufg.inf.horus.implementation.Bsus";
-        assertNotNull(BsusFactory.createBarramento(className, null));
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        };
     }
     
-    @Test(expected = java.lang.ClassNotFoundException.class)
-    public void createBarramentoFalhoTest() throws Exception {
-        String className = "br.ufg.inf.horus.implementation.FalsoBsus";
-        assertNotNull(BsusFactory.createBarramento(className, null));
-    }
+    @Test
+    public void createBarramentoCorretoTest() throws BsusException {
+        String classNameBarramento = this.PACKAGE + ".Bsus";
+        String classNameConnection = this.PACKAGE + ".ConnectionBsus";
+        String url = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        String usuario = "HORUS";
+        String senha = "HORUS";
+        
+        assertNotNull(BsusFactory.createBarramento(
+                classNameConnection, classNameBarramento,
+                this.log, url, usuario, senha
+        ));
+    }    
+    
+    @Test(expected = BsusException.class)
+    public void createBarramentoExceptionTest() throws BsusException {
+        String classNameBarramento = this.PACKAGE + ".FalsoBsus";
+        String classNameConnection = this.PACKAGE + ".FalsoConnectionBsus";
+        String url = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        String usuario = "HORUS";
+        String senha = "HORUS";
+        
+        assertNotNull(BsusFactory.createBarramento(
+                classNameConnection, classNameBarramento,
+                this.log, url, usuario, senha
+        ));
+    }    
+
 }

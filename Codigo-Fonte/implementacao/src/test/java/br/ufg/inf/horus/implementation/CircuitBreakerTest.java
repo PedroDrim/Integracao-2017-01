@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.interfaceh.Log;
 import java.util.concurrent.Future;
 import org.junit.After;
 import org.junit.Before;
@@ -19,9 +15,21 @@ public class CircuitBreakerTest {
 
     private String destination;
     private String header;
+    private Log log;
     
     public CircuitBreakerTest() {
         this.destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        this.log = new Log() {
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        };
     }
 
     /**
@@ -48,7 +56,7 @@ public class CircuitBreakerTest {
     @Test
     public void singleAsynchronousTest() throws Exception {
   
-        CircuitBreaker circuitBreaker = new CircuitBreaker(header, destination);
+        CircuitBreaker circuitBreaker = new CircuitBreaker(header, destination, log);
         
         Future<String> asynchrnous = circuitBreaker.queue();
         String response = asynchrnous.get();

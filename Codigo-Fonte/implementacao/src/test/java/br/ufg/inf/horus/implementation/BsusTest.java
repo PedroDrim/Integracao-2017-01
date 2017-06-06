@@ -62,33 +62,32 @@ public class BsusTest {
 
         Bsus bsus = new Bsus(new Connection() {
             @Override
-            public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes) {
-
+            public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return xml;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes) {
+            public String consultarProdutoPorCNESDispensacao(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
         });
 
-        assertEquals(bsus.obterEstoquePorCNES("HORUS", "SENHA", 7604041), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
+        assertEquals(bsus.obterEstoquePorCNES(7604041), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
                 + "OSB_SEM_AUTENTICACAO\n"
                 + "As credenciais informadas não são válidas");
     }
@@ -101,33 +100,33 @@ public class BsusTest {
 
         Bsus bsus = new Bsus(new Connection() {
             @Override
-            public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes) {
+            public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio) {
 
                 return xml;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes) {
+            public String consultarProdutoPorCNESDispensacao(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
         });
 
-        assertEquals(bsus.obterEstoquePorCNESEPrincipio("HORUS", "SENHA", 7604041, "PRINCIPIO"), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
+        assertEquals(bsus.obterEstoquePorCNESEPrincipio(7604041, "PRINCIPIO"), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
                 + "OSB_SEM_AUTENTICACAO\n"
                 + "As credenciais informadas não são válidas");
     }
@@ -140,33 +139,33 @@ public class BsusTest {
 
         Bsus bsus = new Bsus(new Connection() {
             @Override
-            public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes) {
+            public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
 
                 return xml;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes) {
+            public String consultarProdutoPorCNESDispensacao(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
         });
 
-        assertEquals(bsus.obterEstoquePorCNESEPrincipioPaginado("HORUS", "SENHA", 7604041, "PRINCIPIO", 1111, 2222, 3333), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
+        assertEquals(bsus.obterEstoquePorCNESEPrincipioPaginado(7604041, "PRINCIPIO", 1111, 2222, 3333), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
                 + "OSB_SEM_AUTENTICACAO\n"
                 + "As credenciais informadas não são válidas");
     }
@@ -179,33 +178,33 @@ public class BsusTest {
 
         Bsus bsus = new Bsus(new Connection() {
             @Override
-            public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes) {
+            public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes) {
+            public String consultarProdutoPorCNESDispensacao(int cnes) {
 
                 return xml;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
         });
 
-        assertEquals(bsus.obterDadosEEstoquePorCNES("HORUS", "SENHA", 7604041), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
+        assertEquals(bsus.obterDadosEEstoquePorCNES(7604041), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
                 + "OSB_SEM_AUTENTICACAO\n"
                 + "As credenciais informadas não são válidas");
     }
@@ -218,33 +217,33 @@ public class BsusTest {
 
         Bsus bsus = new Bsus(new Connection() {
             @Override
-            public String consultarPosicaoEstoquePorCNES(String username, String password, int cnes) {
+            public String consultarPosicaoEstoquePorCNES(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String username, String password, int cnes, String principio) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes, String principio) {
                 return null;
             }
 
             @Override
-            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(String username, String password, int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacao(String username, String password, int cnes) {
+            public String consultarProdutoPorCNESDispensacao(int cnes) {
                 return null;
             }
 
             @Override
-            public String consultarProdutoPorCNESDispensacaoPaginado(String username, String password, int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
+            public String consultarProdutoPorCNESDispensacaoPaginado(int cnes, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
 
                 return xml;
             }
         });
 
-        assertEquals(bsus.obterDadosEEstoquePorCNESPaginado("HORUS", "SENHA", 7604041, 1111, 2222, 3333), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
+        assertEquals(bsus.obterDadosEEstoquePorCNESPaginado(7604041, 1111, 2222, 3333), "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
                 + "OSB_SEM_AUTENTICACAO\n"
                 + "As credenciais informadas não são válidas");
     }
