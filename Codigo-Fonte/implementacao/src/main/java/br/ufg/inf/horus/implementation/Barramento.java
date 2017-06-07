@@ -5,8 +5,6 @@
  */
 package br.ufg.inf.horus.implementation;
 
-import br.ufg.inf.horus.interfaceh.Log;
-
 /**
  *
  * @author Pedro

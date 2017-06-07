@@ -5,7 +5,6 @@
  */
 package br.ufg.inf.horus.implementation;
 
-import br.ufg.inf.horus.interfaceh.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

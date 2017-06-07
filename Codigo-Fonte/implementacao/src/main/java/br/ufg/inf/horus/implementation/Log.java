@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package br.ufg.inf.horus.interfaceh;
+package br.ufg.inf.horus.implementation;
 
 /**
  * Interface para geração de mensagens de controle (Log's)

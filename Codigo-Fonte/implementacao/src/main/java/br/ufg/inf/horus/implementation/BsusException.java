@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package br.ufg.inf.horus.interfaceh;
+package br.ufg.inf.horus.implementation;
 
 /**
  * Encapsula as excessões do projeto.

@@ -1,6 +1,5 @@
 package br.ufg.inf.horus.implementation;
 
-import br.ufg.inf.horus.interfaceh.Log;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;

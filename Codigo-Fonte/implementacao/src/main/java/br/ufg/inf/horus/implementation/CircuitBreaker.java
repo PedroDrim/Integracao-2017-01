@@ -1,7 +1,5 @@
 package br.ufg.inf.horus.implementation;
 
-import br.ufg.inf.horus.interfaceh.BsusException;
-import br.ufg.inf.horus.interfaceh.Log;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
