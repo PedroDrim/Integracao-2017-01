@@ -5,10 +5,13 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.service.Bsus;
+import br.ufg.inf.horus.implementation.model.Connection;
+import br.ufg.inf.horus.implementation.model.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  *

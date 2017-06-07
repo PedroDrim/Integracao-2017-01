@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.service.HttpRequest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

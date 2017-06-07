@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.controller.XmlParser;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;

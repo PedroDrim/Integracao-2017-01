@@ -1,5 +1,11 @@
-package br.ufg.inf.horus.implementation;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.ufg.inf.horus.implementation.service;
 
+import br.ufg.inf.horus.implementation.model.HttpInterface;
 import java.io.IOException;
 import java.nio.charset.UnsupportedCharsetException;
 import org.apache.http.HttpEntity;
@@ -12,24 +18,29 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 /**
- *@author Vinicius
- *Classe que faz a conexão e requisição.
+ * Classe que faz a conexão e requisição.
+ *
+ * @see HttpInterface
+ * @author Vinicius
  */
-public class HttpRequest implements HttpInterface{
+public class HttpRequest implements HttpInterface {
 
     /**
      * Método que executa o POST.
+     *
+     * @see HttpInterface
      * @param url Url para a requisição.
      * @param body Mensagem da requisição.
-     * @return resp Resposta da requisição.
+     * @return Resposta da requisição.
      */
     @Override
-    public String request(String url,String body){
-        String resp="";
-        
+    public String request(String url, String body) {
+        String resp = "";
+
         try {
+
             CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            StringEntity strEntity = new StringEntity(body,"UTF-8");
+            StringEntity strEntity = new StringEntity(body, "UTF-8");
             strEntity.setContentType("text/xml");
             HttpPost post = new HttpPost(url);
             post.setEntity(strEntity);
@@ -37,8 +48,10 @@ public class HttpRequest implements HttpInterface{
             HttpResponse response = httpclient.execute(post);
             HttpEntity respEntity = response.getEntity();
             resp = EntityUtils.toString(respEntity);
-        }
-        catch (IOException | UnsupportedCharsetException | ParseException e) {
+
+        } catch (IOException e) {
+        } catch (UnsupportedCharsetException e) {
+        } catch (ParseException e) {
         }
 
         return resp;

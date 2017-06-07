@@ -1,6 +1,8 @@
-package br.ufg.inf.horus.implementation;
+package br.ufg.inf.horus.implementation.controller;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,13 +13,15 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
+ * Classe que faz a conversão da resposta Xml em resposta para o cliente.
  *
  * @author Vinicius/Pedro
- * Classe que faz a conversão da resposta Xml em resposta para o cliente.
  */
 public class XmlParser {
+
     /**
      * Método que busca as informações necessárias na resposta.
+     *
      * @param xml String xml para tratamento.
      * @return message Mensagem com as informações tratadas.
      */
@@ -31,20 +35,22 @@ public class XmlParser {
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
             InputSource source = new InputSource(new StringReader(xml));
-            Document xmlDocument = builder.parse(source);         
+            Document xmlDocument = builder.parse(source);
 
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
-            
+
             Node node1;
-            
+
             node1 = n1.item(0);
-            
-            message = node1.getTextContent()+"\n";
-           
+
+            message = node1.getTextContent() + "\n";
+
         } catch (FileNotFoundException e) {
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+        } catch (ParserConfigurationException e) {
+        } catch (SAXException e) {
+        } catch (IOException e) {
         }
-        
+
         return message;
     }
 }

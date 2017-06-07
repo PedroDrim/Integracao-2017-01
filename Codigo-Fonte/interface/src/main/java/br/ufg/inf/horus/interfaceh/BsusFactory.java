@@ -6,10 +6,10 @@
 
 package br.ufg.inf.horus.interfaceh;
 
-import br.ufg.inf.horus.implementation.BsusException;
-import br.ufg.inf.horus.implementation.Barramento;
-import br.ufg.inf.horus.implementation.Connection;
-import br.ufg.inf.horus.implementation.Log;
+import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.implementation.model.Barramento;
+import br.ufg.inf.horus.implementation.model.Connection;
+import br.ufg.inf.horus.implementation.model.Log;
 
 /**
  * Instancia os serviços disponíveis.

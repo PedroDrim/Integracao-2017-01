@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-package br.ufg.inf.horus.implementation;
+package br.ufg.inf.horus.implementation.model;
 
 /**
- * Interface para geração de mensagens de controle (Log's)
- * @author Pedro.
+ * Interface para geração de mensagens de controle (Log's).
+ * @author Pedro
  */
 public interface Log {
     

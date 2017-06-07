@@ -1,5 +1,13 @@
-package br.ufg.inf.horus.implementation;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+package br.ufg.inf.horus.implementation.service;
+
+import br.ufg.inf.horus.implementation.model.Connection;
+import br.ufg.inf.horus.implementation.model.Log;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -13,29 +21,51 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * Classe que implementa os serviços da interface Connection, constrói a
+ * requisição e retorna a resposta.
+ *
+ * @see Connection
  * @author Vinicius
- * Classe ConnectionBsus que implementa os serviços da interface Connection.
- * Constrói a requisição e retorna a resposta.
  */
-public class ConnectionBsus implements Connection{
-    
+public class ConnectionBsus implements Connection {
+
+    /**
+     * Objeto resposável por exibir Log's.
+     *
+     * @see Log
+     */
     private Log log;
-    private String usuario;
-    private String senha;
-    private String url;
     
     /**
-     * Método para definir a classe de exibição de mensagens (Log).
-     * @param log Objeto que implemente a interface Log.
+     * A credêncial de acesso do usuário ao serviço.
+     */
+    private String usuario;
+    
+    /**
+     * A senha de acesso do usuário ao serviço.
+     */
+    private String senha;
+    
+    /**
+     * A URL do serviço.
+     */
+    private String url;
+
+    /**
+     * Define uma estrutura para exibição de Log's.
+     *
+     * @see Connection
+     * @param log Estrutura de log a ser definida.
      */
     @Override
     public void setLog(Log log) {
         this.log = log;
     }
-    
+
     /**
-     * Método para definir o conjunto de credênciais para acesso aos serviços.
+     * Define as credenciais de acesso da aplicação-usuário ao serviço.
+     *
+     * @see Connection
      * @param usuario Identificador de acesso.
      * @param senha Senha de acesso.
      */
@@ -46,8 +76,10 @@ public class ConnectionBsus implements Connection{
     }
 
     /**
-     * Método para definir a url de acesso aos serviços.
-     * @param url Url referente aos serviços.
+     * Define a url do serviço a ser utilizado.
+     *
+     * @see Connection
+     * @param url URL do serviço.
      */
     @Override
     public void setURL(String url) {
@@ -55,12 +87,15 @@ public class ConnectionBsus implements Connection{
     }
 
     /**
-     * Método para consular estoque pelo número Cnes.
-     * @param cnes Número do CNES para busca, 7 posições.
-     * @return response Resposta retornada da requisição.
+     * Método interno para consultar as posições nos estoques do produto com
+     * base no cnes.
+     *
+     * @see Connection
+     * @param cnes Número de cnes.
+     * @return A posição no estoque do referido produto.
      */
     @Override
-    public String consultarPosicaoEstoquePorCNES(int cnes){
+    public String consultarPosicaoEstoquePorCNES(int cnes) {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXml());
@@ -68,21 +103,24 @@ public class ConnectionBsus implements Connection{
         soap.append(" <est:cnes>");
         soap.append(cnes);
         soap.append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");        
+        soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log).execute();
-        
+
         return getError(response);
     }
 
     /**
-     * Método para consultar o estoque pelo Cnes e Princípio Ativo.
-     * @param cnes Número do CNES para busca, 7 posições.
-     * @param principio Princípio Ativo do medicamento.
-     * @return response Resposta retornada da requisição.
+     * Método interno para consultar as posições nos estoques pelo número de
+     * cnes e princípio ativo.
+     *
+     * @see Connection
+     * @param cnes Número de cnes.
+     * @param principio Tipo de princípio ativo.
+     * @return A posição do estoque do referido produto.
      */
     @Override
     public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes,
-            String principio){
+            String principio) {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXml());
@@ -96,21 +134,24 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
-            
+
         return getError(response);
     }
-    
-   /**
-    * Método para consultar o estoque pelo Cnes e Princípio Ativo, com paginação.
-    * @param cnes Número do CNES para busca, 7 posições.
-    * @param principio Princípio Ativo do medicamento.
-    * @param posicaoInicio Posição de início da listagem.
-    * @param qtdRegistrosPagina Quantidade de registros por pagina.
-    * @param qtdRegistros Quantidade de registros que serão retornados.
-    * @return response Resposta retornada da requisição.
-    */
+
+    /**
+     * Método interno para consultar as posições nos estoques pelo número de
+     * cnes, princípio ativo e dados de paginação.
+     *
+     * @see Connection
+     * @param cnes Número de cnes.
+     * @param principio Tipo de princípio ativo.
+     * @param posicaoInicio Posição inicial.
+     * @param qtdRegistrosPagina Quantidade de registros por página.
+     * @param qtdRegistros Quantidade de registros ao todo.
+     * @return A posição no estoque do referido produto.
+     */
     @Override
-    public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros){
+    public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes, String principio, int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXmlPaginado());
@@ -135,17 +176,20 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
-              
+
         return getError(response);
     }
 
     /**
-     * Método para consular dados e estoque pelo número Cnes.
-     * @param cnes Número do CNES para busca, 7 posições.
-     * @return response Resposta retornada da requisição.
+     * Método interno para consultar as posições nos estoques, bem como os dados
+     * do produto referentes ao número de cnes.
+     *
+     * @see Connection
+     * @param cnes Número de cnes.
+     * @return A posição no estoque e os dados do referido produto.
      */
     @Override
-    public String consultarProdutoPorCNESDispensacao(int cnes){
+    public String consultarProdutoPorCNESDispensacao(int cnes) {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXml());
@@ -155,22 +199,24 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
-                
+
         return getError(response);
     }
 
     /**
-     * Método para consultar o estoque pelo Cnes e Princípio Ativo,
-     * com paginação.
-     * @param cnes Número do CNES para busca, 7 posições.
-     * @param posicaoInicio Posição de início da listagem.
-     * @param qtdRegistrosPagina Quantidade de registros por pagina.
-     * @param qtdRegistros Quantidade de registros que serão retornados.
-     * @return response Resposta retornada da requisição.
+     * Método interno para consultar as posições nos estoques, bem como os dados
+     * do produto referentes ao número de cnes e dados de paginação.
+     *
+     * @see Connection
+     * @param cnes Número de cnes.
+     * @param posicaoInicio Posição inicial.
+     * @param qtdRegistrosPagina Quantidade de registros por página.
+     * @param qtdRegistros Quantidade de registros ao todo.
+     * @return A posição no estoque e os dados do referido produto.
      */
     @Override
     public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
-            int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros){
+            int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXmlPaginado());
@@ -193,15 +239,16 @@ public class ConnectionBsus implements Connection{
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
-           
+
         return getError(response);
     }
 
     /**
      * Método que constrói o header padrão.
+     *
      * @return str Header da requisição para serviços não paginados.
      */
-    private String buildHeaderXml(){
+    private String buildHeaderXml() {
         StringBuilder str = new StringBuilder();
         str.append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\">\n");
         str.append(" <soap:Header>\n");
@@ -211,15 +258,16 @@ public class ConnectionBsus implements Connection{
         str.append(usuario);
         str.append("</wsse:Username>\n");
         str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordText\">").append(senha).append("</wsse:Password>\n");
-        str.append( " </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
+        str.append(" </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
         return str.toString();
     }
-    
+
     /**
      * Método que constrói o header padrão.
+     *
      * @return str Header da requisição para serviços paginados.
      */
-    private String buildHeaderXmlPaginado(){
+    private String buildHeaderXmlPaginado() {
         StringBuilder str = new StringBuilder();
         str.append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\" xmlns:pag=\"http://servicos.saude.gov.br/wsdl/mensageria/v1r0/paginacao\">\n");
         str.append(" <soap:Header>\n");
@@ -229,17 +277,19 @@ public class ConnectionBsus implements Connection{
         str.append(usuario);
         str.append("</wsse:Username>\n");
         str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordText\">").append(senha).append("</wsse:Password>\n");
-        str.append( " </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
+        str.append(" </wsse:UsernameToken>\n </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
         return str.toString();
     }
-    
+
     /**
-     * Método que verifica se o xml retornou com erro e o trata de acordo com o negócio.
+     * Método que verifica se o xml retornou com erro e o trata de acordo com o
+     * negócio.
+     *
      * @param xml
      * @return response String corrigida ou não
      */
-    private String getError(String xml){
-         String message = "";
+    private String getError(String xml) {
+        String message = "";
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
@@ -247,7 +297,7 @@ public class ConnectionBsus implements Connection{
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
             InputSource source = new InputSource(new StringReader(xml));
-            Document xmlDocument = builder.parse(source);         
+            Document xmlDocument = builder.parse(source);
 
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
             NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
@@ -258,17 +308,19 @@ public class ConnectionBsus implements Connection{
             node1 = n1.item(0);
             node2 = n2.item(0);
             node3 = n3.item(0);
-            message = node1.getTextContent()+"\n"+node2.getTextContent()+
-                    "\n"+node3.getTextContent();
-           
+            message = node1.getTextContent() + "\n" + node2.getTextContent()
+                    + "\n" + node3.getTextContent();
+
         } catch (FileNotFoundException e) {
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+        } catch (ParserConfigurationException e) {
+        } catch (SAXException e) {
+        } catch (IOException e) {
         }
-        if(message==""){
+        
+        if (message.equals("")) {
             return xml;
-        }
-        else{
-        return message;
+        } else {
+            return message;
         }
     }
 }
