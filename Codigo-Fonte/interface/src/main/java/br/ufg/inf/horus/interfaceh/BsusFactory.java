@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.ufg.inf.horus.interfaceh;
 
 import br.ufg.inf.horus.implementation.controller.BsusException;
@@ -13,16 +12,18 @@ import br.ufg.inf.horus.implementation.model.Log;
 
 /**
  * Instancia os serviços disponíveis.
+ *
  * @author Pedro
  */
 public class BsusFactory {
 
     /**
      * Gera um Barramento responsável pelo acesso aos serviços.
-     * @param classNameConnection Nome da classe que implementa a
-     * interface Connection.
-     * @param classNameBarramento Nome da classe que implementa a
-     * interface Barramento.
+     *
+     * @param classNameConnection Nome da classe que implementa a interface
+     * Connection.
+     * @param classNameBarramento Nome da classe que implementa a interface
+     * Barramento.
      * @param log Objeto que implementa a interface Log.
      * @param url URL referente ao serviço.
      * @param usuario Identificador de acesso.
@@ -48,6 +49,7 @@ public class BsusFactory {
 
     /**
      * Gera, se existir, o objeto conforme o nome definido pelo usuário.
+     *
      * @param className Nome da classe a ser gerada.
      * @param log Interface para exibição de Log's.
      * @return O objeto do tipo definido pelo usuário.
@@ -67,14 +69,14 @@ public class BsusFactory {
             throw new BsusException(CLASSNAMEERROR, ex);
 
         } catch (InstantiationException ex) {
-            final String INSTANTIATIONERROR = 
-                    "Não foi possível instanciar a classe " + className + ".";
+            final String INSTANTIATIONERROR
+                    = "Não foi possível instanciar a classe " + className + ".";
             log.erro(INSTANTIATIONERROR);
             throw new BsusException(INSTANTIATIONERROR, ex);
 
         } catch (IllegalAccessException ex) {
-            final String ILLEGALACCESSERROR = 
-                    "Não foi possível inicializar o construtor da classe "
+            final String ILLEGALACCESSERROR
+                    = "Não foi possível inicializar o construtor da classe "
                     + className + ".";
             log.erro(ILLEGALACCESSERROR);
             throw new BsusException(ILLEGALACCESSERROR, ex);

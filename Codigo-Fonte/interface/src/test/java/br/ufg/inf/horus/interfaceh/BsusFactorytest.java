@@ -31,7 +31,7 @@ public class BsusFactorytest {
     private Log log;
 
     public BsusFactorytest() {
-        this.PACKAGE = "br.ufg.inf.horus.implementation";
+        this.PACKAGE = "br.ufg.inf.horus.implementation.service";
         this.log = new Log() {
             @Override
             public void info(String message) {
