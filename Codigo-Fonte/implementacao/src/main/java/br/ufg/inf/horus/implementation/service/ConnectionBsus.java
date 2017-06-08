@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.model.Connection;
@@ -35,17 +34,17 @@ public class ConnectionBsus implements Connection {
      * @see Log
      */
     private Log log;
-    
+
     /**
      * A credêncial de acesso do usuário ao serviço.
      */
     private String usuario;
-    
+
     /**
      * A senha de acesso do usuário ao serviço.
      */
     private String senha;
-    
+
     /**
      * A URL do serviço.
      */
@@ -316,7 +315,7 @@ public class ConnectionBsus implements Connection {
         } catch (SAXException e) {
         } catch (IOException e) {
         }
-        
+
         if (message.equals("")) {
             return xml;
         } else {

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.controller.BsusException;
@@ -54,7 +59,7 @@ public class CircuitBreaker extends HystrixCommand<String> {
                 HystrixCommandGroupKey.Factory.asKey("HorusTolerance")
         ).andCommandPropertiesDefaults(
                 HystrixCommandProperties.Setter()
-                        .withExecutionTimeoutEnabled(false)
+                .withExecutionTimeoutEnabled(false)
         ));
 
         if (soapRequest == null) {

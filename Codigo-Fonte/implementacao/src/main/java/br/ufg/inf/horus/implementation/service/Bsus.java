@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.controller.XmlParser;
@@ -12,28 +11,31 @@ import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
 
 /**
- * Classe responsável por implementar e requerir uma execução remota
- * além de receber uma resposta XML, convertendo-a.
+ * Classe responsável por implementar e requerir uma execução remota além de
+ * receber uma resposta XML, convertendo-a.
+ *
  * @see Barramento
  * @author Vinicius
  */
 public class Bsus implements Barramento {
-    
+
     /**
      * Objeto responsável por realizar a conexão com os serviços.
+     *
      * @see Connection
      */
     private Connection connection;
-    
+
     /**
      * Objeto resposável por exibir Log's.
      *
      * @see Log
      */
     private Log log;
-    
+
     /**
      * Define uma Connection.
+     *
      * @see Bsus
      * @param connection Connection a ser definida.
      */
@@ -41,9 +43,10 @@ public class Bsus implements Barramento {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-    
+
     /**
      * Define uma estrutura para exibição de Log's.
+     *
      * @see Bsus
      * @param log Estrutura de log a ser definida.
      */
@@ -51,9 +54,10 @@ public class Bsus implements Barramento {
     public void setLog(Log log) {
         this.log = log;
     }
-        
+
     /**
      * Obtem as posições nos estoques pelo número de cnes.
+     *
      * @see Bsus
      * @param cnes Número de cnes.
      * @return A posição no estoque do referido produto.
@@ -69,6 +73,7 @@ public class Bsus implements Barramento {
 
     /**
      * Obtem as posições nos estoques pelo número de cnes e princípio ativo.
+     *
      * @see Bsus
      * @param cnes Número de cnes.
      * @param principio Tipo de princípio ativo.
@@ -85,12 +90,13 @@ public class Bsus implements Barramento {
     }
 
     /**
-     * Obtem as posições nos estoques pelo número de cnes, princípio ativo
-     * e dados de paginação.
+     * Obtem as posições nos estoques pelo número de cnes, princípio ativo e
+     * dados de paginação.
+     *
      * @see Bsus
      * @param cnes Número de cnes.
      * @param principio Tipo de princípio ativo.
-     * @param posicaoInicio Posição inicial. 
+     * @param posicaoInicio Posição inicial.
      * @param qtdRegistrosPagina Quantidade de registros por página.
      * @param qtdRegistros Quantidade de registros ao todo.
      * @return A posição no estoque do referido produto.
@@ -110,6 +116,7 @@ public class Bsus implements Barramento {
     /**
      * Obtem as posições nos estoques, bem como os dados do produto referentes
      * ao número de cnes.
+     *
      * @see Bsus
      * @param cnes Número de cnes.
      * @return A posição no estoque e os dados do referido produto.
@@ -126,9 +133,10 @@ public class Bsus implements Barramento {
     /**
      * Obtem as posições nos estoques, bem como os dados do produto referentes
      * ao número de cnes e dados de paginação.
+     *
      * @see Bsus
      * @param cnes Número de cnes.
-     * @param posicaoInicio Posição inicial. 
+     * @param posicaoInicio Posição inicial.
      * @param qtdRegistrosPagina Quantidade de registros por página.
      * @param qtdRegistros Quantidade de registros ao todo.
      * @return A posição no estoque e os dados do referido produto.
@@ -143,5 +151,5 @@ public class Bsus implements Barramento {
         String retorno = parser.getMessage(xml);
         return retorno;
     }
-    
+
 }

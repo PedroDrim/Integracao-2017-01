@@ -1,7 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.ufg.inf.horus.implementation;
 
 import br.ufg.inf.horus.implementation.service.CircuitBreaker;
 import br.ufg.inf.horus.implementation.model.Log;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -9,24 +15,48 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Teste unitário do Circuit Breaker.
  *
+ * @see CircuitBreaker
  * @author Pedro
  */
 public class CircuitBreakerTest {
-
-    private String destination;
+    
+    /**
+     * Cabeçalho da requisição.
+     */
     private String header;
+    
+    /**
+     * Objeto resposável por exibir Log's.
+     *
+     * @see Log
+     */
     private Log log;
 
-    public CircuitBreakerTest() {
-        this.destination = "https://servicos.saude.gov.br"
-                + "/horus/v1r0/EstoqueService";
+    /**
+     * Construtor da classe de testes.
+     */
+    public CircuitBreakerTest() {        
         this.log = new Log() {
+
+            /**
+             * Exibição de uma mensagem informativa.
+             *
+             * @see Log
+             * @param message Mensagem a ser exibida.
+             */
             @Override
             public void info(String message) {
                 System.out.println(message);
             }
 
+            /**
+             * Exibição de uma mensagem de erro.
+             *
+             * @see Log
+             * @param message Mensagem a ser exibida.
+             */
             @Override
             public void erro(String message) {
                 System.err.println(message);
@@ -45,8 +75,8 @@ public class CircuitBreakerTest {
     }
 
     /**
-     * Método executado antes de cada teste, responsável por limpar as
-     * variaveis comuns.
+     * Método executado antes de cada teste, responsável por limpar as variaveis
+     * comuns.
      */
     @After
     public void tearDown() {
@@ -57,16 +87,42 @@ public class CircuitBreakerTest {
      * Caso de teste resonsável por testar a classe CicruitBreaker de modo
      * assincrono.
      *
-     * @throws Exception
+     * @throws InterruptedException
+     * @throws ExecutionException
      */
     @Test
-    public void singleAsynchronousTest() throws Exception {
+    public void singleAsynchronousTest() throws InterruptedException, ExecutionException {
 
-        CircuitBreaker circuitBreaker = 
-                new CircuitBreaker(header, destination, log);
+        String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        
+        CircuitBreaker circuitBreaker
+                = new CircuitBreaker(header, destination, log);
 
         Future<String> asynchrnous = circuitBreaker.queue();
         String response = asynchrnous.get();
+
+        String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
+
+        assertEquals(response, esperado);
+    }
+    
+    /**
+     * Caso de teste resonsável por testar a classe CicruitBreaker de modo
+     * sincrono.
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    @Test
+    public void singleSynchronousTest() throws InterruptedException, ExecutionException {
+
+        String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        
+        CircuitBreaker circuitBreaker
+                = new CircuitBreaker(header, destination, log);
+
+        String response = circuitBreaker.execute();
 
         String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
@@ -84,7 +140,7 @@ public class CircuitBreakerTest {
 class HeaderGenerator {
 
     /**
-     * Gera o cabeçalho da requisição com base em um username, password e número
+     * Gera o conteúdo do cabeçalho da requisição com base em um username, password e número
      * cnes.
      *
      * @param username Usuário do sistema Horus.
@@ -97,14 +153,16 @@ class HeaderGenerator {
         StringBuilder soap = new StringBuilder();
         soap.append(buildHeaderXml(username, password));
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
+        soap.append(" <est:cnes>");
+        soap.append(cnes);
+        soap.append("</est:cnes>\n </est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
 
         return soap.toString();
     }
 
     /**
-     * Gera o conteúdo do cabeçalho da requisição com base em um username e
+     * Gera o cabeçalho da requisição com base em um username e
      * password.
      *
      * @param username Usuário do sistema Horus.
