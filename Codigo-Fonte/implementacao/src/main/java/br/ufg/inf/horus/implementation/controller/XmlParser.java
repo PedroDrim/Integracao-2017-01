@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation.controller;
 
+import br.ufg.inf.horus.implementation.model.Log;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -25,6 +26,23 @@ import org.xml.sax.SAXException;
 public class XmlParser {
 
     /**
+     * Objeto resposável por exibir Log's.
+     *
+     * @see Log
+     */
+    private Log log;
+
+    /**
+     * Construtor publico da classe.
+     *
+     * @see Log
+     * @param log Estrutura de log a ser definida.
+     */
+    public XmlParser(Log log) {
+        this.log = log;
+    }
+
+    /**
      * Método que busca as informações necessárias na resposta.
      *
      * @param xml String xml para tratamento.
@@ -32,7 +50,6 @@ public class XmlParser {
      */
     public String getMessage(String xml) {
 
-        String message = "";
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
@@ -48,14 +65,25 @@ public class XmlParser {
 
             node1 = n1.item(0);
 
-            message = node1.getTextContent() + "\n";
+            String message = node1.getTextContent() + "\n";
+            return (message);
 
         } catch (FileNotFoundException e) {
+            String logMessage = "O documento .xml não foi encontrado.";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         } catch (ParserConfigurationException e) {
+            String logMessage = "Houve um erro ao buscar as informações.";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         } catch (SAXException e) {
+            String logMessage = "Houve um erro ao utilizar o SAX.";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         } catch (IOException e) {
+            String logMessage = "Houve um erro ao abrir o documento .xml";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         }
-
-        return message;
     }
 }

@@ -6,6 +6,7 @@
 package br.ufg.inf.horus.implementation;
 
 import br.ufg.inf.horus.implementation.controller.XmlParser;
+import br.ufg.inf.horus.implementation.model.Log;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import org.junit.Test;
  * @author Vinicius
  */
 public class XmlParserTest {
-    
+
     private StringBuilder xml;
 
     public XmlParserTest() {
@@ -47,18 +48,29 @@ public class XmlParserTest {
      */
     @Test
     public void testGetMessage() {
-        XmlParser instance = new XmlParser();
+        XmlParser instance = new XmlParser(new Log() {
+
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        });
         
         String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
         /*
                 String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
                 + "OSB_SEM_AUTENTICACAO\n"
                 + "As credenciais informadas não são válidas";
-        */
-                
+         */
+
         String request = instance.getMessage(xml.toString());
         assertEquals(request, response);
-        
+
     }
-    
+
 }

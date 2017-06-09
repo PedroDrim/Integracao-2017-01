@@ -323,23 +323,19 @@ public class ConnectionBsus implements Connection {
             return(message.toString());
 
         } catch (FileNotFoundException e) {
-            
-            String logMessage = "";
+            String logMessage = "O documento .xml não foi encontrado.";
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         } catch (ParserConfigurationException e) {
-            
-            String logMessage = "";
+            String logMessage = "Houve um erro ao buscar as informações.";
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         } catch (SAXException e) {
-            
-            String logMessage = "";
+            String logMessage = "Houve um erro ao utilizar o SAX.";
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         } catch (IOException e) {
-            
-            String logMessage = "";
+            String logMessage = "Houve um erro ao abrir o documento .xml";
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         }

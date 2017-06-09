@@ -66,7 +66,7 @@ public class Bsus implements Barramento {
     public String obterEstoquePorCNES(int cnes) {
         String xml = connection.consultarPosicaoEstoquePorCNES(cnes
         );
-        XmlParser parser = new XmlParser();
+        XmlParser parser = new XmlParser(log);
         String retorno = parser.getMessage(xml);
         return retorno;
     }
@@ -84,7 +84,7 @@ public class Bsus implements Barramento {
         String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
                 cnes, principio
         );
-        XmlParser parser = new XmlParser();
+        XmlParser parser = new XmlParser(log);
         String retorno = parser.getMessage(xml);
         return retorno;
     }
@@ -108,7 +108,7 @@ public class Bsus implements Barramento {
         String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
                 cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
         );
-        XmlParser parser = new XmlParser();
+        XmlParser parser = new XmlParser(log);
         String retorno = parser.getMessage(xml);
         return retorno;
     }
@@ -125,7 +125,7 @@ public class Bsus implements Barramento {
     public String obterDadosEEstoquePorCNES(int cnes) {
         String xml = connection.consultarProdutoPorCNESDispensacao(cnes
         );
-        XmlParser parser = new XmlParser();
+        XmlParser parser = new XmlParser(log);
         String retorno = parser.getMessage(xml);
         return retorno;
     }
@@ -147,7 +147,7 @@ public class Bsus implements Barramento {
         String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(
                 cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
         );
-        XmlParser parser = new XmlParser();
+        XmlParser parser = new XmlParser(log);
         String retorno = parser.getMessage(xml);
         return retorno;
     }
