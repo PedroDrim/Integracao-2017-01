@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.service.CircuitBreaker;
 import br.ufg.inf.horus.implementation.model.Log;
 import java.util.concurrent.ExecutionException;
@@ -21,12 +22,12 @@ import org.junit.Test;
  * @author Pedro
  */
 public class CircuitBreakerTest {
-    
+
     /**
      * Cabeçalho da requisição.
      */
     private String header;
-    
+
     /**
      * Objeto resposável por exibir Log's.
      *
@@ -37,7 +38,7 @@ public class CircuitBreakerTest {
     /**
      * Construtor da classe de testes.
      */
-    public CircuitBreakerTest() {        
+    public CircuitBreakerTest() {
         this.log = new Log() {
 
             /**
@@ -84,7 +85,7 @@ public class CircuitBreakerTest {
     }
 
     /**
-     * Caso de teste resonsável por testar a classe CicruitBreaker de modo
+     * Caso de teste responsável por testar a classe CicruitBreaker de modo
      * assincrono.
      *
      * @throws InterruptedException
@@ -94,7 +95,7 @@ public class CircuitBreakerTest {
     public void singleAsynchronousTest() throws InterruptedException, ExecutionException {
 
         String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
-        
+
         CircuitBreaker circuitBreaker
                 = new CircuitBreaker(header, destination, log);
 
@@ -106,9 +107,9 @@ public class CircuitBreakerTest {
 
         assertEquals(response, esperado);
     }
-    
+
     /**
-     * Caso de teste resonsável por testar a classe CicruitBreaker de modo
+     * Caso de teste responsável por testar a classe CicruitBreaker de modo
      * sincrono.
      *
      * @throws InterruptedException
@@ -118,11 +119,80 @@ public class CircuitBreakerTest {
     public void singleSynchronousTest() throws InterruptedException, ExecutionException {
 
         String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
-        
+
         CircuitBreaker circuitBreaker
                 = new CircuitBreaker(header, destination, log);
 
         String response = circuitBreaker.execute();
+
+        String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
+
+        assertEquals(response, esperado);
+    }
+
+    /**
+     * Caso de teste responsável por testar a classe CicruitBreaker quando o
+     * parametro 'header' é vazio.
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    @Test(expected = BsusException.class)
+    public void headerIsNullTest() throws InterruptedException, ExecutionException {
+
+        String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+
+        CircuitBreaker circuitBreaker
+                = new CircuitBreaker(null, destination, log);
+
+        Future<String> asynchrnous = circuitBreaker.queue();
+        String response = asynchrnous.get();
+
+        String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
+
+        assertEquals(response, esperado);
+    }
+     /**
+     * Caso de teste responsável por testar a classe CicruitBreaker quando o
+     * parametro 'destination' é vazio.
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    @Test(expected = BsusException.class)
+    public void destinationIsNullTest() throws InterruptedException, ExecutionException {
+
+        CircuitBreaker circuitBreaker
+                = new CircuitBreaker(header, null, log);
+
+        Future<String> asynchrnous = circuitBreaker.queue();
+        String response = asynchrnous.get();
+
+        String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
+
+        assertEquals(response, esperado);
+    }
+    
+    /**
+     * Caso de teste responsável por testar a classe CicruitBreaker quando o
+     * parametro 'log' é vazio.
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    @Test(expected = BsusException.class)
+    public void logIsNullTest() throws InterruptedException, ExecutionException {
+
+        String destination = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+
+        CircuitBreaker circuitBreaker
+                = new CircuitBreaker(header, destination, null);
+
+        Future<String> asynchrnous = circuitBreaker.queue();
+        String response = asynchrnous.get();
 
         String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">env:Sender</env:Value></soap:Code><soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais regras negociais foram violadas, verifique a lista de erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\"><men:codigo>OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>As credenciais informadas não são válidas</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
@@ -140,8 +210,8 @@ public class CircuitBreakerTest {
 class HeaderGenerator {
 
     /**
-     * Gera o conteúdo do cabeçalho da requisição com base em um username, password e número
-     * cnes.
+     * Gera o conteúdo do cabeçalho da requisição com base em um username,
+     * password e número cnes.
      *
      * @param username Usuário do sistema Horus.
      * @param senha Senha do usuário.
@@ -162,8 +232,7 @@ class HeaderGenerator {
     }
 
     /**
-     * Gera o cabeçalho da requisição com base em um username e
-     * password.
+     * Gera o cabeçalho da requisição com base em um username e password.
      *
      * @param username Usuário do sistema Horus.
      * @param senha Senha do usuário.

@@ -59,22 +59,24 @@ public class CircuitBreaker extends HystrixCommand<String> {
                 HystrixCommandGroupKey.Factory.asKey("HorusTolerance")
         ).andCommandPropertiesDefaults(
                 HystrixCommandProperties.Setter()
-                .withExecutionTimeoutEnabled(false)
+                        .withExecutionTimeoutEnabled(false)
         ));
 
         if (soapRequest == null) {
-            String errorMessage = "O parametro 'soapRequest' não possui valor.";
-            this.catchError(errorMessage);
+            String message = "O parametro 'soapRequest' não possui valor.";
+            log.erro(message);
+            throw new BsusException(message);
         }
 
         if (destination == null) {
-            String errorMessage = "O parametro 'destination' não possui valor.";
-            this.catchError(errorMessage);
+            String message = "O parametro 'destination' não possui valor.";
+            log.erro(message);
+            throw new BsusException(message);
         }
 
         if (log == null) {
-            String errorMessage = "O parametro 'log' não possui valor.";
-            this.catchError(errorMessage);
+            String message = "O parametro 'log' não possui valor.";
+            throw new BsusException(message);
         }
 
         this.log = log;
@@ -91,18 +93,7 @@ public class CircuitBreaker extends HystrixCommand<String> {
     @Override
     protected String run() throws Exception {
         String resposta = this.request.request(this.destination,
-                this.soapRequest);
+                this.soapRequest, this.log);
         return resposta;
-    }
-
-    /**
-     * Método para captura e exibição de erros.
-     *
-     * @param message Mensagem do erro referente.
-     * @throws BsusException
-     */
-    private void catchError(String message) throws BsusException {
-        log.erro(message);
-        throw new BsusException(message);
     }
 }

@@ -38,7 +38,13 @@ public class XmlParser {
      * @see Log
      * @param log Estrutura de log a ser definida.
      */
-    public XmlParser(Log log) {
+    public XmlParser(Log log) throws BsusException {
+
+        if (log == null) {
+            String logMessage = "O parametro 'log' não possui valor.";
+            throw new BsusException(logMessage);
+        }
+
         this.log = log;
     }
 
@@ -49,6 +55,12 @@ public class XmlParser {
      * @return message Mensagem com as informações tratadas.
      */
     public String getMessage(String xml) {
+
+        if (xml == null) {
+            String logMessage = "O parametro 'xml' não possui valor.";
+            log.erro(logMessage);
+            throw new BsusException(logMessage);
+        }
 
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
@@ -62,7 +74,6 @@ public class XmlParser {
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
 
             Node node1;
-
             node1 = n1.item(0);
 
             String message = node1.getTextContent() + "\n";
@@ -82,6 +93,10 @@ public class XmlParser {
             throw new BsusException(logMessage, e);
         } catch (IOException e) {
             String logMessage = "Houve um erro ao abrir o documento .xml";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
+        } catch (NullPointerException e) {
+            String logMessage = "Não foi possivel encontrar a TagName no documento .xml";
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         }

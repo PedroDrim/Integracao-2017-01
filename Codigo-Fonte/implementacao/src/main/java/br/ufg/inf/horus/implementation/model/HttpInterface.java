@@ -19,7 +19,8 @@ public interface HttpInterface {
      * @see HttpRequest
      * @param url URL do serviço.
      * @param body Corpo da requisição.
+     * @param log Objeto para exibição de mensagens (Log).
      * @return A resposta da requisição referida.
      */
-    String request(String url, String body);
+    String request(String url, String body, Log log);
 }

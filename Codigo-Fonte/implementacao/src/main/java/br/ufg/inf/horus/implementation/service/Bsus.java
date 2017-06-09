@@ -151,5 +151,4 @@ public class Bsus implements Barramento {
         String retorno = parser.getMessage(xml);
         return retorno;
     }
-
 }
