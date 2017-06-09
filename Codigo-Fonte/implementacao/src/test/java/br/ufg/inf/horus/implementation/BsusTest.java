@@ -8,8 +8,6 @@ package br.ufg.inf.horus.implementation;
 import br.ufg.inf.horus.implementation.service.Bsus;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -24,22 +22,6 @@ public class BsusTest {
     public BsusTest() {
         bsus = new Bsus();
         bsus.setLog(new TestLog());
-    }
-
-    /**
-     * Método executado antes de cada teste, responsável por inicializar as
-     * variaveis comuns.
-     */
-    @Before
-    public void setUp() {
-    }
-
-    /**
-     * Método executado antes de cada teste, responsável por limpar as variaveis
-     * comuns.
-     */
-    @After
-    public void tearDown() {
     }
 
     /**

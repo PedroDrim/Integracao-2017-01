@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation.service;
 
+import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
 import java.io.FileNotFoundException;
@@ -288,7 +289,7 @@ public class ConnectionBsus implements Connection {
      * @return response String corrigida ou não
      */
     private String getError(String xml) {
-        String message = "";
+
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
@@ -301,25 +302,47 @@ public class ConnectionBsus implements Connection {
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
             NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
             NodeList n3 = xmlDocument.getElementsByTagName("men:descricao");
+            
             Node node1;
             Node node2;
             Node node3;
+            
             node1 = n1.item(0);
             node2 = n2.item(0);
             node3 = n3.item(0);
-            message = node1.getTextContent() + "\n" + node2.getTextContent()
-                    + "\n" + node3.getTextContent();
+            
+            StringBuilder message =  new StringBuilder();
+            
+            message.append(node1.getTextContent());
+            message.append("\n");
+            message.append(node2.getTextContent());
+            message.append("\n");
+            message.append(node3.getTextContent());
+            message.append("\n");
+            
+            return(message.toString());
 
         } catch (FileNotFoundException e) {
+            
+            String logMessage = "";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         } catch (ParserConfigurationException e) {
+            
+            String logMessage = "";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         } catch (SAXException e) {
+            
+            String logMessage = "";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         } catch (IOException e) {
+            
+            String logMessage = "";
+            log.erro(logMessage);
+            throw new BsusException(logMessage, e);
         }
 
-        if (message.equals("")) {
-            return xml;
-        } else {
-            return message;
-        }
     }
 }
