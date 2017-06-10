@@ -65,11 +65,10 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNES(int cnes) {
         if(verificaCnes(cnes)!=0){
-        String xml = connection.consultarPosicaoEstoquePorCNES(cnes
-        );
-        XmlParser parser = new XmlParser(log);
-        String retorno = parser.getMessage(xml);
-        return retorno;
+        String xml = connection.consultarPosicaoEstoquePorCNES(cnes);        
+            XmlParser parser = new XmlParser(log);
+            String retorno = parser.getMessage(xml);
+            return retorno;
         }
         else{
             return null;
@@ -186,7 +185,7 @@ public class Bsus implements Barramento {
      * @return cnes Se válido, 0 se inválido
      */
     public int verificaCnes(int cnes){
-        if(cnes>0000000 && cnes<=9999999){
+        if(cnes>1000000 && cnes<=9999999){
             log.info("Número CNES "+cnes+" é válido.");
             return cnes;
         }

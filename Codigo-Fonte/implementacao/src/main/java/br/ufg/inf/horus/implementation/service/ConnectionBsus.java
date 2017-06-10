@@ -318,9 +318,16 @@ public class ConnectionBsus implements Connection {
             message.append(node2.getTextContent());
             message.append("\n");
             message.append(node3.getTextContent());
-            message.append("\n");
             
-            return(message.toString());
+            if(node1.getTextContent().isEmpty() || 
+                    node2.getTextContent().isEmpty() ||
+                    node3.getTextContent().isEmpty()){
+                log.info("Não foi encontrado mensagem de erro.");
+                return xml;
+            }
+            else{
+                return(message.toString());
+            }
 
         } catch (FileNotFoundException e) {
             String logMessage = "O documento .xml não foi encontrado.";

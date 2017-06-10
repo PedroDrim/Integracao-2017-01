@@ -32,14 +32,27 @@ public class BsusTest {
 
         bsus.setConnection(new TestConnection());
 
-        String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-        */
-        
+        String response = "Uma ou mais regras negociais foram violadas, "
+                + "verifique a lista de erros.\n";
         assertEquals(bsus.obterEstoquePorCNES(7604041), response);
+    }
+    
+    @Test
+    public void cnesValidoTest(){
+        bsus.setConnection(new TestConnection());
+        assertEquals(bsus.verificaCnes(7604041),7604041);
+    }
+    
+    @Test
+    public void cnesErradoMenorTest(){
+        bsus.setConnection(new TestConnection());
+        assertEquals(bsus.verificaCnes(01),0);
+    }
+    
+     @Test
+    public void cnesErradoMaiorTest(){
+        bsus.setConnection(new TestConnection());
+        assertEquals(bsus.verificaCnes(87654321),0);
     }
 
     /**
@@ -50,16 +63,39 @@ public class BsusTest {
 
         bsus.setConnection(new TestConnection());
 
-        String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-        */
-        
-        assertEquals(bsus.obterEstoquePorCNESEPrincipio(7604041, "PRINCIPIO"), response);
+        String response = "Uma ou mais regras negociais foram violadas, "
+                + "verifique a lista de erros.\n";
+
+        assertEquals(bsus.obterEstoquePorCNESEPrincipio(7604041, "PRINCIPIO"),
+                response);
     }
 
+     @Test
+    public void principioAtivoTest(){
+        bsus.setConnection(new TestConnection());
+        
+        assertEquals(bsus.verificaPrincipio(""),null);
+    }
+    
+    @Test
+    public void principioAtivoCorretoTest(){
+        bsus.setConnection(new TestConnection());
+        assertEquals(bsus.verificaPrincipio("Principio Ativo"),
+                "Principio Ativo");
+    }
+    
+    @Test
+    public void paginadoErradoTest(){
+        bsus.setConnection(new TestConnection());
+        assertEquals(bsus.verificaPaginado(0,-1,0),false);
+    }
+    
+        @Test
+    public void paginadoCorretoTest(){
+        bsus.setConnection(new TestConnection());
+        assertEquals(bsus.verificaPaginado(1,15,30),true);
+    }
+    
     /**
      * Caso de teste do método obterEstoquePorCNESEPrincipioPaginado
      */
@@ -68,14 +104,11 @@ public class BsusTest {
 
         bsus.setConnection(new TestConnection());
 
-        String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-        */
+        String response = "Uma ou mais regras negociais foram violadas, "
+                + "verifique a lista de erros.\n";
         
-        assertEquals(bsus.obterEstoquePorCNESEPrincipioPaginado(7604041, "PRINCIPIO", 1111, 2222, 3333), response);
+        assertEquals(bsus.obterEstoquePorCNESEPrincipioPaginado(7604041, 
+                "PRINCIPIO", 1111, 2222, 3333), response);
     }
 
     /**
@@ -86,13 +119,9 @@ public class BsusTest {
 
         bsus.setConnection(new TestConnection());
 
-        String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-        */
-        
+        String response = "Uma ou mais regras negociais foram violadas, "
+                + "verifique a lista de erros.\n";
+
         assertEquals(bsus.obterDadosEEstoquePorCNES(7604041), response);
     }
 
@@ -104,12 +133,8 @@ public class BsusTest {
 
         bsus.setConnection(new TestConnection());
 
-        String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-        */
+        String response = "Uma ou mais regras negociais foram violadas, "
+                + "verifique a lista de erros.\n";
         
         assertEquals(bsus.obterDadosEEstoquePorCNESPaginado(7604041, 1111, 2222, 3333), response);
     }

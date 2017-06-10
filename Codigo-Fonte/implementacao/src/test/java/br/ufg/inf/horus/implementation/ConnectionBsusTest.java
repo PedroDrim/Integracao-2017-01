@@ -41,8 +41,10 @@ public class ConnectionBsusTest {
 
     @Before
     public void setUp() {
-        this.result = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n" 
-                + "OSB_SEM_AUTENTICACAO\nAs credenciais informadas não são válidas";
+        this.result = "Uma ou mais regras negociais foram violadas, "
+                + "verifique a lista de erros.\n" 
+                + "OSB_SEM_AUTENTICACAO\n"
+                + "As credenciais informadas não são válidas";
         
         this.cnes = 7604041;
     }

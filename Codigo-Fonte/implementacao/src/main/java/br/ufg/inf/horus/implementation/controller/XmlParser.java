@@ -61,7 +61,7 @@ public class XmlParser {
             log.erro(logMessage);
             throw new BsusException(logMessage);
         }
-
+        
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
