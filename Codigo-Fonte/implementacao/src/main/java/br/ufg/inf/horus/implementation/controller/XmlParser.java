@@ -96,7 +96,8 @@ public class XmlParser {
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         } catch (NullPointerException e) {
-            String logMessage = "Não foi possivel encontrar a TagName no documento .xml";
+            String logMessage = "Não foi possivel encontrar a TagName "
+                    + "no documento .xml";
             log.erro(logMessage);
             throw new BsusException(logMessage, e);
         }

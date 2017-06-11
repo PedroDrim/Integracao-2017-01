@@ -86,7 +86,8 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNESEPrincipio(int cnes, String principio) {
         if(verificaCnes(cnes)!=0 && verificaPrincipio(principio)!=null){
-            String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
+            String xml = 
+                connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
             cnes, principio);
             XmlParser parser = new XmlParser(log);
             String retorno = parser.getMessage(xml);
@@ -111,18 +112,19 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNESEPrincipioPaginado(int cnes,
-            String principio, int posicaoInicio, int qtdRegistrosPagina,
-            int qtdRegistros) {
+        String principio, int posicaoInicio, int qtdRegistrosPagina,
+        int qtdRegistros) {
         
         if(verificaCnes(cnes)!=0 && verificaPrincipio(principio)!=null && 
             verificaPaginado(posicaoInicio,qtdRegistrosPagina,
                     qtdRegistros)==true){
-        String xml = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+            String xml = 
+                connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
                 cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
-        );
-        XmlParser parser = new XmlParser(log);
-        String retorno = parser.getMessage(xml);
-        return retorno;
+            );
+            XmlParser parser = new XmlParser(log);
+            String retorno = parser.getMessage(xml);
+            return retorno;
         }
         else{
             return null;
@@ -140,11 +142,11 @@ public class Bsus implements Barramento {
     @Override
     public String obterDadosEEstoquePorCNES(int cnes) {
         if(verificaCnes(cnes)!=0){
-        String xml = connection.consultarProdutoPorCNESDispensacao(cnes
-        );
-        XmlParser parser = new XmlParser(log);
-        String retorno = parser.getMessage(xml);
-        return retorno;
+            String xml = connection.consultarProdutoPorCNESDispensacao(cnes
+            );
+            XmlParser parser = new XmlParser(log);
+            String retorno = parser.getMessage(xml);
+            return retorno;
         }
         else{
             return null;
@@ -167,12 +169,13 @@ public class Bsus implements Barramento {
             int qtdRegistrosPagina, int qtdRegistros) {
         if(verificaCnes(cnes)!=0 && verificaPaginado(posicaoInicio,
                 qtdRegistrosPagina,qtdRegistros)==true){
-        String xml = connection.consultarProdutoPorCNESDispensacaoPaginado(
+                String xml = 
+                    connection.consultarProdutoPorCNESDispensacaoPaginado(
                 cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
-        );
-        XmlParser parser = new XmlParser(log);
-        String retorno = parser.getMessage(xml);
-        return retorno;
+                );
+            XmlParser parser = new XmlParser(log);
+            String retorno = parser.getMessage(xml);
+            return retorno;
         }
         else{
             return null;

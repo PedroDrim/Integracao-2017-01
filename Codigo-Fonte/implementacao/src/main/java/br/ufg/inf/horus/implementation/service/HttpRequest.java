@@ -37,7 +37,8 @@ public class HttpRequest implements HttpInterface {
      * @return Resposta da requisição.
      */
     @Override
-    public String request(String url, String body, Log log) throws BsusException {
+    public String request(String url, String body, Log log) 
+            throws BsusException {
 
         if (url == null) {
             String logMessage = "O parametro 'url' não possui valor.";
@@ -72,7 +73,8 @@ public class HttpRequest implements HttpInterface {
             log.erro(message);
             throw new BsusException(message);
         } catch (UnsupportedCharsetException e) {
-            String message = "O charset 'UTF-8' da mensagem não esta sendo suportado.";
+            String message = 
+                    "O charset 'UTF-8' da mensagem não esta sendo suportado.";
             log.erro(message);
             throw new BsusException(message);
         } catch (ParseException e) {
