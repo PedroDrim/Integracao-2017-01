@@ -96,11 +96,6 @@ public class XmlParserTest {
         });
 
         String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-         */
 
         String request = instance.getMessage(null);
         assertEquals(request, response);

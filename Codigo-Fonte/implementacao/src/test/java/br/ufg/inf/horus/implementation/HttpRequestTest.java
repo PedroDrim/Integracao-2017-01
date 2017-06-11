@@ -5,10 +5,9 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.model.Log;
 import br.ufg.inf.horus.implementation.service.HttpRequest;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -86,4 +85,58 @@ public class HttpRequestTest {
         assertEquals(req.request(url, body.toString(), log), resp);
     }
 
+    @Test(expected=BsusException.class)
+    public void erroUrlTest(){
+        Log log = new Log() {
+
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        };
+        HttpRequest req = new HttpRequest();
+        req.request(null, body.toString(), log);
+    }
+    
+    @Test(expected=BsusException.class)
+    public void erroBodyTest(){
+        Log log = new Log() {
+
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        };
+        HttpRequest req = new HttpRequest();
+        req.request(url, null, log);
+    }
+    
+    @Test(expected=BsusException.class)
+    public void erroLogTest(){
+        Log log = new Log() {
+
+            @Override
+            public void info(String message) {
+                System.out.println(message);
+            }
+
+            @Override
+            public void erro(String message) {
+                System.err.println(message);
+            }
+        };
+        HttpRequest req = new HttpRequest();
+        req.request(url, body.toString(), null);
+    }
 }
+

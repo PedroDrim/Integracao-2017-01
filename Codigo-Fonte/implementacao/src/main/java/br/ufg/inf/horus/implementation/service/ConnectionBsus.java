@@ -288,7 +288,7 @@ public class ConnectionBsus implements Connection {
      * @param xml
      * @return response String corrigida ou não
      */
-    private String getError(String xml) {
+    public String getError(String xml) {
 
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
