@@ -72,7 +72,9 @@ public class Bsus implements Barramento {
             return retorno;
         }
         else{
-            return null;
+            String message = "";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
 
@@ -95,7 +97,9 @@ public class Bsus implements Barramento {
             return retorno;  
         }
         else{
-            return null;
+            String message = "";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
 
@@ -128,7 +132,9 @@ public class Bsus implements Barramento {
             return retorno;
         }
         else{
-            return null;
+            String message = "";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
 
@@ -150,7 +156,9 @@ public class Bsus implements Barramento {
             return retorno;
         }
         else{
-            return null;
+            String message = "";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
 
@@ -179,7 +187,9 @@ public class Bsus implements Barramento {
             return retorno;
         }
         else{
-            return null;
+            String message = "";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
     
@@ -190,7 +200,6 @@ public class Bsus implements Barramento {
      */
     public int verificaCnes(int cnes){
         if(cnes>1000000 && cnes<=9999999){
-            log.info("Número CNES "+cnes+" é válido.");
             return cnes;
         }
         else{
@@ -208,7 +217,6 @@ public class Bsus implements Barramento {
      */
     public String verificaPrincipio(String principio){
         if(!principio.isEmpty() && principio!=null){
-            log.info("Principio Ativo "+principio+" é válido.");
             return principio;
         }
         else{
@@ -228,8 +236,7 @@ public class Bsus implements Barramento {
     public boolean verificaPaginado(int posicaoInicio, int qtdRegistrosPagina,
             int qtdRegistros){
         if(posicaoInicio>=0 && qtdRegistrosPagina>=0 && qtdRegistros>=0){
-            log.info("Parametros para paginação são válidos.");
-        return true;
+            return true;
         }
         else{
             String message = "Parâmentros para paginação informados"

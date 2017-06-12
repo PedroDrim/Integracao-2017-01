@@ -102,8 +102,8 @@ public class ConnectionBsus implements Connection {
         soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" <est:cnes>");
         soap.append(cnes);
-        soap.append("</est:cnes>\n "
-                + "</est:requestConsultarPosicaoEstoquePorCNES>\n");
+        soap.append("</est:cnes>\n ");
+        soap.append("</est:requestConsultarPosicaoEstoquePorCNES>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(),
                 url, log).execute();
@@ -126,15 +126,16 @@ public class ConnectionBsus implements Connection {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXml());
-        soap.append(" "
-            + "<est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
+        soap.append(" <est:requestConsultarPosicaoEstoque");
+        soap.append("PorCNESPrincipioAtivo>\n");
         soap.append(" <est:cnes>");
         soap.append(cnes);
         soap.append("</est:cnes>\n");
         soap.append(" <est:principioAtivo>");
         soap.append(principio);
-        soap.append("</est:principioAtivo>\n "
-            + "</est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>\n");
+        soap.append("</est:principioAtivo>\n ");
+        soap.append("</est:requestConsultarPosicaoEstoque");
+        soap.append("PorCNESPrincipioAtivo>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
@@ -161,8 +162,8 @@ public class ConnectionBsus implements Connection {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXmlPaginado());
-        soap.append(
-        " <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivoPaginado>\n");
+        soap.append(" <est:requestConsultarPosicaoEstoque");
+        soap.append("PorCNESPrincipioAtivoPaginado>\n");
         soap.append(" <est:cnes>");
         soap.append(cnes);
         soap.append("</est:cnes>\n");
@@ -179,8 +180,8 @@ public class ConnectionBsus implements Connection {
         soap.append(qtdRegistros);
         soap.append("</pag:quantidadeRegistros>\n");
         soap.append(" </est:paginacao>\n");
-        soap.append(" </est:requestConsultarPosicaoEstoquePor"
-                + "CNESPrincipioAtivoPaginado>\n");
+        soap.append(" </est:requestConsultarPosicaoEstoquePor");
+        soap.append("CNESPrincipioAtivoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
@@ -228,8 +229,8 @@ public class ConnectionBsus implements Connection {
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXmlPaginado());
-        soap.append(" <est:requestConsultarProdutoPor"
-                + "CNESDispensacaoPaginado>\n");
+        soap.append(" <est:requestConsultarProdutoPor");
+        soap.append("CNESDispensacaoPaginado>\n");
         soap.append(" <est:cnes>");
         soap.append(cnes);
         soap.append("</est:cnes>\n");
@@ -244,7 +245,8 @@ public class ConnectionBsus implements Connection {
         soap.append(qtdRegistros);
         soap.append("</pag:quantidadeRegistros>\n");
         soap.append(" </est:paginacao>\n");
-        soap.append(" </est:requestConsultarProdutoPorCNESDispensacaoPaginado>\n");
+        soap.append(" </est:requestConsultarProduto");
+        soap.append("PorCNESDispensacaoPaginado>\n");
         soap.append(" </soap:Body>\n </soap:Envelope>");
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
@@ -259,26 +261,27 @@ public class ConnectionBsus implements Connection {
      */
     private String buildHeaderXml() {
         StringBuilder str = new StringBuilder();
-        str.append("<soap:Envelope "
-                + "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\""
-                + " xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/"
-                + "EstoqueService\">\n");
+        str.append("<soap:Envelope ");
+        str.append("xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"");
+        str.append(" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/");
+        str.append("EstoqueService\">\n");
         str.append(" <soap:Header>\n");
-        str.append(" <wsse:Security xmlns:"
-                + "wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-"
-                + "wsswssecurity-secext-1.0.xsd\">\n");
-        str.append(" <wsse:UsernameToken"
-                + " wsu:Id=\"Id-0001334008436683-000000002c4a1908-1\""
-                + " xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/"
-                + "oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n");
+        str.append(" <wsse:Security xmlns:");
+        str.append("wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-");
+        str.append("wsswssecurity-secext-1.0.xsd\">\n");
+        str.append(" <wsse:UsernameToken");
+        str.append(" wsu:Id=\"Id-0001334008436683-000000002c4a1908-1\"");
+        str.append(" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/");
+        str.append("oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n");
         str.append(" <wsse:Username>");
         str.append(usuario);
         str.append("</wsse:Username>\n");
-        str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004"
-                + "/01/oasis-200401-wssusername-token-profile-1.0#PasswordText"
-                + "\">").append(senha).append("</wsse:Password>\n");
-        str.append(" </wsse:UsernameToken>\n </wsse:Security>\n"
-                + " </soap:Header>\n <soap:Body>\n");
+        str.append(" <wsse:Password Type=\"http:");
+        str.append("//docs.oasis-open.org/wss/2004");
+        str.append("/01/oasis-200401-wssusername-token-profile-1.0#PasswordText");
+        str.append("\">").append(senha).append("</wsse:Password>\n");
+        str.append(" </wsse:UsernameToken>\n </wsse:Security>\n");
+        str.append(" </soap:Header>\n <soap:Body>\n");
         return str.toString();
     }
 
@@ -289,28 +292,30 @@ public class ConnectionBsus implements Connection {
      */
     private String buildHeaderXmlPaginado() {
         StringBuilder str = new StringBuilder();
-        str.append("<soap:Envelope"
-                + " xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\""
-                + " xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/"
-                + "EstoqueService\" xmlns:pag=\"http://servicos.saude.gov.br/"
-                + "wsdl/mensageria/v1r0/paginacao\">\n");
+        str.append("<soap:Envelope");
+        str.append(" xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"");
+        str.append(" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/");
+        str.append("EstoqueService\" xmlns:pag=\"http://servicos.saude.gov.br/");
+        str.append("wsdl/mensageria/v1r0/paginacao\">\n");
         str.append(" <soap:Header>\n");
-        str.append(" <wsse:Security"
-                + " xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/"
-                + "oasis-200401-wsswssecurity-secext-1.0.xsd\">\n");
-        str.append(" <wsse:UsernameToken wsu:Id=\"Id-0001334008436683"
-                + "-000000002c4a1908-1\" xmlns:wsu=\"http://docs.oasis-open.org"
-                + "/wss/2004/01/oasis-200401-wss-wssecurity-utility"
-                + "-1.0.xsd\">\n");
+        str.append(" <wsse:Security");
+        str.append(" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/");
+        str.append("oasis-200401-wsswssecurity-secext-1.0.xsd\">\n");
+        str.append(" <wsse:UsernameToken wsu:Id=\"Id-0001334008436683");
+        str.append("-000000002c4a1908-1\" xmlns:wsu=\"http://");
+        str.append("docs.oasis-open.org");
+        str.append("/wss/2004/01/oasis-200401-wss-wssecurity-utility");
+        str.append("-1.0.xsd\">\n");
         str.append(" <wsse:Username>");
         str.append(usuario);
         str.append("</wsse:Username>\n");
-        str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/"
-                + "2004/01/oasis-200401-wssusername-token-profile"
-                + "-1.0#PasswordText\">").append(senha)
-                .append("</wsse:Password>\n");
-        str.append(" </wsse:UsernameToken>\n"
-                + " </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
+        str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/");
+        str.append("2004/01/oasis-200401-wssusername-token-profile");
+        str.append("-1.0#PasswordText\">");
+        str.append(senha);
+        str.append("</wsse:Password>\n");
+        str.append(" </wsse:UsernameToken>\n");
+        str.append(" </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
         return str.toString();
     }
 
@@ -355,7 +360,6 @@ public class ConnectionBsus implements Connection {
             if(node1.getTextContent().isEmpty() || 
                     node2.getTextContent().isEmpty() ||
                     node3.getTextContent().isEmpty()){
-                log.info("Não foi encontrado mensagem de erro.");
                 return xml;
             }
             else{
