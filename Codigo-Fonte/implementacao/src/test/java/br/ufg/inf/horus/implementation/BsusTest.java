@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.service.Bsus;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
@@ -43,16 +44,16 @@ public class BsusTest {
         assertEquals(bsus.verificaCnes(7604041),7604041);
     }
     
-    @Test
+    @Test(expected=BsusException.class)
     public void cnesErradoMenorTest(){
         bsus.setConnection(new TestConnection());
-        assertEquals(bsus.verificaCnes(01),0);
+        bsus.verificaCnes(01);
     }
     
-     @Test
+     @Test(expected=BsusException.class)
     public void cnesErradoMaiorTest(){
         bsus.setConnection(new TestConnection());
-        assertEquals(bsus.verificaCnes(87654321),0);
+        bsus.verificaCnes(87654321);
     }
 
     /**
@@ -70,11 +71,11 @@ public class BsusTest {
                 response);
     }
 
-     @Test
+     @Test(expected=BsusException.class)
     public void principioAtivoTest(){
         bsus.setConnection(new TestConnection());
         
-        assertEquals(bsus.verificaPrincipio(""),null);
+        bsus.verificaPrincipio("");
     }
     
     @Test
@@ -84,10 +85,10 @@ public class BsusTest {
                 "Principio Ativo");
     }
     
-    @Test
+    @Test(expected=BsusException.class)
     public void paginadoErradoTest(){
         bsus.setConnection(new TestConnection());
-        assertEquals(bsus.verificaPaginado(0,-1,0),false);
+        bsus.verificaPaginado(0,-1,0);
     }
     
         @Test

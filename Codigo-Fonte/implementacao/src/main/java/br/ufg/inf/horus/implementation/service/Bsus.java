@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation.service;
 
+import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.controller.XmlParser;
 import br.ufg.inf.horus.implementation.model.Barramento;
 import br.ufg.inf.horus.implementation.model.Connection;
@@ -193,9 +194,10 @@ public class Bsus implements Barramento {
             return cnes;
         }
         else{
-            log.erro("Número CNES "+cnes+" inválido. CNES deve ter 7 dígitos e "
-                    + "conter somente números.");
-            return 0;
+            String message = "Número CNES "+cnes+" inválido. CNES deve ter"
+                    + " 7 dígitos e conter somente números.";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
     
@@ -210,8 +212,9 @@ public class Bsus implements Barramento {
             return principio;
         }
         else{
-            log.erro("Principio Ativo "+principio+" é inválido.");
-            return null;
+            String message = "Principio Ativo "+principio+" é inválido.";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
     
@@ -229,8 +232,10 @@ public class Bsus implements Barramento {
         return true;
         }
         else{
-            log.erro("Parâmentros para paginação informados não são válidos.");
-        return false;
+            String message = "Parâmentros para paginação informados"
+                    + " não são válidos.";
+            log.erro(message);
+            throw new BsusException(message);
         }
     }
 }
