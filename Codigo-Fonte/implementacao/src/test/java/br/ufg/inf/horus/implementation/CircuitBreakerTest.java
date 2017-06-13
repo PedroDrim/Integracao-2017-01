@@ -39,30 +39,7 @@ public class CircuitBreakerTest {
      * Construtor da classe de testes.
      */
     public CircuitBreakerTest() {
-        this.log = new Log() {
-
-            /**
-             * Exibição de uma mensagem informativa.
-             *
-             * @see Log
-             * @param message Mensagem a ser exibida.
-             */
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            /**
-             * Exibição de uma mensagem de erro.
-             *
-             * @see Log
-             * @param message Mensagem a ser exibida.
-             */
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        };
+        this.log = new LogTester();
     }
 
     /**

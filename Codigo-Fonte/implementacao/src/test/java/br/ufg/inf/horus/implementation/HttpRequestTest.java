@@ -63,11 +63,12 @@ public class HttpRequestTest {
 
     /**
      * Teste funcional do método 'request'.
+     *
      * @see HttpRequest
      */
     @Test
     public void functionalRequestTest() {
-        
+
         Log log = new Log() {
 
             @Override
@@ -80,63 +81,29 @@ public class HttpRequestTest {
                 System.err.println(message);
             }
         };
-                
+
         HttpRequest req = new HttpRequest();
         assertEquals(req.request(url, body.toString(), log), resp);
     }
 
-    @Test(expected=BsusException.class)
-    public void erroUrlTest(){
-        Log log = new Log() {
-
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        };
+    @Test(expected = BsusException.class)
+    public void erroUrlTest() {
+        Log log = new LogTester();
         HttpRequest req = new HttpRequest();
         req.request(null, body.toString(), log);
     }
-    
-    @Test(expected=BsusException.class)
-    public void erroBodyTest(){
-        Log log = new Log() {
 
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        };
+    @Test(expected = BsusException.class)
+    public void erroBodyTest() {
+        Log log = new LogTester();
         HttpRequest req = new HttpRequest();
         req.request(url, null, log);
     }
-    
-    @Test(expected=BsusException.class)
-    public void erroLogTest(){
-        Log log = new Log() {
 
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        };
+    @Test(expected = BsusException.class)
+    public void erroLogTest() {
+        Log log = new LogTester();
         HttpRequest req = new HttpRequest();
         req.request(url, body.toString(), null);
     }
 }
-

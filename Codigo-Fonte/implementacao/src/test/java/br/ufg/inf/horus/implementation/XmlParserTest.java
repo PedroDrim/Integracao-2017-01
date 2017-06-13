@@ -82,18 +82,7 @@ public class XmlParserTest {
     @Test(expected = BsusException.class)
     public void xmlIsNullTest() {
 
-        XmlParser instance = new XmlParser(new Log() {
-
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        });
+        XmlParser instance = new XmlParser(new LogTester());
 
         String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
 
@@ -135,11 +124,6 @@ public class XmlParserTest {
         XmlParser instance = new XmlParser(null);
 
         String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-         */
 
         String request = instance.getMessage(xml.toString());
         assertEquals(request, response);
@@ -153,25 +137,9 @@ public class XmlParserTest {
     @Test(expected = BsusException.class)
     public void captureSAXExceptionGetMessageTest() {
 
-        XmlParser instance = new XmlParser(new Log() {
-
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        });
+        XmlParser instance = new XmlParser(new LogTester());
 
         String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-         */
 
         String request = instance.getMessage("batata");
         assertEquals(request, response);
@@ -208,25 +176,9 @@ public class XmlParserTest {
         xml.append("</soap:Body>\n");
         xml.append("</soap:Envelope>");
         
-        XmlParser instance = new XmlParser(new Log() {
-
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        });
+        XmlParser instance = new XmlParser(new LogTester());
 
         String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n";
-        /*
-                String response = "Uma ou mais regras negociais foram violadas, verifique a lista de erros.\n"
-                + "OSB_SEM_AUTENTICACAO\n"
-                + "As credenciais informadas não são válidas";
-         */
 
         String request = instance.getMessage(xml.toString());
         assertEquals(request, response);

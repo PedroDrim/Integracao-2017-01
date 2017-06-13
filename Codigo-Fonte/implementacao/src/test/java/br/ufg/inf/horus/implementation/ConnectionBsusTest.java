@@ -29,17 +29,7 @@ public class ConnectionBsusTest {
         instance.setCredential("user", "pass");
         instance
             .setURL("https://servicos.saude.gov.br/horus/v1r0/EstoqueService");
-        instance.setLog(new Log() {
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        });
+        instance.setLog(new LogTester());
     }
 
     @Before
