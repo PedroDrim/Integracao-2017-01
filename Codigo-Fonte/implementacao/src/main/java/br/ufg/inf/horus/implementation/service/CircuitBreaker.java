@@ -6,6 +6,7 @@
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.model.HttpInterface;
 import br.ufg.inf.horus.implementation.model.Log;
 import com.netflix.hystrix.HystrixCommand;
@@ -62,22 +63,8 @@ public class CircuitBreaker extends HystrixCommand<String> {
                         .withExecutionTimeoutEnabled(false)
         ));
 
-        if (soapRequest == null) {
-            String message = "O parametro 'soapRequest' não possui valor.";
-            log.erro(message);
-            throw new BsusException(message);
-        }
-
-        if (destination == null) {
-            String message = "O parametro 'destination' não possui valor.";
-            log.erro(message);
-            throw new BsusException(message);
-        }
-
-        if (log == null) {
-            String message = "O parametro 'log' não possui valor.";
-            throw new BsusException(message);
-        }
+        BsusValidator.verifyNull(soapRequest, "soapRequest", log);
+        BsusValidator.verifyNull(destination, "destination", log);
 
         this.log = log;
         this.soapRequest = soapRequest;
@@ -92,8 +79,7 @@ public class CircuitBreaker extends HystrixCommand<String> {
      */
     @Override
     protected String run() throws Exception {
-        String resposta = this.request.request(this.destination,
+        return this.request.request(this.destination,
                 this.soapRequest, this.log);
-        return resposta;
     }
 }

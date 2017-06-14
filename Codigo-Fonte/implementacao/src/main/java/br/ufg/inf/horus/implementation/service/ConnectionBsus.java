@@ -6,8 +6,10 @@
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.implementation.model.Security;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -71,10 +73,26 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public void setCredential(String usuario, String senha) {
+        BsusValidator.verifyNull(usuario, "usuario", log);
+        BsusValidator.verifyNull(senha, "senha", log);
         this.usuario = usuario;
         this.senha = senha;
     }
 
+    /**
+     * Define as credenciais de acesso da aplicação-usuário ao serviço
+     * com base em uma interface.
+     *
+     * @see Connection
+     * @param security interface para obtenção das credenciais.
+     */
+    @Override
+    public void setCredential(Security security){
+        BsusValidator.verifyNull(security, "security", log);
+        this.usuario = security.getUser();
+        this.senha = security.getPassword();
+    }
+    
     /**
      * Define a url do serviço a ser utilizado.
      *
@@ -83,6 +101,7 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public void setURL(String url) {
+        BsusValidator.verifyNull(url, "url", log);
         this.url = url;
     }
 
@@ -96,6 +115,7 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public String consultarPosicaoEstoquePorCNES(int cnes) {
+        
         StringBuilder soap = new StringBuilder();
 
         soap.append(buildHeaderXml());

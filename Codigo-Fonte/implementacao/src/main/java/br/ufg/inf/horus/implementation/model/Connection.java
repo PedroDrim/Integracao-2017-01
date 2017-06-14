@@ -25,6 +25,15 @@ public interface Connection {
     void setCredential(String usuario, String senha);
 
     /**
+     * Define as credenciais de acesso da aplicação-usuário ao serviço
+     * com base em uma interface.
+     *
+     * @see ConnectionBsus
+     * @param security interface para obtenção das credenciais.
+     */
+    void setCredential(Security security);
+
+    /**
      * Define a url do serviço a ser utilizado.
      *
      * @see ConnectionBsus

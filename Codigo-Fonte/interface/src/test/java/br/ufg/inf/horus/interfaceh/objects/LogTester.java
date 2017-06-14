@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufg.inf.horus.implementation;
+package br.ufg.inf.horus.interfaceh.objects;
 
 import br.ufg.inf.horus.implementation.model.Log;
 import java.util.ArrayList;

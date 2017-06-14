@@ -9,6 +9,7 @@ import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.model.Barramento;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.implementation.model.Security;
 
 /**
  * Instancia os serviços disponíveis.
@@ -24,26 +25,64 @@ public class BsusFactory {
      * Connection.
      * @param classNameBarramento Nome da classe que implementa a interface
      * Barramento.
-     * @param log Objeto que implementa a interface Log.
      * @param url URL referente ao serviço.
      * @param usuario Identificador de acesso.
      * @param senha Senha de acesso.
+     * @param log Objeto que implementa a interface Log (Opcional).
      * @return Barramento responsável pelo acesso aos serviços.
      * @throws BsusException
      */
     public static Barramento createBarramento(String classNameConnection,
-            String classNameBarramento, Log log, String url,
-            String usuario, String senha) throws BsusException {
+            String classNameBarramento, String url,
+            String usuario, String senha, Log log) throws BsusException {
 
         Connection c = (Connection) criaInstancia(classNameConnection, log);
         c.setLog(log);
         c.setCredential(usuario, senha);
         c.setURL(url);
 
+        return buildBarramento(classNameBarramento, log, c);
+    }
+
+    /**
+     * Gera um Barramento responsável pelo acesso aos serviços.
+     *
+     * @param classNameConnection Nome da classe que implementa a interface
+     * Connection.
+     * @param classNameBarramento Nome da classe que implementa a interface
+     * Barramento.
+     * @param url URL referente ao serviço.
+     * @param security Objeto responsável pelas credênciais do usuário.
+     * @param log Objeto que implementa a interface Log (Opcional).
+     * @return Barramento responsável pelo acesso aos serviços.
+     * @throws BsusException
+     */
+    public static Barramento createBarramento(String classNameConnection,
+            String classNameBarramento, String url,
+            Security security, Log log) throws BsusException {
+
+        Connection c = (Connection) criaInstancia(classNameConnection, log);
+        c.setLog(log);
+        c.setCredential(security);
+        c.setURL(url);
+
+        return buildBarramento(classNameBarramento, log, c);
+    }
+
+    /**
+     * Método intermediário para criação de um barramento.
+     * @param classNameBarramento Nome da classe que implementa a interface
+     * Barramento.
+     * @param log Objeto que implementa a interface Log (Opcional).
+     * @param c Objeto que implementa a interface Connecion.
+     * @return O objeto que implementa a interface barramento.
+     * @throws BsusException 
+     */
+    private static Barramento buildBarramento(String classNameBarramento,
+            Log log, Connection c) throws BsusException {
         Barramento b = (Barramento) criaInstancia(classNameBarramento, log);
         b.setConnection(c);
         b.setLog(log);
-
         return b;
     }
 

@@ -6,7 +6,6 @@
 package br.ufg.inf.horus.implementation.controller;
 
 import br.ufg.inf.horus.implementation.model.Log;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
@@ -38,13 +37,7 @@ public class XmlParser {
      * @see Log
      * @param log Estrutura de log a ser definida.
      */
-    public XmlParser(Log log) throws BsusException {
-
-        if (log == null) {
-            String logMessage = "O parametro 'log' não possui valor.";
-            throw new BsusException(logMessage);
-        }
-
+    public XmlParser(Log log) {
         this.log = log;
     }
 
@@ -52,15 +45,12 @@ public class XmlParser {
      * Método que busca as informações necessárias na resposta.
      *
      * @param xml String xml para tratamento.
-     * @return message Mensagem com as informações tratadas.
+     * @return Mensagem com as informações tratadas.
      */
-    public String getMessage(String xml) {
+    public String getMessage(String xml) throws BsusException {
 
-        if (xml == null) {
-            String logMessage = "O parametro 'xml' não possui valor.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage);
-        }
+        BsusValidator.verifyNull(xml, "xml", log);
+        String message = "";
         
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
@@ -69,37 +59,23 @@ public class XmlParser {
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
             InputSource source = new InputSource(new StringReader(xml));
-            Document xmlDocument = builder.parse(source);
+            Document document = builder.parse(source);
+            NodeList n1 = document.getElementsByTagName("soap:Text");
 
-            NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
-
-            Node node1;
-            node1 = n1.item(0);
-
-            String message = node1.getTextContent() + "\n";
-            return (message);
-
-        } catch (FileNotFoundException e) {
-            String logMessage = "O documento .xml não foi encontrado.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            Node node1 = n1.item(0);
+            message = node1.getTextContent() + "\n";
+            
         } catch (ParserConfigurationException e) {
             String logMessage = "Houve um erro ao buscar as informações.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         } catch (SAXException e) {
             String logMessage = "Houve um erro ao utilizar o SAX.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         } catch (IOException e) {
             String logMessage = "Houve um erro ao abrir o documento .xml";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
-        } catch (NullPointerException e) {
-            String logMessage = "Não foi possivel encontrar a TagName "
-                    + "no documento .xml";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         }
+
+        return message;
     }
 }

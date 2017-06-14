@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.interfaceh;
 
+import br.ufg.inf.horus.interfaceh.objects.LogTester;
 import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.model.Log;
 import static org.junit.Assert.assertNotNull;
@@ -32,17 +33,7 @@ public class BsusFactorytest {
 
     public BsusFactorytest() {
         this.PACKAGE = "br.ufg.inf.horus.implementation.service";
-        this.log = new Log() {
-            @Override
-            public void info(String message) {
-                System.out.println(message);
-            }
-
-            @Override
-            public void erro(String message) {
-                System.err.println(message);
-            }
-        };
+        this.log = new LogTester();
     }
 
     @Test
@@ -55,7 +46,7 @@ public class BsusFactorytest {
 
         assertNotNull(BsusFactory.createBarramento(
                 classNameConnection, classNameBarramento,
-                this.log, url, usuario, senha
+                url, usuario, senha, this.log
         ));
     }
 
@@ -69,7 +60,7 @@ public class BsusFactorytest {
 
         assertNotNull(BsusFactory.createBarramento(
                 classNameConnection, classNameBarramento,
-                this.log, url, usuario, senha
+                url, usuario, senha, this.log
         ));
     }
 

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufg.inf.horus.implementation;
+package br.ufg.inf.horus.implementation.objects;
 
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.implementation.model.Security;
 
 /**
  *
@@ -87,6 +88,12 @@ public class ConnectionTester implements Connection {
 
     @Override
     public void setCredential(String usuario, String senha) {
+        throw new UnsupportedOperationException(
+                "Metétodo não utilizado.");
+    }
+    
+    @Override
+    public void setCredential(Security security) {
         throw new UnsupportedOperationException(
                 "Metétodo não utilizado.");
     }

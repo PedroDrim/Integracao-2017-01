@@ -6,6 +6,7 @@
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.controller.XmlParser;
 import br.ufg.inf.horus.implementation.model.Barramento;
 import br.ufg.inf.horus.implementation.model.Connection;
@@ -42,6 +43,7 @@ public class Bsus implements Barramento {
      */
     @Override
     public void setConnection(Connection connection) {
+        BsusValidator.verifyNull(connection, "connection", log);
         this.connection = connection;
     }
 

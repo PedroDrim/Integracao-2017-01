@@ -5,6 +5,8 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.objects.ConnectionTester;
+import br.ufg.inf.horus.implementation.objects.LogTester;
 import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.service.Bsus;
 import org.junit.Test;

@@ -5,6 +5,7 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.objects.LogTester;
 import br.ufg.inf.horus.implementation.controller.BsusException;
 import br.ufg.inf.horus.implementation.service.CircuitBreaker;
 import br.ufg.inf.horus.implementation.model.Log;
@@ -227,12 +228,11 @@ public class CircuitBreakerTest {
     
     /**
      * Caso de teste responsável por testar a classe CicruitBreaker quando o
-     * parametro 'log' é vazio.
+     * parametro 'log' é vazio (deverá permitir).
      *
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    @Test(expected = BsusException.class)
     public void logIsNullTest() throws InterruptedException,
             ExecutionException {
 
