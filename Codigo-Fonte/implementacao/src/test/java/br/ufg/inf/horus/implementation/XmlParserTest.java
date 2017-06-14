@@ -52,7 +52,7 @@ public class XmlParserTest {
 
         XmlParser instance = new XmlParser(new LogTester());
 
-        String response = "Uma ou mais regras negociais foram violadas,"
+        String response = "Uma ou mais regras negociais foram violadas, "
                 + "verifique a lista de erros.\n";
 
         String request = instance.getMessage(xml.toString());

@@ -6,6 +6,7 @@
 package br.ufg.inf.horus.interfaceh;
 
 import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.model.Barramento;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
@@ -36,6 +37,14 @@ public class BsusFactory {
             String classNameBarramento, String url,
             String usuario, String senha, Log log) throws BsusException {
 
+        BsusValidator.verifyNull(classNameBarramento, "classNameBarramento",
+                log);
+        BsusValidator.verifyNull(classNameConnection, "classNameConnection",
+                log);
+        BsusValidator.verifyNull(url, "url", log);
+        BsusValidator.verifyNull(usuario, "usuario", log);
+        BsusValidator.verifyNull(senha, "senha", log);
+
         Connection c = (Connection) criaInstancia(classNameConnection, log);
         c.setLog(log);
         c.setCredential(usuario, senha);
@@ -61,6 +70,13 @@ public class BsusFactory {
             String classNameBarramento, String url,
             Security security, Log log) throws BsusException {
 
+        BsusValidator.verifyNull(classNameBarramento, "classNameBarramento",
+                log);
+        BsusValidator.verifyNull(classNameConnection, "classNameConnection",
+                log);
+        BsusValidator.verifyNull(url, "url", log);
+        BsusValidator.verifyNull(security, "security", log);
+
         Connection c = (Connection) criaInstancia(classNameConnection, log);
         c.setLog(log);
         c.setCredential(security);
@@ -71,15 +87,21 @@ public class BsusFactory {
 
     /**
      * Método intermediário para criação de um barramento.
+     *
      * @param classNameBarramento Nome da classe que implementa a interface
      * Barramento.
      * @param log Objeto que implementa a interface Log (Opcional).
      * @param c Objeto que implementa a interface Connecion.
      * @return O objeto que implementa a interface barramento.
-     * @throws BsusException 
+     * @throws BsusException
      */
     private static Barramento buildBarramento(String classNameBarramento,
             Log log, Connection c) throws BsusException {
+        
+        BsusValidator.verifyNull(classNameBarramento, "classNameBarramento",
+                log);
+        BsusValidator.verifyNull(c, "c", log);
+        
         Barramento b = (Barramento) criaInstancia(classNameBarramento, log);
         b.setConnection(c);
         b.setLog(log);
@@ -97,28 +119,28 @@ public class BsusFactory {
     private static Object criaInstancia(String className, Log log)
             throws BsusException {
 
+        BsusValidator.verifyNull(className, "className", log);
+        Object object = null;
+
         try {
             Class clazz = Class.forName(className);
-            return clazz.newInstance();
+            object = clazz.newInstance();
 
         } catch (ClassNotFoundException ex) {
             final String CLASSNAMEERROR = "A classe " + className
                     + " não foi encontrada.";
-            log.erro(CLASSNAMEERROR);
-            throw new BsusException(CLASSNAMEERROR, ex);
-
+            BsusValidator.catchException(ex, CLASSNAMEERROR, log);
         } catch (InstantiationException ex) {
             final String INSTANTIATIONERROR
                     = "Não foi possível instanciar a classe " + className + ".";
-            log.erro(INSTANTIATIONERROR);
-            throw new BsusException(INSTANTIATIONERROR, ex);
-
+            BsusValidator.catchException(ex, INSTANTIATIONERROR, log);
         } catch (IllegalAccessException ex) {
             final String ILLEGALACCESSERROR
                     = "Não foi possível inicializar o construtor da classe "
                     + className + ".";
-            log.erro(ILLEGALACCESSERROR);
-            throw new BsusException(ILLEGALACCESSERROR, ex);
+            BsusValidator.catchException(ex, ILLEGALACCESSERROR, log);
         }
+
+        return object;
     }
 }
