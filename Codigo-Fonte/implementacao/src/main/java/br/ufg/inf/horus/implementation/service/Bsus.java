@@ -67,17 +67,12 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNES(int cnes) {
-        if(verificaCnes(cnes)!=0){
+        verificaCnes(cnes);
         String xml = connection.consultarPosicaoEstoquePorCNES(cnes);        
             XmlParser parser = new XmlParser(log);
             String retorno = parser.getMessage(xml);
             return retorno;
-        }
-        else{
-            String message = "";
-            log.erro(message);
-            throw new BsusException(message);
-        }
+        
     }
 
     /**
@@ -90,19 +85,15 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNESEPrincipio(int cnes, String principio) {
-        if(verificaCnes(cnes)!=0 && verificaPrincipio(principio)!=null){
+        verificaCnes(cnes);
+        verificaPrincipio(principio);
             String xml = 
                 connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
             cnes, principio);
             XmlParser parser = new XmlParser(log);
             String retorno = parser.getMessage(xml);
             return retorno;  
-        }
-        else{
-            String message = "";
-            log.erro(message);
-            throw new BsusException(message);
-        }
+        
     }
 
     /**
@@ -122,22 +113,17 @@ public class Bsus implements Barramento {
         String principio, int posicaoInicio, int qtdRegistrosPagina,
         int qtdRegistros) {
         
-        if(verificaCnes(cnes)!=0 && verificaPrincipio(principio)!=null && 
-            verificaPaginado(posicaoInicio,qtdRegistrosPagina,
-                    qtdRegistros)==true){
+        verificaCnes(cnes);
+        verificaPrincipio(principio);
+        verificaPaginado(posicaoInicio,qtdRegistrosPagina,qtdRegistros);
             String xml = 
-                connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
-                cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+               connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+               cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
             );
             XmlParser parser = new XmlParser(log);
             String retorno = parser.getMessage(xml);
             return retorno;
-        }
-        else{
-            String message = "";
-            log.erro(message);
-            throw new BsusException(message);
-        }
+        
     }
 
     /**
@@ -150,18 +136,13 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterDadosEEstoquePorCNES(int cnes) {
-        if(verificaCnes(cnes)!=0){
+        verificaCnes(cnes);
             String xml = connection.consultarProdutoPorCNESDispensacao(cnes
             );
             XmlParser parser = new XmlParser(log);
             String retorno = parser.getMessage(xml);
             return retorno;
-        }
-        else{
-            String message = "";
-            log.erro(message);
-            throw new BsusException(message);
-        }
+
     }
 
     /**
@@ -178,8 +159,9 @@ public class Bsus implements Barramento {
     @Override
     public String obterDadosEEstoquePorCNESPaginado(int cnes, int posicaoInicio,
             int qtdRegistrosPagina, int qtdRegistros) {
-        if(verificaCnes(cnes)!=0 && verificaPaginado(posicaoInicio,
-                qtdRegistrosPagina,qtdRegistros)==true){
+        verificaCnes(cnes);
+        verificaPaginado(posicaoInicio,
+                qtdRegistrosPagina,qtdRegistros);
                 String xml = 
                     connection.consultarProdutoPorCNESDispensacaoPaginado(
                 cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
@@ -187,12 +169,7 @@ public class Bsus implements Barramento {
             XmlParser parser = new XmlParser(log);
             String retorno = parser.getMessage(xml);
             return retorno;
-        }
-        else{
-            String message = "";
-            log.erro(message);
-            throw new BsusException(message);
-        }
+       
     }
     
     /**
