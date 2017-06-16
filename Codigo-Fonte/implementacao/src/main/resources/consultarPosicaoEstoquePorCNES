@@ -1,0 +1,15 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:est="http://servicos.saude.gov.br/horus/v1r0/EstoqueService">
+ <soap:Header>
+ <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd">
+ <wsse:UsernameToken wsu:Id="Id-0001334008436683-000000002c4a1908-1" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+ <wsse:Username>%s</wsse:Username>
+ <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordText">%s</wsse:Password>
+ </wsse:UsernameToken>
+ </wsse:Security>
+ </soap:Header>
+ <soap:Body>
+ <est:requestConsultarPosicaoEstoquePorCNES>
+ <est:cnes>%d</est:cnes>
+ </est:requestConsultarPosicaoEstoquePorCNES>
+ </soap:Body>
+</soap:Envelope>

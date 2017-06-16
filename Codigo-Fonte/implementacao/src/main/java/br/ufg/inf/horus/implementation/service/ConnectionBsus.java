@@ -10,7 +10,9 @@ import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.model.Connection;
 import br.ufg.inf.horus.implementation.model.Log;
 import br.ufg.inf.horus.implementation.model.Security;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
@@ -115,20 +117,25 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public String consultarPosicaoEstoquePorCNES(int cnes) {
-        
-        StringBuilder soap = new StringBuilder();
-
-        soap.append(buildHeaderXml());
-        soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" <est:cnes>");
-        soap.append(cnes);
-        soap.append("</est:cnes>\n ");
-        soap.append("</est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");
+       StringBuilder soap = new StringBuilder();
+       String teste ="";
+       try{
+        BufferedReader br = new BufferedReader(new FileReader(
+                "./src/main/resources/consultarPosicaoEstoquePorCNES") );
+        String a;
+        while((a = br.readLine())!=null){
+        teste += a;
+        }
+        }catch (IOException ex){
+           log.erro("Arquivo não encontrado");
+        }
+        String output = String.format(teste, usuario, senha,cnes);
+        soap.append(output);
         String response = new CircuitBreaker(soap.toString(),
                 url, log).execute();
 
         return getError(response);
+
     }
 
     /**
@@ -143,20 +150,22 @@ public class ConnectionBsus implements Connection {
     @Override
     public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes,
             String principio) {
+        
         StringBuilder soap = new StringBuilder();
-
-        soap.append(buildHeaderXml());
-        soap.append(" <est:requestConsultarPosicaoEstoque");
-        soap.append("PorCNESPrincipioAtivo>\n");
-        soap.append(" <est:cnes>");
-        soap.append(cnes);
-        soap.append("</est:cnes>\n");
-        soap.append(" <est:principioAtivo>");
-        soap.append(principio);
-        soap.append("</est:principioAtivo>\n ");
-        soap.append("</est:requestConsultarPosicaoEstoque");
-        soap.append("PorCNESPrincipioAtivo>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");
+        String teste ="";
+        try{
+        BufferedReader br = new BufferedReader(new FileReader(
+                "./src/main/resources/consultarPosicaoEstoquePorCNES"
+                        + "PrincipioAtivo") );
+        String a;
+        while((a = br.readLine())!=null){
+        teste += a;
+        }
+        }catch (IOException ex){
+           log.erro("Arquivo não encontrado");
+        }
+        String output = String.format(teste, usuario, senha, cnes, principio);
+        soap.append(output);
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
 
@@ -179,30 +188,23 @@ public class ConnectionBsus implements Connection {
     public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes,
             String principio, int posicaoInicio, int qtdRegistrosPagina,
             int qtdRegistros) {
+       
         StringBuilder soap = new StringBuilder();
-
-        soap.append(buildHeaderXmlPaginado());
-        soap.append(" <est:requestConsultarPosicaoEstoque");
-        soap.append("PorCNESPrincipioAtivoPaginado>\n");
-        soap.append(" <est:cnes>");
-        soap.append(cnes);
-        soap.append("</est:cnes>\n");
-        soap.append(" <est:principioAtivo>");
-        soap.append(principio);
-        soap.append("</est:principioAtivo>\n");
-        soap.append(" <est:paginacao>\n <pag:posicaoRegistroInicio>");
-        soap.append(posicaoInicio);
-        soap.append("</pag:posicaoRegistroInicio>\n");
-        soap.append(" <pag:quantidadeRegistrosPorPagina>");
-        soap.append(qtdRegistrosPagina);
-        soap.append("</pag:quantidadeRegistrosPorPagina>\n");
-        soap.append(" <pag:quantidadeRegistros>");
-        soap.append(qtdRegistros);
-        soap.append("</pag:quantidadeRegistros>\n");
-        soap.append(" </est:paginacao>\n");
-        soap.append(" </est:requestConsultarPosicaoEstoquePor");
-        soap.append("CNESPrincipioAtivoPaginado>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");
+        String teste ="";
+        try{
+        BufferedReader br = new BufferedReader(new FileReader(
+                "./src/main/resources/consultarPosicaoEstoquePorCNES"
+                        + "PrincipioAtivoPaginado") );
+        String a;
+        while((a = br.readLine())!=null){
+        teste += a;
+        }
+        }catch (IOException ex){
+           log.erro("Arquivo não encontrado");
+        }
+        String output = String.format(teste, usuario, senha, cnes, principio,
+                posicaoInicio,qtdRegistrosPagina,qtdRegistros);
+        soap.append(output);
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
 
@@ -219,14 +221,24 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public String consultarProdutoPorCNESDispensacao(int cnes) {
-        StringBuilder soap = new StringBuilder();
 
-        soap.append(buildHeaderXml());
-        soap.append(" <est:requestConsultarProdutoPorCNESDispensacao>\n");
-        soap.append(" <est:cnes>").append(cnes).append("</est:cnes>\n");
-        soap.append(" </est:requestConsultarProdutoPorCNESDispensacao>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");
-        String response = new CircuitBreaker(soap.toString(), url, log)
+       StringBuilder soap = new StringBuilder();
+       String teste ="";
+       try{
+        BufferedReader br = new BufferedReader(new FileReader(
+                "./src/main/resources/consultarProdutoPor"
+                        + "CNESDispensacao") );
+        String a;
+        while((a = br.readLine())!=null){
+        teste += a;
+        }
+        }catch (IOException ex){
+           log.erro("Arquivo não encontrado");
+        }
+        String output = String.format(teste, usuario, senha,cnes);
+        soap.append(output);
+        String response = new CircuitBreaker(soap.toString(),
+                url, log)
                 .execute();
 
         return getError(response);
@@ -247,96 +259,25 @@ public class ConnectionBsus implements Connection {
     public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
             int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         StringBuilder soap = new StringBuilder();
-
-        soap.append(buildHeaderXmlPaginado());
-        soap.append(" <est:requestConsultarProdutoPor");
-        soap.append("CNESDispensacaoPaginado>\n");
-        soap.append(" <est:cnes>");
-        soap.append(cnes);
-        soap.append("</est:cnes>\n");
-        soap.append("<est:paginacao>\n");
-        soap.append(" <pag:posicaoRegistroInicio>");
-        soap.append(posicaoInicio);
-        soap.append("</pag:posicaoRegistroInicio>\n");
-        soap.append(" <pag:quantidadeRegistrosPorPagina>");
-        soap.append(qtdRegistrosPagina);
-        soap.append("</pag:quantidadeRegistrosPorPagina>\n");
-        soap.append("<pag:quantidadeRegistros>");
-        soap.append(qtdRegistros);
-        soap.append("</pag:quantidadeRegistros>\n");
-        soap.append(" </est:paginacao>\n");
-        soap.append(" </est:requestConsultarProduto");
-        soap.append("PorCNESDispensacaoPaginado>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");
+        String teste ="";
+        try{
+        BufferedReader br = new BufferedReader(new FileReader(
+                "./src/main/resources/consultarProdutoPor"
+                        + "CNESDispensacaoPaginado") );
+        String a;
+        while((a = br.readLine())!=null){
+        teste += a;
+        }
+        }catch (IOException ex){
+           log.erro("Arquivo não encontrado");
+        }
+        String output = String.format(teste, usuario, senha,cnes,posicaoInicio,
+                qtdRegistrosPagina,qtdRegistros);
+        soap.append(output);
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
 
         return getError(response);
-    }
-
-    /**
-     * Método que constrói o header padrão.
-     *
-     * @return str Header da requisição para serviços não paginados.
-     */
-    private String buildHeaderXml() {
-        StringBuilder str = new StringBuilder();
-        str.append("<soap:Envelope ");
-        str.append("xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"");
-        str.append(" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/");
-        str.append("EstoqueService\">\n");
-        str.append(" <soap:Header>\n");
-        str.append(" <wsse:Security xmlns:");
-        str.append("wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-");
-        str.append("wsswssecurity-secext-1.0.xsd\">\n");
-        str.append(" <wsse:UsernameToken");
-        str.append(" wsu:Id=\"Id-0001334008436683-000000002c4a1908-1\"");
-        str.append(" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/");
-        str.append("oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n");
-        str.append(" <wsse:Username>");
-        str.append(usuario);
-        str.append("</wsse:Username>\n");
-        str.append(" <wsse:Password Type=\"http:");
-        str.append("//docs.oasis-open.org/wss/2004");
-        str.append("/01/oasis-200401-wssusername-token-profile-1.0#PasswordText");
-        str.append("\">").append(senha).append("</wsse:Password>\n");
-        str.append(" </wsse:UsernameToken>\n </wsse:Security>\n");
-        str.append(" </soap:Header>\n <soap:Body>\n");
-        return str.toString();
-    }
-
-    /**
-     * Método que constrói o header padrão.
-     *
-     * @return str Header da requisição para serviços paginados.
-     */
-    private String buildHeaderXmlPaginado() {
-        StringBuilder str = new StringBuilder();
-        str.append("<soap:Envelope");
-        str.append(" xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"");
-        str.append(" xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/");
-        str.append("EstoqueService\" xmlns:pag=\"http://servicos.saude.gov.br/");
-        str.append("wsdl/mensageria/v1r0/paginacao\">\n");
-        str.append(" <soap:Header>\n");
-        str.append(" <wsse:Security");
-        str.append(" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/");
-        str.append("oasis-200401-wsswssecurity-secext-1.0.xsd\">\n");
-        str.append(" <wsse:UsernameToken wsu:Id=\"Id-0001334008436683");
-        str.append("-000000002c4a1908-1\" xmlns:wsu=\"http://");
-        str.append("docs.oasis-open.org");
-        str.append("/wss/2004/01/oasis-200401-wss-wssecurity-utility");
-        str.append("-1.0.xsd\">\n");
-        str.append(" <wsse:Username>");
-        str.append(usuario);
-        str.append("</wsse:Username>\n");
-        str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/");
-        str.append("2004/01/oasis-200401-wssusername-token-profile");
-        str.append("-1.0#PasswordText\">");
-        str.append(senha);
-        str.append("</wsse:Password>\n");
-        str.append(" </wsse:UsernameToken>\n");
-        str.append(" </wsse:Security>\n </soap:Header>\n <soap:Body>\n");
-        return str.toString();
     }
 
     /**
