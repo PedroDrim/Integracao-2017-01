@@ -32,10 +32,11 @@ public class FileResources {
      * @param cnes Número de cnes.
      * @return A posição no estoque do referido produto.
      */
-    public String consultarPosicaoEstoquePorCNES(int cnes) {
+    public String consultarPosicaoEstoquePorCNES(String usuario, String senha,
+            int cnes) {
         String resposta = getXml("consultarPosicaoEstoquePorCNES");
-
-        return resposta;
+        String output = String.format(resposta, usuario, senha,cnes);
+        return output;
     }
 
     /**
@@ -47,12 +48,13 @@ public class FileResources {
      * @param principio Tipo de princípio ativo.
      * @return A posição do estoque do referido produto.
      */
-    public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes,
-            String principio) {
+    public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String usuario,
+            String senha,int cnes, String principio) {
         String arquivo = "consultarPosicaoEstoquePorCNESPrincipioAtivo";
         String resposta = getXml(arquivo);
-
-        return resposta;
+        String output = String.format(resposta, usuario, senha, cnes,
+                principio);
+        return output;
     }
 
     /**
@@ -67,13 +69,15 @@ public class FileResources {
      * @param qtdRegistros Quantidade de registros ao todo.
      * @return A posição no estoque do referido produto.
      */
-    public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes,
+    public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+            String usuario, String senha,int cnes,
             String principio, int posicaoInicio, int qtdRegistrosPagina,
             int qtdRegistros) {
         String arquivo = "consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado";
         String resposta = getXml(arquivo);
-
-        return resposta;
+        String output = String.format(resposta, usuario, senha, cnes, principio,
+                posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        return output;
     }
 
     /**
@@ -84,10 +88,11 @@ public class FileResources {
      * @param cnes Número de cnes.
      * @return A posição no estoque e os dados do referido produto.
      */
-    public String consultarProdutoPorCNESDispensacao(int cnes) {
+    public String consultarProdutoPorCNESDispensacao(String usuario,
+            String senha, int cnes) {
         String resposta = getXml("consultarProdutoPorCNESDispensacao");
-
-        return resposta;
+        String output = String.format(resposta, usuario, senha,cnes);
+        return output;
     }
 
     /**
@@ -101,12 +106,14 @@ public class FileResources {
      * @param qtdRegistros Quantidade de registros ao todo.
      * @return A posição no estoque e os dados do referido produto.
      */
-    public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
+    public String consultarProdutoPorCNESDispensacaoPaginado(String usuario, 
+            String senha, int cnes,
             int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         String resposta
                 = getXml("consultarProdutoPorCNESDispensacaoPaginado");
-
-        return resposta;
+        String output = String.format(resposta, usuario, senha, cnes,
+                posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        return output;
     }
 
     public String resposta() {

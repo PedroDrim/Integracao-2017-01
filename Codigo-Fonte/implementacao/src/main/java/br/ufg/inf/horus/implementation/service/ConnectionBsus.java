@@ -6,6 +6,7 @@
 package br.ufg.inf.horus.implementation.service;
 
 import br.ufg.inf.horus.implementation.model.Connection;
+import br.ufg.inf.horus.implementation.controller.FileResources;
 import br.ufg.inf.horus.util.model.Log;
 import br.ufg.inf.horus.util.model.Security;
 import br.ufg.inf.horus.util.validations.BsusException;
@@ -117,20 +118,9 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public String consultarPosicaoEstoquePorCNES(int cnes) {
-       StringBuilder soap = new StringBuilder();
-       String teste ="";
-       try{
-        BufferedReader br = new BufferedReader(new FileReader(
-                "./src/main/resources/consultarPosicaoEstoquePorCNES") );
-        String a;
-        while((a = br.readLine())!=null){
-        teste += a;
-        }
-        }catch (IOException ex){
-           log.erro("Arquivo não encontrado");
-        }
-        String output = String.format(teste, usuario, senha,cnes);
-        soap.append(output);
+        StringBuilder soap = new StringBuilder();
+        FileResources file = new FileResources(log);
+        soap.append(file.consultarPosicaoEstoquePorCNES(usuario, senha, cnes));
         String response = new CircuitBreaker(soap.toString(),
                 url, log).execute();
 
@@ -152,20 +142,9 @@ public class ConnectionBsus implements Connection {
             String principio) {
         
         StringBuilder soap = new StringBuilder();
-        String teste ="";
-        try{
-        BufferedReader br = new BufferedReader(new FileReader(
-                "./src/main/resources/consultarPosicaoEstoquePorCNES"
-                        + "PrincipioAtivo") );
-        String a;
-        while((a = br.readLine())!=null){
-        teste += a;
-        }
-        }catch (IOException ex){
-           log.erro("Arquivo não encontrado");
-        }
-        String output = String.format(teste, usuario, senha, cnes, principio);
-        soap.append(output);
+        FileResources file = new FileResources(log);
+        soap.append(file.consultarPosicaoEstoquePorCNESPrincipioAtivo(
+                usuario, senha, cnes, principio));
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
 
@@ -190,27 +169,17 @@ public class ConnectionBsus implements Connection {
             int qtdRegistros) {
        
         StringBuilder soap = new StringBuilder();
-        String teste ="";
-        try{
-        BufferedReader br = new BufferedReader(new FileReader(
-                "./src/main/resources/consultarPosicaoEstoquePorCNES"
-                        + "PrincipioAtivoPaginado") );
-        String a;
-        while((a = br.readLine())!=null){
-        teste += a;
-        }
-        }catch (IOException ex){
-           log.erro("Arquivo não encontrado");
-        }
-        String output = String.format(teste, usuario, senha, cnes, principio,
-                posicaoInicio,qtdRegistrosPagina,qtdRegistros);
-        soap.append(output);
-        String response = new CircuitBreaker(soap.toString(), url, log)
+        FileResources file = new FileResources(log);
+        soap.append(file.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+                usuario, senha, cnes, principio, posicaoInicio,
+                qtdRegistrosPagina, qtdRegistros));
+        String response = new CircuitBreaker(soap.toString(),
+                url, log)
                 .execute();
 
         return getError(response);
     }
-
+    
     /**
      * Método interno para consultar as posições nos estoques, bem como os dados
      * do produto referentes ao número de cnes.
@@ -220,30 +189,17 @@ public class ConnectionBsus implements Connection {
      * @return A posição no estoque e os dados do referido produto.
      */
     @Override
-    public String consultarProdutoPorCNESDispensacao(int cnes) {
-
-       StringBuilder soap = new StringBuilder();
-       String teste ="";
-       try{
-        BufferedReader br = new BufferedReader(new FileReader(
-                "./src/main/resources/consultarProdutoPor"
-                        + "CNESDispensacao") );
-        String a;
-        while((a = br.readLine())!=null){
-        teste += a;
-        }
-        }catch (IOException ex){
-           log.erro("Arquivo não encontrado");
-        }
-        String output = String.format(teste, usuario, senha,cnes);
-        soap.append(output);
-        String response = new CircuitBreaker(soap.toString(),
-                url, log)
+    public String consultarProdutoPorCNESDispensacao(int cnes){
+        StringBuilder soap = new StringBuilder();
+        
+        FileResources file = new FileResources(log);
+        soap.append(file.consultarProdutoPorCNESDispensacao(
+                usuario, senha, cnes));
+        String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
 
         return getError(response);
     }
-
     /**
      * Método interno para consultar as posições nos estoques, bem como os dados
      * do produto referentes ao número de cnes e dados de paginação.
@@ -259,21 +215,11 @@ public class ConnectionBsus implements Connection {
     public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
             int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         StringBuilder soap = new StringBuilder();
-        String teste ="";
-        try{
-        BufferedReader br = new BufferedReader(new FileReader(
-                "./src/main/resources/consultarProdutoPor"
-                        + "CNESDispensacaoPaginado") );
-        String a;
-        while((a = br.readLine())!=null){
-        teste += a;
-        }
-        }catch (IOException ex){
-           log.erro("Arquivo não encontrado");
-        }
-        String output = String.format(teste, usuario, senha,cnes,posicaoInicio,
-                qtdRegistrosPagina,qtdRegistros);
-        soap.append(output);
+        
+       FileResources file = new FileResources(log);
+        soap.append(file.consultarProdutoPorCNESDispensacaoPaginado(
+                usuario, senha, cnes, posicaoInicio, qtdRegistrosPagina,
+                qtdRegistros));
         String response = new CircuitBreaker(soap.toString(), url, log)
                 .execute();
 
