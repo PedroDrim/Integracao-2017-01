@@ -5,7 +5,7 @@
  */
 package br.ufg.inf.horus.interfaceh.objects;
 
-import br.ufg.inf.horus.implementation.model.Security;
+import br.ufg.inf.horus.util.model.Security;
 
 /**
  * Classe que implementa a interface para obtenção das credênciais da

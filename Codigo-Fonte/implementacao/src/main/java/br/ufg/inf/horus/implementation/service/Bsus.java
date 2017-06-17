@@ -5,12 +5,12 @@
  */
 package br.ufg.inf.horus.implementation.service;
 
-import br.ufg.inf.horus.implementation.controller.BsusException;
-import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.controller.XmlParser;
 import br.ufg.inf.horus.implementation.model.Barramento;
 import br.ufg.inf.horus.implementation.model.Connection;
-import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.validations.BsusException;
+import br.ufg.inf.horus.util.validations.BsusValidator;
 
 /**
  * Classe responsável por implementar e requerir uma execução remota além de
@@ -57,7 +57,7 @@ public class Bsus implements Barramento {
     public void setLog(Log log) {
         this.log = log;
     }
-    
+
     /**
      * Obtem as posições nos estoques pelo número de cnes.
      *
@@ -68,11 +68,11 @@ public class Bsus implements Barramento {
     @Override
     public String obterEstoquePorCNES(int cnes) {
         verificaCnes(cnes);
-        String xml = connection.consultarPosicaoEstoquePorCNES(cnes);        
-            XmlParser parser = new XmlParser(log);
-            String retorno = parser.getMessage(xml);
-            return retorno;
-        
+        String xml = connection.consultarPosicaoEstoquePorCNES(cnes);
+        XmlParser parser = new XmlParser(log);
+        String retorno = parser.getMessage(xml);
+        return retorno;
+
     }
 
     /**
@@ -87,13 +87,13 @@ public class Bsus implements Barramento {
     public String obterEstoquePorCNESEPrincipio(int cnes, String principio) {
         verificaCnes(cnes);
         verificaPrincipio(principio);
-            String xml = 
-                connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
-            cnes, principio);
-            XmlParser parser = new XmlParser(log);
-            String retorno = parser.getMessage(xml);
-            return retorno;  
-        
+        String xml
+                = connection.consultarPosicaoEstoquePorCNESPrincipioAtivo(
+                        cnes, principio);
+        XmlParser parser = new XmlParser(log);
+        String retorno = parser.getMessage(xml);
+        return retorno;
+
     }
 
     /**
@@ -110,20 +110,20 @@ public class Bsus implements Barramento {
      */
     @Override
     public String obterEstoquePorCNESEPrincipioPaginado(int cnes,
-        String principio, int posicaoInicio, int qtdRegistrosPagina,
-        int qtdRegistros) {
-        
+            String principio, int posicaoInicio, int qtdRegistrosPagina,
+            int qtdRegistros) {
+
         verificaCnes(cnes);
         verificaPrincipio(principio);
-        verificaPaginado(posicaoInicio,qtdRegistrosPagina,qtdRegistros);
-            String xml = 
-               connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
-               cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
-            );
-            XmlParser parser = new XmlParser(log);
-            String retorno = parser.getMessage(xml);
-            return retorno;
-        
+        verificaPaginado(posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        String xml
+                = connection.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+                        cnes, principio, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+                );
+        XmlParser parser = new XmlParser(log);
+        String retorno = parser.getMessage(xml);
+        return retorno;
+
     }
 
     /**
@@ -137,11 +137,10 @@ public class Bsus implements Barramento {
     @Override
     public String obterDadosEEstoquePorCNES(int cnes) {
         verificaCnes(cnes);
-            String xml = connection.consultarProdutoPorCNESDispensacao(cnes
-            );
-            XmlParser parser = new XmlParser(log);
-            String retorno = parser.getMessage(xml);
-            return retorno;
+        String xml = connection.consultarProdutoPorCNESDispensacao(cnes);
+        XmlParser parser = new XmlParser(log);
+        String retorno = parser.getMessage(xml);
+        return retorno;
 
     }
 
@@ -161,63 +160,63 @@ public class Bsus implements Barramento {
             int qtdRegistrosPagina, int qtdRegistros) {
         verificaCnes(cnes);
         verificaPaginado(posicaoInicio,
-                qtdRegistrosPagina,qtdRegistros);
-                String xml = 
-                    connection.consultarProdutoPorCNESDispensacaoPaginado(
-                cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
+                qtdRegistrosPagina, qtdRegistros);
+        String xml
+                = connection.consultarProdutoPorCNESDispensacaoPaginado(
+                        cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros
                 );
-            XmlParser parser = new XmlParser(log);
-            String retorno = parser.getMessage(xml);
-            return retorno;
-       
+        XmlParser parser = new XmlParser(log);
+        String retorno = parser.getMessage(xml);
+        return retorno;
+
     }
-    
+
     /**
      * Método para verificar se parâmetro informado é válido.
+     *
      * @param cnes Número Cnes para verificação
      * @return cnes Se válido, 0 se inválido
      */
-    public int verificaCnes(int cnes){
-        if(cnes>1000000 && cnes<=9999999){
+    public int verificaCnes(int cnes) {
+        if (cnes > 1000000 && cnes <= 9999999) {
             return cnes;
-        }
-        else{
-            String message = "Número CNES "+cnes+" inválido. CNES deve ter"
+        } else {
+            String message = "Número CNES " + cnes + " inválido. CNES deve ter"
                     + " 7 dígitos e conter somente números.";
             log.erro(message);
             throw new BsusException(message);
         }
     }
-    
+
     /**
      * Método para verificação do parâmetro princípio ativo.
+     *
      * @param principio String de principio ativo para verificação
      * @return principio se válido, null se inválido.
      */
-    public String verificaPrincipio(String principio){
-        if(!principio.isEmpty() && principio!=null){
+    public String verificaPrincipio(String principio) {
+        if (!principio.isEmpty() && principio != null) {
             return principio;
-        }
-        else{
-            String message = "Principio Ativo "+principio+" é inválido.";
+        } else {
+            String message = "Principio Ativo " + principio + " é inválido.";
             log.erro(message);
             throw new BsusException(message);
         }
     }
-    
+
     /**
      * Método para verificação dos parâmetros paginados.
+     *
      * @param posicaoInicio Parametro para verificação.
      * @param qtdRegistrosPagina Parâmetro para verificação.
      * @param qtdRegistros Parâmetro para verificação.
      * @return true se válidos, false se inválidos.
      */
     public boolean verificaPaginado(int posicaoInicio, int qtdRegistrosPagina,
-            int qtdRegistros){
-        if(posicaoInicio>=0 && qtdRegistrosPagina>=0 && qtdRegistros>=0){
+            int qtdRegistros) {
+        if (posicaoInicio >= 0 && qtdRegistrosPagina >= 0 && qtdRegistros >= 0) {
             return true;
-        }
-        else{
+        } else {
             String message = "Parâmentros para paginação informados"
                     + " não são válidos.";
             log.erro(message);

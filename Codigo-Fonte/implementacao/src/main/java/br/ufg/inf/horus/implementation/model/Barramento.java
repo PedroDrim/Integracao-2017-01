@@ -6,6 +6,7 @@
 package br.ufg.inf.horus.implementation.model;
 
 import br.ufg.inf.horus.implementation.service.Bsus;
+import br.ufg.inf.horus.util.model.Log;
 
 /**
  * Interface responsável por definir os métodos do serviço a serem utilizados

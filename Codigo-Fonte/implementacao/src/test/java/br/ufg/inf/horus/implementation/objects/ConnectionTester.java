@@ -6,8 +6,8 @@
 package br.ufg.inf.horus.implementation.objects;
 
 import br.ufg.inf.horus.implementation.model.Connection;
-import br.ufg.inf.horus.implementation.model.Log;
-import br.ufg.inf.horus.implementation.model.Security;
+import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.model.Security;
 
 /**
  *

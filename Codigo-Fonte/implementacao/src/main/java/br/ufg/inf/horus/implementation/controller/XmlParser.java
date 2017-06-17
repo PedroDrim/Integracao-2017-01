@@ -5,7 +5,9 @@
  */
 package br.ufg.inf.horus.implementation.controller;
 
-import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.validations.BsusException;
+import br.ufg.inf.horus.util.validations.BsusValidator;
 import java.io.IOException;
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;

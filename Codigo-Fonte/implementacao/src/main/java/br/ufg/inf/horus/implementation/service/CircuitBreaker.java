@@ -5,10 +5,10 @@
  */
 package br.ufg.inf.horus.implementation.service;
 
-import br.ufg.inf.horus.implementation.controller.BsusException;
-import br.ufg.inf.horus.implementation.controller.BsusValidator;
+import br.ufg.inf.horus.util.validations.BsusException;
+import br.ufg.inf.horus.util.validations.BsusValidator;
 import br.ufg.inf.horus.implementation.model.HttpInterface;
-import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.util.model.Log;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
@@ -51,7 +51,7 @@ public class CircuitBreaker extends HystrixCommand<String> {
      * @see Log
      * @param soapRequest String com a requisição.
      * @param destination Url de destino.
-     * @param log Objeto para exibição de mensagens (Log).
+     * @param log Objeto para exibição de mensagens Log (Opcional).
      */
     public CircuitBreaker(String soapRequest, String destination, Log log)
             throws BsusException {

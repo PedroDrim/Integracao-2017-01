@@ -6,8 +6,8 @@
 package br.ufg.inf.horus.interfaceh;
 
 import br.ufg.inf.horus.interfaceh.objects.LogTester;
-import br.ufg.inf.horus.implementation.controller.BsusException;
-import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.util.validations.BsusException;
+import br.ufg.inf.horus.util.model.Log;
 import br.ufg.inf.horus.interfaceh.objects.SecurityTester;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;

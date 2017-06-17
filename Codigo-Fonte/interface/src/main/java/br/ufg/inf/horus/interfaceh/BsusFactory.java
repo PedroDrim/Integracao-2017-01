@@ -5,12 +5,12 @@
  */
 package br.ufg.inf.horus.interfaceh;
 
-import br.ufg.inf.horus.implementation.controller.BsusException;
-import br.ufg.inf.horus.implementation.controller.BsusValidator;
+import br.ufg.inf.horus.util.validations.BsusException;
+import br.ufg.inf.horus.util.validations.BsusValidator;
 import br.ufg.inf.horus.implementation.model.Barramento;
 import br.ufg.inf.horus.implementation.model.Connection;
-import br.ufg.inf.horus.implementation.model.Log;
-import br.ufg.inf.horus.implementation.model.Security;
+import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.model.Security;
 
 /**
  * Instancia os serviços disponíveis.

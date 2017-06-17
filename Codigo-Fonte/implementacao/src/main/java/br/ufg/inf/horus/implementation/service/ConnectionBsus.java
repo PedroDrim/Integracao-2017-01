@@ -5,11 +5,11 @@
  */
 package br.ufg.inf.horus.implementation.service;
 
-import br.ufg.inf.horus.implementation.controller.BsusException;
-import br.ufg.inf.horus.implementation.controller.BsusValidator;
 import br.ufg.inf.horus.implementation.model.Connection;
-import br.ufg.inf.horus.implementation.model.Log;
-import br.ufg.inf.horus.implementation.model.Security;
+import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.model.Security;
+import br.ufg.inf.horus.util.validations.BsusException;
+import br.ufg.inf.horus.util.validations.BsusValidator;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

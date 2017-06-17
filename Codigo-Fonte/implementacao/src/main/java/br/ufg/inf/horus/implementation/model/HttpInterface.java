@@ -5,6 +5,8 @@
  */
 package br.ufg.inf.horus.implementation.model;
 
+import br.ufg.inf.horus.util.model.Log;
+
 /**
  * Interface para relizar as requisições com o serviço.
  *

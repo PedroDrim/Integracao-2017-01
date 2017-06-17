@@ -6,6 +6,8 @@
 package br.ufg.inf.horus.implementation.model;
 
 import br.ufg.inf.horus.implementation.service.ConnectionBsus;
+import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.model.Security;
 
 /**
  * Interface para conexão com os serviços do Horus.

@@ -5,9 +5,9 @@
  */
 package br.ufg.inf.horus.implementation.service;
 
-import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.util.validations.BsusException;
 import br.ufg.inf.horus.implementation.model.HttpInterface;
-import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.util.model.Log;
 import java.io.IOException;
 import java.nio.charset.UnsupportedCharsetException;
 import org.apache.http.HttpEntity;

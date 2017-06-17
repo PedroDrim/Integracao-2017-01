@@ -5,15 +5,14 @@
  */
 package br.ufg.inf.horus.implementation;
 
+import br.ufg.inf.horus.implementation.controller.FileResources;
 import br.ufg.inf.horus.implementation.objects.LogTester;
-import br.ufg.inf.horus.implementation.controller.BsusException;
+import br.ufg.inf.horus.util.validations.BsusException;
 import br.ufg.inf.horus.implementation.service.CircuitBreaker;
-import br.ufg.inf.horus.implementation.model.Log;
+import br.ufg.inf.horus.util.model.Log;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -41,25 +40,7 @@ public class CircuitBreakerTest {
      */
     public CircuitBreakerTest() {
         this.log = new LogTester();
-    }
-
-    /**
-     * Método executado antes de cada teste, responsável por inicializar as
-     * variaveis comuns.
-     */
-    @Before
-    public void setUp() {
-        HeaderGenerator headerGenerator = new HeaderGenerator();
-        this.header = headerGenerator.getHeader("user", "123", 0);
-    }
-
-    /**
-     * Método executado antes de cada teste, responsável por limpar as variaveis
-     * comuns.
-     */
-    @After
-    public void tearDown() {
-        this.header = "";
+        this.header = null;
     }
 
     /**
@@ -73,8 +54,8 @@ public class CircuitBreakerTest {
     public void singleAsynchronousTest() throws InterruptedException,
             ExecutionException {
 
-        String destination =
-                "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        String destination
+                = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
 
         CircuitBreaker circuitBreaker
                 = new CircuitBreaker(header, destination, log);
@@ -116,8 +97,8 @@ public class CircuitBreakerTest {
     public void singleSynchronousTest() throws InterruptedException,
             ExecutionException {
 
-        String destination =
-                "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        String destination
+                = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
 
         CircuitBreaker circuitBreaker
                 = new CircuitBreaker(header, destination, log);
@@ -188,7 +169,8 @@ public class CircuitBreakerTest {
 
         assertEquals(response, esperado);
     }
-     /**
+
+    /**
      * Caso de teste responsável por testar a classe CicruitBreaker quando o
      * parametro 'destination' é vazio.
      *
@@ -225,7 +207,7 @@ public class CircuitBreakerTest {
 
         assertEquals(response, esperado);
     }
-    
+
     /**
      * Caso de teste responsável por testar a classe CicruitBreaker quando o
      * parametro 'log' é vazio (deverá permitir).
@@ -236,8 +218,8 @@ public class CircuitBreakerTest {
     public void logIsNullTest() throws InterruptedException,
             ExecutionException {
 
-        String destination =
-                "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        String destination
+                = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
 
         CircuitBreaker circuitBreaker
                 = new CircuitBreaker(header, destination, null);
@@ -265,70 +247,5 @@ public class CircuitBreakerTest {
                 + "</soap:Detail></soap:Fault></soap:Body></soap:Envelope>";
 
         assertEquals(response, esperado);
-    }
-}
-
-/**
- * Classe responsável pela geração do cabeçalho utilizado para os testes da
- * classe CircuitBreaker
- *
- * @author Pedro
- */
-class HeaderGenerator {
-
-    /**
-     * Gera o conteúdo do cabeçalho da requisição com base em um username,
-     * password e número cnes.
-     *
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
-     * @param cnes Número do CNES para busca, 7 posições.
-     * @return Retorna o cabeçalho da requisição.
-     */
-    public String getHeader(String username, String password, int cnes) {
-
-        StringBuilder soap = new StringBuilder();
-        soap.append(buildHeaderXml(username, password));
-        soap.append(" <est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" <est:cnes>");
-        soap.append(cnes);
-        soap.append("</est:cnes>\n"
-                + " </est:requestConsultarPosicaoEstoquePorCNES>\n");
-        soap.append(" </soap:Body>\n </soap:Envelope>");
-
-        return soap.toString();
-    }
-
-    /**
-     * Gera o cabeçalho da requisição com base em um username e password.
-     *
-     * @param username Usuário do sistema Horus.
-     * @param senha Senha do usuário.
-     * @return Retorna o conteúdo do cabeçalho da requisição.
-     */
-    public String buildHeaderXml(String username, String password) {
-        StringBuilder str = new StringBuilder();
-        str.append("<soap:Envelope"
-                + " xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\""
-                + " xmlns:est=\"http://servicos.saude.gov.br/horus/v1r0/"
-                + "EstoqueService\">\n");
-        str.append(" <soap:Header>\n");
-        str.append(" <wsse:Security"
-                + " xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/"
-                + "oasis-200401-wsswssecurity-secext-1.0.xsd\">\n");
-        str.append(" <wsse:UsernameToken"
-                + " wsu:Id=\"Id-0001334008436683-000000002c4a1908-1\""
-                + " xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/"
-                + "01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n");
-        str.append(" <wsse:Username>");
-        str.append(username);
-        str.append("</wsse:Username>\n");
-        str.append(" <wsse:Password Type=\"http://docs.oasis-open.org/wss/"
-                + "2004/01/oasis-200401-wssusername-token-profile-1.0#"
-                + "PasswordText\">").append(password)
-                .append("</wsse:Password>\n");
-        str.append(" </wsse:UsernameToken>\n </wsse:Security>\n"
-                + " </soap:Header>\n <soap:Body>\n");
-        return str.toString();
     }
 }
