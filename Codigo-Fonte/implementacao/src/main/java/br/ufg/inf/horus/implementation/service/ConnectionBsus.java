@@ -83,19 +83,19 @@ public class ConnectionBsus implements Connection {
     }
 
     /**
-     * Define as credenciais de acesso da aplicação-usuário ao serviço
-     * com base em uma interface.
+     * Define as credenciais de acesso da aplicação-usuário ao serviço com base
+     * em uma interface.
      *
      * @see Connection
      * @param security interface para obtenção das credenciais.
      */
     @Override
-    public void setCredential(Security security){
+    public void setCredential(Security security) {
         BsusValidator.verifyNull(security, "security", log);
         this.usuario = security.getUser();
         this.senha = security.getPassword();
     }
-    
+
     /**
      * Define a url do serviço a ser utilizado.
      *
@@ -118,11 +118,9 @@ public class ConnectionBsus implements Connection {
      */
     @Override
     public String consultarPosicaoEstoquePorCNES(int cnes) {
-        StringBuilder soap = new StringBuilder();
-        FileResources file = new FileResources(log);
-        soap.append(file.consultarPosicaoEstoquePorCNES(usuario, senha, cnes));
-        String response = new CircuitBreaker(soap.toString(),
-                url, log).execute();
+        FileResources file = new FileResources(usuario, senha, log);
+        String soap = file.consultarPosicaoEstoquePorCNES(cnes);
+        String response = new CircuitBreaker(soap, url, log).execute();
 
         return getError(response);
 
@@ -140,14 +138,11 @@ public class ConnectionBsus implements Connection {
     @Override
     public String consultarPosicaoEstoquePorCNESPrincipioAtivo(int cnes,
             String principio) {
-        
-        StringBuilder soap = new StringBuilder();
-        FileResources file = new FileResources(log);
-        soap.append(file.consultarPosicaoEstoquePorCNESPrincipioAtivo(
-                usuario, senha, cnes, principio));
-        String response = new CircuitBreaker(soap.toString(), url, log)
-                .execute();
 
+        FileResources file = new FileResources("usuario", "senha", log);
+        String soap = file
+                .consultarPosicaoEstoquePorCNESPrincipioAtivo(cnes, principio);
+        String response = new CircuitBreaker(soap, url, log).execute();
         return getError(response);
     }
 
@@ -167,19 +162,16 @@ public class ConnectionBsus implements Connection {
     public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(int cnes,
             String principio, int posicaoInicio, int qtdRegistrosPagina,
             int qtdRegistros) {
-       
-        StringBuilder soap = new StringBuilder();
-        FileResources file = new FileResources(log);
-        soap.append(file.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
-                usuario, senha, cnes, principio, posicaoInicio,
-                qtdRegistrosPagina, qtdRegistros));
-        String response = new CircuitBreaker(soap.toString(),
-                url, log)
-                .execute();
+
+        FileResources file = new FileResources("usuario", "senha", log);
+        String soap = file.consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
+                cnes, principio, posicaoInicio,
+                qtdRegistrosPagina, qtdRegistros);
+        String response = new CircuitBreaker(soap, url, log).execute();
 
         return getError(response);
     }
-    
+
     /**
      * Método interno para consultar as posições nos estoques, bem como os dados
      * do produto referentes ao número de cnes.
@@ -189,17 +181,15 @@ public class ConnectionBsus implements Connection {
      * @return A posição no estoque e os dados do referido produto.
      */
     @Override
-    public String consultarProdutoPorCNESDispensacao(int cnes){
-        StringBuilder soap = new StringBuilder();
-        
-        FileResources file = new FileResources(log);
-        soap.append(file.consultarProdutoPorCNESDispensacao(
-                usuario, senha, cnes));
-        String response = new CircuitBreaker(soap.toString(), url, log)
-                .execute();
+    public String consultarProdutoPorCNESDispensacao(int cnes) {
+
+        FileResources file = new FileResources("usuario", "senha", log);
+        String soap = file.consultarProdutoPorCNESDispensacao(cnes);
+        String response = new CircuitBreaker(soap, url, log).execute();
 
         return getError(response);
     }
+
     /**
      * Método interno para consultar as posições nos estoques, bem como os dados
      * do produto referentes ao número de cnes e dados de paginação.
@@ -214,14 +204,11 @@ public class ConnectionBsus implements Connection {
     @Override
     public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
             int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
-        StringBuilder soap = new StringBuilder();
-        
-       FileResources file = new FileResources(log);
-        soap.append(file.consultarProdutoPorCNESDispensacaoPaginado(
-                usuario, senha, cnes, posicaoInicio, qtdRegistrosPagina,
-                qtdRegistros));
-        String response = new CircuitBreaker(soap.toString(), url, log)
-                .execute();
+
+        FileResources file = new FileResources("usuario", "senha", log);
+        String soap = file.consultarProdutoPorCNESDispensacaoPaginado(
+                cnes, posicaoInicio, qtdRegistrosPagina, qtdRegistros);
+        String response = new CircuitBreaker(soap, url, log).execute();
 
         return getError(response);
     }
@@ -235,6 +222,9 @@ public class ConnectionBsus implements Connection {
      */
     public String getError(String xml) {
 
+        BsusValidator.verifyNull(xml, "xml", log);
+        String resposta = "";
+
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
@@ -247,49 +237,45 @@ public class ConnectionBsus implements Connection {
             NodeList n1 = xmlDocument.getElementsByTagName("soap:Text");
             NodeList n2 = xmlDocument.getElementsByTagName("men:codigo");
             NodeList n3 = xmlDocument.getElementsByTagName("men:descricao");
-            
+
             Node node1;
             Node node2;
             Node node3;
-            
+
             node1 = n1.item(0);
             node2 = n2.item(0);
             node3 = n3.item(0);
-            
-            StringBuilder message =  new StringBuilder();
-            
+
+            StringBuilder message = new StringBuilder();
+
             message.append(node1.getTextContent());
             message.append("\n");
             message.append(node2.getTextContent());
             message.append("\n");
             message.append(node3.getTextContent());
-            
-            if(node1.getTextContent().isEmpty() || 
-                    node2.getTextContent().isEmpty() ||
-                    node3.getTextContent().isEmpty()){
-                return xml;
-            }
-            else{
-                return(message.toString());
+
+            if (node1.getTextContent().isEmpty()
+                    || node2.getTextContent().isEmpty()
+                    || node3.getTextContent().isEmpty()) {
+                resposta = xml;
+            } else {
+                resposta = message.toString();
             }
 
         } catch (FileNotFoundException e) {
             String logMessage = "O documento .xml não foi encontrado.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         } catch (ParserConfigurationException e) {
             String logMessage = "Houve um erro ao buscar as informações.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         } catch (SAXException e) {
             String logMessage = "Houve um erro ao utilizar o SAX.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         } catch (IOException e) {
             String logMessage = "Houve um erro ao abrir o documento .xml";
-            log.erro(logMessage);
-            throw new BsusException(logMessage, e);
+            BsusValidator.catchException(e, logMessage, log);
         }
 
+        return resposta;
     }
 }

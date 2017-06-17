@@ -37,21 +37,21 @@ public class BsusTest {
                 + "verifique a lista de erros.\n";
         assertEquals(bsus.obterEstoquePorCNES(7604041), response);
     }
-    
+
     @Test
-    public void cnesValidoTest(){
+    public void cnesValidoTest() {
         bsus.setConnection(new ConnectionTester());
-        assertEquals(bsus.verificaCnes(7604041),7604041);
+        assertEquals(bsus.verificaCnes(7604041), 7604041);
     }
-    
-    @Test(expected=BsusException.class)
-    public void cnesErradoMenorTest(){
+
+    @Test(expected = BsusException.class)
+    public void cnesErradoMenorTest() {
         bsus.setConnection(new ConnectionTester());
         bsus.verificaCnes(01);
     }
-    
-     @Test(expected=BsusException.class)
-    public void cnesErradoMaiorTest(){
+
+    @Test(expected = BsusException.class)
+    public void cnesErradoMaiorTest() {
         bsus.setConnection(new ConnectionTester());
         bsus.verificaCnes(87654321);
     }
@@ -71,31 +71,31 @@ public class BsusTest {
                 response);
     }
 
-     @Test(expected=BsusException.class)
-    public void principioAtivoTest(){
+    @Test(expected = BsusException.class)
+    public void principioAtivoTest() {
         bsus.setConnection(new ConnectionTester());
         bsus.verificaPrincipio("");
     }
-    
+
     @Test
-    public void principioAtivoCorretoTest(){
+    public void principioAtivoCorretoTest() {
         bsus.setConnection(new ConnectionTester());
         assertEquals(bsus.verificaPrincipio("Principio Ativo"),
                 "Principio Ativo");
     }
-    
-    @Test(expected=BsusException.class)
-    public void paginadoErradoTest(){
+
+    @Test(expected = BsusException.class)
+    public void paginadoErradoTest() {
         bsus.setConnection(new ConnectionTester());
-        bsus.verificaPaginado(0,-1,0);
+        bsus.verificaPaginado(0, -1, 0);
     }
-    
-        @Test
-    public void paginadoCorretoTest(){
+
+    @Test
+    public void paginadoCorretoTest() {
         bsus.setConnection(new ConnectionTester());
-        assertEquals(bsus.verificaPaginado(1,15,30),true);
+        assertEquals(bsus.verificaPaginado(1, 15, 30), true);
     }
-    
+
     /**
      * Caso de teste do método obterEstoquePorCNESEPrincipioPaginado
      */
@@ -106,8 +106,8 @@ public class BsusTest {
 
         String response = "Uma ou mais regras negociais foram violadas, "
                 + "verifique a lista de erros.\n";
-        
-        assertEquals(bsus.obterEstoquePorCNESEPrincipioPaginado(7604041, 
+
+        assertEquals(bsus.obterEstoquePorCNESEPrincipioPaginado(7604041,
                 "PRINCIPIO", 1111, 2222, 3333), response);
     }
 
@@ -135,7 +135,7 @@ public class BsusTest {
 
         String response = "Uma ou mais regras negociais foram violadas, "
                 + "verifique a lista de erros.\n";
-        
+
         assertEquals(bsus.obterDadosEEstoquePorCNESPaginado(
                 7604041, 1111, 2222, 3333), response);
     }

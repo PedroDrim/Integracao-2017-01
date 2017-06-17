@@ -12,44 +12,68 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Classe responsável para retornar os ,xml necessários.
+ * Classe responsável para retornar os .xml necessários.
  *
  * @author Pedro
  */
 public class FileResources {
 
+    /**
+     * Objeto resposável por exibir Log's.
+     *
+     * @see Log
+     */
     private Log log;
+    
+    /**
+     * Identificador de acesso da aplicação-usuário.
+     */
+    private String usuario;
+    
+    /**
+     * Senha de acesso da aplicação-usuário.
+     */
+    private String senha;
 
-    public FileResources(Log log) {
+    /**
+     * Construtor publico da classe.
+     * @param usuario Identificador de acesso.
+     * @param senha Senha de acesso.
+     * @param log Estrutura de log a ser definida (pode ser 'null').
+     */
+    public FileResources(String usuario, String senha, Log log) {
+        BsusValidator.verifyNull(usuario, "usuario", log);
+        BsusValidator.verifyNull(senha, "senha", log);
+        
         this.log = log;
+        this.usuario = usuario;
+        this.senha = senha;
     }
 
     /**
-     * Método interno para consultar as posições nos estoques do produto com
-     * base no cnes.
+     * Método interno para retornar o conteudo do arquivo
+     * 'consultarPosicaoEstoquePorCNES'.
      *
-     * @see ConnectionBsus
      * @param cnes Número de cnes.
      * @return A posição no estoque do referido produto.
      */
-    public String consultarPosicaoEstoquePorCNES(String usuario, String senha,
+    public String consultarPosicaoEstoquePorCNES(
             int cnes) {
         String resposta = getXml("consultarPosicaoEstoquePorCNES");
-        String output = String.format(resposta, usuario, senha,cnes);
+        String output = String.format(resposta, usuario, senha, cnes);
         return output;
     }
 
     /**
-     * Método interno para consultar as posições nos estoques pelo número de
-     * cnes e princípio ativo.
+     * Método interno para retornar o conteudo do arquivo
+     * 'consultarPosicaoEstoquePorCNESPrincipioAtivo'.
      *
-     * @see ConnectionBsus
      * @param cnes Número de cnes.
      * @param principio Tipo de princípio ativo.
      * @return A posição do estoque do referido produto.
      */
-    public String consultarPosicaoEstoquePorCNESPrincipioAtivo(String usuario,
-            String senha,int cnes, String principio) {
+    public String consultarPosicaoEstoquePorCNESPrincipioAtivo(
+            int cnes, String principio) {
         String arquivo = "consultarPosicaoEstoquePorCNESPrincipioAtivo";
         String resposta = getXml(arquivo);
         String output = String.format(resposta, usuario, senha, cnes,
@@ -58,10 +82,9 @@ public class FileResources {
     }
 
     /**
-     * Método interno para consultar as posições nos estoques pelo número de
-     * cnes, princípio ativo e dados de paginação.
+     * Método interno para retornar o conteudo do arquivo
+     * 'consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado'.
      *
-     * @see ConnectionBsus
      * @param cnes Número de cnes.
      * @param principio Tipo de princípio ativo.
      * @param posicaoInicio Posição inicial.
@@ -70,7 +93,7 @@ public class FileResources {
      * @return A posição no estoque do referido produto.
      */
     public String consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado(
-            String usuario, String senha,int cnes,
+            int cnes,
             String principio, int posicaoInicio, int qtdRegistrosPagina,
             int qtdRegistros) {
         String arquivo = "consultarPosicaoEstoquePorCNESPrincipioAtivoPaginado";
@@ -81,33 +104,29 @@ public class FileResources {
     }
 
     /**
-     * Método interno para consultar as posições nos estoques, bem como os dados
-     * do produto referentes ao número de cnes.
+     * Método interno para retornar o conteudo do arquivo
+     * 'consultarProdutoPorCNESDispensacao'.
      *
-     * @see ConnectionBsus
      * @param cnes Número de cnes.
      * @return A posição no estoque e os dados do referido produto.
      */
-    public String consultarProdutoPorCNESDispensacao(String usuario,
-            String senha, int cnes) {
+    public String consultarProdutoPorCNESDispensacao(int cnes) {
         String resposta = getXml("consultarProdutoPorCNESDispensacao");
-        String output = String.format(resposta, usuario, senha,cnes);
+        String output = String.format(resposta, usuario, senha, cnes);
         return output;
     }
 
     /**
-     * Método interno para consultar as posições nos estoques, bem como os dados
-     * do produto referentes ao número de cnes e dados de paginação.
+     * Método interno para retornar o conteudo do arquivo
+     * 'consultarProdutoPorCNESDispensacaoPaginado'.
      *
-     * @see ConnectionBsus
      * @param cnes Número de cnes.
      * @param posicaoInicio Posição inicial.
      * @param qtdRegistrosPagina Quantidade de registros por página.
      * @param qtdRegistros Quantidade de registros ao todo.
      * @return A posição no estoque e os dados do referido produto.
      */
-    public String consultarProdutoPorCNESDispensacaoPaginado(String usuario, 
-            String senha, int cnes,
+    public String consultarProdutoPorCNESDispensacaoPaginado(int cnes,
             int posicaoInicio, int qtdRegistrosPagina, int qtdRegistros) {
         String resposta
                 = getXml("consultarProdutoPorCNESDispensacaoPaginado");
@@ -116,12 +135,20 @@ public class FileResources {
         return output;
     }
 
+    /**
+     * Método interno para retornar o conteudo do arquivo 'resposta'.
+     * @return O conteúdo do arquivo 'resposta'.
+     */
     public String resposta() {
         String resposta = getXml("resposta");
-
         return resposta;
     }
 
+    /**
+     * Método interno responsável por buscar e ler um arquivo definido.
+     * @param arquivo nome do arquivo a ser lido.
+     * @return Conteúdo do arquivo.
+     */
     private String getXml(String arquivo) {
 
         BsusValidator.verifyNull(arquivo, "arquivo", log);

@@ -21,6 +21,20 @@ import org.junit.Test;
 public class XmlParserTest {
 
     /**
+     * Objeto responsável por retornar o conteudo dos arquivos internos .xml.
+     */
+    private FileResources fileResources;
+    
+    /**
+     * Construtor publico do teste.
+     */
+    public XmlParserTest(){
+        String usuario = "usuario";
+        String senha = "senha";
+        this.fileResources = new FileResources(usuario, senha, new LogTester());
+    }
+    
+    /**
      * Teste unitário funcional do método 'getMessage'.
      *
      * @see XmlParser
@@ -33,7 +47,7 @@ public class XmlParserTest {
         String response = "Uma ou mais regras negociais foram violadas, "
                 + "verifique a lista de erros.\n";
 
-        String xml = FileResources.getXml("resposta", new LogTester());
+        String xml = fileResources.resposta();
         String request = instance.getMessage(xml);
         assertEquals(request, response);
     }

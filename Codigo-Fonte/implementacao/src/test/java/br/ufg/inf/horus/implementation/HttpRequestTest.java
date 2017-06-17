@@ -37,15 +37,21 @@ public class HttpRequestTest {
     private String resp;
 
     /**
+     * Objeto responsável por retornar o conteudo dos arquivos internos .xml.
+     */
+    private FileResources fileResources;
+
+    /**
      * Construtor publico da classe.
      */
     public HttpRequestTest() {
 
-        this.url = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
-
-        this.body = FileResources.getXml("consultarPosicaoEstoquePorCNES",
+        this.fileResources = new FileResources("usuario", "senha",
                 new LogTester());
-        this.resp = FileResources.getXml("resposta", new LogTester());
+        
+        this.url = "https://servicos.saude.gov.br/horus/v1r0/EstoqueService";
+        this.body = fileResources.consultarPosicaoEstoquePorCNES(1234567);
+        this.resp = fileResources.resposta();
     }
 
     /**
@@ -64,22 +70,20 @@ public class HttpRequestTest {
     public void erroUrlTest() {
         Log log = new LogTester();
         HttpRequest req = new HttpRequest();
-        req.request(null, body, log);
-        assertEquals(req.request(url, body, log), resp);
+        assertEquals(req.request(null, body, log), resp);
     }
 
     @Test(expected = BsusException.class)
     public void erroBodyTest() {
         Log log = new LogTester();
         HttpRequest req = new HttpRequest();
-        req.request(url, null, log);
-        assertEquals(req.request(url, body, log), resp);
+        assertEquals(req.request(url, null, log), resp);
     }
 
-    @Test(expected = BsusException.class)
+    @Test
     public void erroLogTest() {
         HttpRequest req = new HttpRequest();
-        req.request(url, body, null);
-        assertEquals(req.request(url, body, null), resp);
+        String get = req.request(url, body, null);
+        assertEquals(get, resp);
     }
 }

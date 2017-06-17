@@ -8,6 +8,7 @@ package br.ufg.inf.horus.implementation.service;
 import br.ufg.inf.horus.util.validations.BsusException;
 import br.ufg.inf.horus.implementation.model.HttpInterface;
 import br.ufg.inf.horus.util.model.Log;
+import br.ufg.inf.horus.util.validations.BsusValidator;
 import java.io.IOException;
 import java.nio.charset.UnsupportedCharsetException;
 import org.apache.http.HttpEntity;
@@ -33,30 +34,18 @@ public class HttpRequest implements HttpInterface {
      * @see HttpInterface
      * @param url Url para a requisição.
      * @param body Mensagem da requisição.
-     * @param log Objeto para exibição de mensagens (Log).
+     * @param log Objeto para exibição de mensagens Log (opcional).
      * @return Resposta da requisição.
      */
     @Override
     public String request(String url, String body, Log log) 
             throws BsusException {
 
-        if (url == null) {
-            String logMessage = "O parametro 'url' não possui valor.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage);
-        }
+        BsusValidator.verifyNull(body," body", log);
+        BsusValidator.verifyNull(url," url", log);
 
-        if (body == null) {
-            String logMessage = "O parametro 'body' não possui valor.";
-            log.erro(logMessage);
-            throw new BsusException(logMessage);
-        }
-
-        if (log == null) {
-            String logMessage = "O parametro 'log' não possui valor.";
-            throw new BsusException(logMessage);
-        }
-
+        String resposta = "";
+        
         try {
             CloseableHttpClient httpclient = HttpClientBuilder.create().build();
             StringEntity strEntity = new StringEntity(body, "UTF-8");
@@ -66,21 +55,20 @@ public class HttpRequest implements HttpInterface {
 
             HttpResponse response = httpclient.execute(post);
             HttpEntity respEntity = response.getEntity();
-            return (EntityUtils.toString(respEntity));
+            resposta = EntityUtils.toString(respEntity);
 
         } catch (IOException e) {
             String message = "Houve um erro ao abrir o documento .xml";
-            log.erro(message);
-            throw new BsusException(message);
+            BsusValidator.catchException(e, message, log);
         } catch (UnsupportedCharsetException e) {
             String message = 
                     "O charset 'UTF-8' da mensagem não esta sendo suportado.";
-            log.erro(message);
-            throw new BsusException(message);
+            BsusValidator.catchException(e, message, log);
         } catch (ParseException e) {
             String message = "Houve um erro ao buscar as informações.";
-            log.erro(message);
-            throw new BsusException(message);
+            BsusValidator.catchException(e, message, log);
         }
+        
+        return resposta;
     }
 }
