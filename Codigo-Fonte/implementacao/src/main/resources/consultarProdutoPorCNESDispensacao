@@ -9,7 +9,7 @@
  </soap:Header>
  <soap:Body>
  <est:requestConsultarProdutoPorCNESDispensacao>
-         <est:cnes>%d</est:cnes>
-      </est:requestConsultarProdutoPorCNESDispensacao>
+ <est:cnes>%d</est:cnes>
+ </est:requestConsultarProdutoPorCNESDispensacao>
  </soap:Body>
 </soap:Envelope>

@@ -8,9 +8,9 @@
  </wsse:Security>
  </soap:Header>
  <soap:Body>
-  <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>
-         <est:cnes>%d</est:cnes>
-         <est:principioAtivo>%s</est:principioAtivo>
-      </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>
+ <est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>
+ <est:cnes>%d</est:cnes>
+ <est:principioAtivo>%s</est:principioAtivo>
+ </est:requestConsultarPosicaoEstoquePorCNESPrincipioAtivo>
  </soap:Body>
 </soap:Envelope>

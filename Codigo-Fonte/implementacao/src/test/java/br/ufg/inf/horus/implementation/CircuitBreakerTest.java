@@ -69,7 +69,23 @@ public class CircuitBreakerTest {
 
         Future<String> asynchrnous = circuitBreaker.queue();
         String response = asynchrnous.get();
-        String esperado = fileResources.resposta();
+        String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+"<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">"
+                + "<soap:Header xmlns:est=\"http://servicos.saude.gov.br/"
+                + "horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http:"
+                + "//servicos.saude.gov.br/horus/v1r0/EstoqueService\"><soap:"
+                + "Fault><soap:Code><env:Value xmlns:env=\"http://www.w3.org/"
+                + "2003/05/soap-envelope\">env:Sender</env:Value></soap:Code>"
+                + "<soap:Reason><soap:Text xml:lang=\"pt-BR\">Uma ou mais"
+                + " regras negociais foram violadas, verifique a lista de"
+                + " erros.</soap:Text></soap:Reason><soap:Detail><msf:MSFalha"
+                + " xmlns:msf=\"http://servicos.saude.gov.br/wsdl/mensageria/"
+                + "falha/v5r0/msfalha\"><msf:Mensagem xmlns:men=\"http://"
+                + "servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/mensagem\">"
+                + "<men:codigo>OSB_SEM_AUTENTICACAO</men:codigo>"
+                + "<men:descricao>As credenciais informadas não são válidas"
+                + "</men:descricao></msf:Mensagem></msf:MSFalha></soap:Detail>"
+                + "</soap:Fault></soap:Body></soap:Envelope>";
         assertEquals(response, esperado);
     }
 
@@ -92,7 +108,24 @@ public class CircuitBreakerTest {
 
         String response = circuitBreaker.execute();
 
-        String esperado = fileResources.resposta();
+        String esperado = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+"<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">"
+                + "<soap:Header xmlns:est=\"http://servicos.saude.gov.br/"
+                + "horus/v1r0/EstoqueService\"/><soap:Body xmlns:est=\"http://"
+                + "servicos.saude.gov.br/horus/v1r0/EstoqueService\">"
+                + "<soap:Fault><soap:Code><env:Value xmlns:"
+                + "env=\"http://www.w3.org/2003/05/soap-envelope\">env:"
+                + "Sender</env:Value></soap:Code><soap:Reason><soap:Text"
+                + " xml:lang=\"pt-BR\">Uma ou mais regras negociais foram"
+                + " violadas, verifique a lista de erros.</soap:Text></soap:"
+                + "Reason><soap:Detail><msf:MSFalha xmlns:msf=\"http://"
+                + "servicos.saude.gov.br/wsdl/mensageria/falha/v5r0/msfalha\">"
+                + "<msf:Mensagem xmlns:men=\"http://servicos.saude.gov.br/wsdl"
+                + "/mensageria/falha/v5r0/mensagem\"><men:codigo>"
+                + "OSB_SEM_AUTENTICACAO</men:codigo><men:descricao>"
+                + "As credenciais informadas não são válidas</men:descricao>"
+                + "</msf:Mensagem></msf:MSFalha></soap:Detail></soap:Fault>"
+                + "</soap:Body></soap:Envelope>";
         assertEquals(response, esperado);
     }
 
