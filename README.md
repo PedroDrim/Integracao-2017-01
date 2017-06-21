@@ -8,12 +8,8 @@ Este sistema foi desenvolvido focado no meio acadêmico, entretanto possui a pre
 ### 2.1. Integrantes
 Nome | Contato
 -----|--------
-Gabriel Nuñez | g.nunez.coutinho@gmail.com
 Pedro Henrique | pedrohenriquedrim@gmail.com
-Vinícius Machado | ?
-Lucas Nunes | lucasalemao.ns@gmail.com
-Guilherme Caixeta | caixetag@gmail.com
-Valquer Diniz | valquernovaes@hotmail.com
+Vinicius Carvalho Machado | viniciuscmac@gmail.com
 
 ### 2.2. Cronogramas
 
